@@ -1,5 +1,11 @@
 # tw-bootstrap-grid
 
+[![npm version](https://img.shields.io/npm/v/tw-bootstrap-grid.svg)](https://www.npmjs.com/package/tw-bootstrap-grid)
+[![license](https://img.shields.io/npm/l/tw-bootstrap-grid.svg)](https://github.com/bawerbozdag/tw-bootstrap-grid/blob/master/LICENSE)
+[![npm downloads](https://img.shields.io/npm/dm/tw-bootstrap-grid.svg)](https://www.npmjs.com/package/tw-bootstrap-grid)
+
+A **Tailwind CSS plugin** that brings a responsive, Bootstrap-like grid system to Tailwind...
+
 A **Tailwind CSS plugin** that brings a responsive, Bootstrap-like grid system to Tailwind — complete with rows, columns, gutters, offsets, and ordering utilities.
 
 ---
