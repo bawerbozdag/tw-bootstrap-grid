@@ -1,0 +1,28 @@
+{
+  "name": "tw-bootstrap-grid",
+  "version": "1.0.0",
+  "description": "A Tailwind CSS plugin that provides a Bootstrap-style grid system",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "tailwind",
+    "plugin",
+    "grid",
+    "bootstrap",
+    "responsive"
+  ],
+  "author": "Baver Bozdağ",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "peerDependencies": {
+    "tailwindcss": ">=3.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
