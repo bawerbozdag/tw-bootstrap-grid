@@ -13,6 +13,14 @@
   ],
   "author": "Baver Bozdağ",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bawerbozdag/tw-bootstrap-grid.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bawerbozdag/tw-bootstrap-grid/issues"
+  },
+  "homepage": "https://github.com/bawerbozdag/tw-bootstrap-grid#readme",
   "files": [
     "dist"
   ],
