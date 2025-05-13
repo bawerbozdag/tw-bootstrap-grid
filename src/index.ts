@@ -33,18 +33,18 @@ const TailwindBootstrapGrid = plugin(function ({
     Object.entries(spacing).forEach(([key, value]) => {
       // .g-{key} => applies both horizontal and vertical gutter
       classes[`.g-${key}`] = {
-        "--theme-gutter-x": value,
-        "--theme-gutter-y": value,
+        "--bs-gutter-x": value,
+        "--bs-gutter-y": value,
       };
 
       // .gx-{key} => horizontal gutter only
       classes[`.gx-${key}`] = {
-        "--theme-gutter-x": value,
+        "--bs-gutter-x": value,
       };
 
       // .gy-{key} => vertical gutter only
       classes[`.gy-${key}`] = {
-        "--theme-gutter-y": value,
+        "--bs-gutter-y": value,
       };
     });
 
@@ -84,56 +84,38 @@ const TailwindBootstrapGrid = plugin(function ({
   };
 
   addComponents({
-    // basic container class for fixed width layout
-    ".container": {
+    ".container, .container-fluid": {
+      // define horizontal and vertical gutter spacing using CSS variables for container
+      "--bs-gutter-x": "1.5rem",
+      "--bs-gutter-y": "0",
+
+      // full width with automatic horizontal centering
       width: "100%",
-      paddingRight: "calc(0.75rem + var(--theme-gutter-x, 0.5rem))",
-      paddingLeft: "calc(0.75rem + var(--theme-gutter-x, 0.5rem))",
+      paddingRight: "calc(var(--bs-gutter-x, 1.5rem) * 0.5)",
+      paddingLeft: "calc(var(--bs-gutter-x, 1.5rem) * 0.5)",
       marginRight: "auto",
       marginLeft: "auto",
-
-      // responsive max-width settings per breakpoint
-      "@screen sm": {
-        maxWidth: "540px",
-      },
-      "@screen md": {
-        maxWidth: "720px",
-      },
-      "@screen lg": {
-        maxWidth: "960px",
-      },
-      "@screen xl": {
-        maxWidth: "1140px",
-      },
-      "@screen xxl": {
-        maxWidth: "1400px",
-      },
-    },
-
-    // fluid container takes full width always
-    ".container-fluid": {
-      width: "100%",
-      paddingRight: "calc(0.75rem + var(--theme-gutter-x, 0.5rem))",
-      paddingLeft: "calc(0.75rem + var(--theme-gutter-x, 0.5rem))",
     },
 
     // row class with negative margins and wrapping
     ".row": {
+      // define horizontal and vertical gutter spacing using CSS variables for row
+      "--bs-gutter-x": "1.5rem",
+      "--bs-gutter-y": "0",
+
       display: "flex",
       flexWrap: "wrap",
-      marginRight: "calc(-1 * var(--theme-gutter-x, 0.5rem))",
-      marginLeft: "calc(-1 * var(--theme-gutter-x, 0.5rem))",
-      marginTop: "calc(-1 * var(--theme-gutter-y, 0rem))",
-      marginBottom: "calc(-1 * var(--theme-gutter-y, 0rem))",
+      marginTop: "calc(-1 * var(--bs-gutter-y, 0))",
+      marginRight: "calc(-.5 * var(--bs-gutter-x, 1.5rem))",
+      marginLeft: "calc(-.5 * var(--bs-gutter-x, 1.5rem))",
 
       // each child gets padding for gutter
       "& > *": {
-        flex: "0 0 100%",
+        flexShrink: "0",
         width: "100%",
-        paddingRight: "var(--theme-gutter-x, 0.5rem)",
-        paddingLeft: "var(--theme-gutter-x, 0.5rem)",
-        paddingTop: "var(--theme-gutter-y, 0rem)",
-        paddingBottom: "var(--theme-gutter-y, 0rem)",
+        paddingRight: "calc(var(--bs-gutter-x, 1.5rem) * .5)",
+        paddingLeft: "calc(var(--bs-gutter-x, 1.5rem) * .5)",
+        marginTop: "var(--bs-gutter-y, 0)",
       },
     },
 
