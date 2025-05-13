@@ -103,6 +103,8 @@ You can override the default container breakpoints by defining custom CSS variab
 </div>
 ```
 
+This demonstrates how you can use Tailwind’s responsive syntax (`sm:`, `md:`, etc.) in place of Bootstrap’s `col-sm-*`, `col-md-*` conventions — keeping the layout responsive and Tailwind-native.
+
 ---
 
 ### 🔹 Offset Usage
