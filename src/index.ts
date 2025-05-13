@@ -124,6 +124,12 @@ const TailwindBootstrapGrid = plugin(function ({
       flex: "1 0 0%",
     },
 
+    // column with auto width based on content
+    ".col-auto": {
+      flex: "0 0 auto",
+      width: "auto",
+    },
+
     // add generated utilities
     ...generateColClasses(),
     ...generateGutterVariableClasses(),
