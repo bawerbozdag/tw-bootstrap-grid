@@ -65,6 +65,20 @@ If you're using Tailwind via CSS (e.g., with PostCSS or Vite), you can import th
 
 ---
 
+### 🎛️ Customizing Breakpoints
+
+You can override the default container breakpoints by defining custom CSS variables inside the `@theme` directive.
+
+```css
+@theme {
+  --breakpoint-sm: 40rem; /* 640px */
+  --breakpoint-md: 48rem; /* 768px */
+  --breakpoint-lg: 64rem; /* 1024px */
+  --breakpoint-xl: 80rem; /* 1280px */
+  --breakpoint-xxl: 96rem; /* 1536px */
+}
+```
+
 ## 🧱 Examples
 
 ### 🔹 Basic Grid
