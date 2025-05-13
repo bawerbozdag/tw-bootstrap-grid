@@ -3,7 +3,12 @@
   "version": "1.0.5",
   "description": "A Tailwind CSS plugin that provides a Bootstrap-style grid system",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "exports": {
+    "require": "./dist/index.js",
+    "import": "./dist/index.mjs"
+  },
   "keywords": [
     "tailwind",
     "plugin",
@@ -25,13 +30,14 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc"
+    "build": "tsup"
   },
   "peerDependencies": {
     "tailwindcss": ">=3.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.15.17",
+    "tsup": "^8.4.0",
     "typescript": "^5.8.3"
   }
 }

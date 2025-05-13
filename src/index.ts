@@ -151,4 +151,3 @@ const TailwindBootstrapGrid = plugin(function ({
 });
 
 export default TailwindBootstrapGrid;
-module.exports = TailwindBootstrapGrid;
