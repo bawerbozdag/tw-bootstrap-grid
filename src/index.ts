@@ -1,4 +1,4 @@
-import type { PluginAPI } from "tailwindcss/types/config";
+import type { CSSRuleObject, PluginAPI } from "tailwindcss/types/config";
 import plugin from "tailwindcss/plugin";
 
 // define a custom Tailwind plugin for Bootstrap-style grid system
@@ -12,7 +12,7 @@ const TailwindBootstrapGrid = plugin(function ({
   // generate .col-{1-12} classes for column widths
   const generateColClasses = () => {
     // create an empty object to hold column class definitions
-    const cols: Record<string, Record<string, string>> = {};
+    const cols: CSSRuleObject = {};
 
     for (let i = 1; i <= totalCols; i++) {
       // define .col-{i} classes with corresponding flex and width
@@ -28,7 +28,7 @@ const TailwindBootstrapGrid = plugin(function ({
   // generate .g-{key}, .gx-{key}, and .gy-{key} for gutter spacing
   const generateGutterVariableClasses = () => {
     const spacing = theme("spacing") as Record<string, string>;
-    const classes: Record<string, Record<string, string>> = {};
+    const classes: CSSRuleObject = {};
 
     Object.entries(spacing).forEach(([key, value]) => {
       // .g-{key} => applies both horizontal and vertical gutter
@@ -53,7 +53,7 @@ const TailwindBootstrapGrid = plugin(function ({
 
   // generate .offset-{1-12} to add left margin as offset
   const generateOffsetClasses = () => {
-    const offsets: Record<string, Record<string, string>> = {};
+    const offsets: CSSRuleObject = {};
 
     for (let i = 1; i <= totalCols; i++) {
       // .offset-{1-12} => adds left margin to offset the column
@@ -67,7 +67,7 @@ const TailwindBootstrapGrid = plugin(function ({
 
   // generate .order-{0-12}, .order-first, .order-last for ordering flex items
   const generateOrderClasses = () => {
-    const orders: Record<string, Record<string, string>> = {};
+    const orders: CSSRuleObject = {};
 
     // .order-{0-12}
     for (let i = 0; i <= 12; i++) {
