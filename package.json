@@ -1,6 +1,6 @@
 {
   "name": "tw-bootstrap-grid",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A Tailwind CSS plugin that adds a responsive, Bootstrap-style grid system.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
