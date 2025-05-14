@@ -4,7 +4,9 @@
 [![license](https://img.shields.io/npm/l/tw-bootstrap-grid.svg)](https://github.com/bawerbozdag/tw-bootstrap-grid/blob/master/LICENSE)
 [![npm downloads](https://img.shields.io/npm/dm/tw-bootstrap-grid.svg)](https://www.npmjs.com/package/tw-bootstrap-grid)
 
-A **Tailwind CSS plugin** that brings a responsive, Bootstrap-like grid system to Tailwind — complete with rows, columns, gutters, offsets, and ordering utilities.
+A **Tailwind CSS plugin** that brings a responsive, Bootstrap-like grid system to Tailwind, complete with rows, columns, gutters, offsets, and ordering utilities.
+
+> 📌 This plugin supports **Tailwind CSS v3 and v4**.
 
 ---
 
@@ -52,7 +54,7 @@ export default {
 
 ---
 
-### ✅ 2. CSS / PostCSS Plugin Usage
+### ✅ 2. CSS / PostCSS Plugin Usage (Tailwind v4 only)
 
 If you're using Tailwind via CSS (e.g., with PostCSS or Vite), you can import the plugin directly:
 
@@ -61,13 +63,15 @@ If you're using Tailwind via CSS (e.g., with PostCSS or Vite), you can import th
 @plugin "tw-bootstrap-grid";
 ```
 
-> ✅ The plugin will automatically be resolved from `node_modules`.
+✅ The plugin will automatically be resolved from `node_modules`.
 
 ---
 
-### 🎛️ Customizing Breakpoints
+## 🎛️ Customizing Breakpoints
 
-You can override the default container breakpoints by defining custom CSS variables inside the `@theme` directive.
+You can override the default container breakpoints in two ways:
+
+### ✅ Option 1: Using CSS `@theme` directive (Tailwind v4 only)
 
 ```css
 @theme {
@@ -78,6 +82,36 @@ You can override the default container breakpoints by defining custom CSS variab
   --breakpoint-xxl: 96rem; /* 1536px */
 }
 ```
+
+> ⚠️ **Requires Tailwind CSS v4**
+
+---
+
+### ✅ Option 2: Via Tailwind Config (`tailwind.config.js` / `tailwind.config.ts`)
+
+```ts
+import TailwindBootstrapGrid from "tw-bootstrap-grid";
+
+export default {
+  content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
+  theme: {
+    screens: {
+      sm: "40rem", // 640px
+      md: "48rem", // 768px
+      lg: "64rem", // 1024px
+      xl: "80rem", // 1280px
+      xxl: "96rem", // 1536px
+    },
+    extend: {},
+  },
+  plugins: [TailwindBootstrapGrid],
+};
+```
+
+> ✅ Compatible with both Tailwind v3 and v4.  
+> The plugin will automatically use these values to generate responsive container max-widths.
+
+---
 
 ## 🧱 Examples
 
@@ -103,7 +137,7 @@ You can override the default container breakpoints by defining custom CSS variab
 </div>
 ```
 
-This demonstrates how you can use Tailwind’s responsive syntax (`sm:`, `md:`, etc.) in place of Bootstrap’s `col-sm-*`, `col-md-*` conventions — keeping the layout responsive and Tailwind-native.
+This demonstrates how you can use Tailwind’s responsive syntax (`sm:`, `md:`, etc.) in place of Bootstrap’s `col-sm-*`, `col-md-*` conventions, while keeping the layout responsive and Tailwind-native.
 
 ---
 
@@ -152,6 +186,13 @@ This demonstrates how you can use Tailwind’s responsive syntax (`sm:`, `md:`, 
 - The plugin **does not override any core Tailwind utility**.
 - All grid utilities support **responsive variants** (`sm:`, `md:`, `lg:`, etc).
 - Gutters are handled using CSS custom properties: `--theme-gutter-x` and `--theme-gutter-y`.
+- This plugin is not compatible with Tailwind via CDN. Use it in a build environment (PostCSS, Vite, Webpack, etc.).
+
+---
+
+## 🤝 Contributing
+
+Found a bug or have a feature request? Feel free to open an [issue](https://github.com/bawerbozdag/tw-bootstrap-grid/issues) or submit a [pull request](https://github.com/bawerbozdag/tw-bootstrap-grid/pulls)!
 
 ---
 
