@@ -11,10 +11,20 @@
   },
   "keywords": [
     "tailwind",
-    "plugin",
-    "grid",
+    "tailwindcss",
+    "tailwind-plugin",
     "bootstrap",
-    "responsive"
+    "bootstrap-grid",
+    "responsive-grid",
+    "grid",
+    "responsive",
+    "plugin",
+    "flexbox",
+    "breakpoints",
+    "utility-first",
+    "layout",
+    "12-column",
+    "css-grid"
   ],
   "author": "Baver Bozdağ",
   "license": "MIT",
@@ -26,6 +36,9 @@
     "url": "https://github.com/bawerbozdag/tw-bootstrap-grid/issues"
   },
   "homepage": "https://github.com/bawerbozdag/tw-bootstrap-grid#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "files": [
     "dist"
   ],
