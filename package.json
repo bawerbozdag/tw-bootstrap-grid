@@ -1,57 +1,58 @@
 {
-  "name": "tw-bootstrap-grid",
-  "version": "1.0.8",
-  "description": "A Tailwind CSS plugin that adds a responsive, Bootstrap-style grid system.",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "exports": {
-    "require": "./dist/index.js",
-    "import": "./dist/index.mjs"
-  },
-  "keywords": [
-    "tailwind",
-    "tailwindcss",
-    "tailwind-plugin",
-    "bootstrap",
-    "bootstrap-grid",
-    "responsive-grid",
-    "grid",
-    "responsive",
-    "plugin",
-    "flexbox",
-    "breakpoints",
-    "utility-first",
-    "layout",
-    "12-column",
-    "css-grid"
-  ],
-  "author": "Baver Bozdağ",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bawerbozdag/tw-bootstrap-grid.git"
-  },
-  "bugs": {
-    "url": "https://github.com/bawerbozdag/tw-bootstrap-grid/issues"
-  },
-  "homepage": "https://github.com/bawerbozdag/tw-bootstrap-grid#readme",
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "tsup"
-  },
-  "peerDependencies": {
-    "tailwindcss": ">=3.0.0"
-  },
-  "devDependencies": {
-    "@types/node": "^22.15.17",
-    "prettier": "3.5.3",
-    "tsup": "^8.4.0",
-    "typescript": "^5.8.3"
-  }
+    "name": "tw-bootstrap-grid",
+    "version": "1.0.8",
+    "description": "A Tailwind CSS plugin that adds a responsive, Bootstrap-style grid system.",
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "types": "dist/index.d.ts",
+    "exports": {
+        "require": "./dist/index.js",
+        "import": "./dist/index.mjs"
+    },
+    "keywords": [
+        "tailwind",
+        "tailwindcss",
+        "tailwind-plugin",
+        "bootstrap",
+        "bootstrap-grid",
+        "responsive-grid",
+        "grid",
+        "responsive",
+        "plugin",
+        "flexbox",
+        "breakpoints",
+        "utility-first",
+        "layout",
+        "12-column",
+        "css-grid"
+    ],
+    "author": "Baver Bozdağ",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bawerbozdag/tw-bootstrap-grid.git"
+    },
+    "bugs": {
+        "url": "https://github.com/bawerbozdag/tw-bootstrap-grid/issues"
+    },
+    "homepage": "https://github.com/bawerbozdag/tw-bootstrap-grid#readme",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsup",
+        "format": "prettier --write ./**/*.{js,jsx,ts,tsx,cjs,json,css,scss}"
+    },
+    "peerDependencies": {
+        "tailwindcss": ">=3.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^22.15.17",
+        "prettier": "3.5.3",
+        "tsup": "^8.4.0",
+        "typescript": "^5.8.3"
+    }
 }
