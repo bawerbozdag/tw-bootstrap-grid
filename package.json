@@ -45,6 +45,7 @@
     ],
     "scripts": {
         "build": "tsup",
+        "typecheck": "tsc --noEmit",
         "format": "prettier --write ./**/*.{js,jsx,ts,tsx,cjs,json,css,scss}",
         "lint": "eslint src",
         "lint:fix": "eslint src --fix"
