@@ -1,0 +1,32 @@
+name: ESLint
+
+on:
+    push:
+        paths:
+            - "**"
+    pull_request:
+        paths:
+            - "**"
+
+jobs:
+    lint:
+        name: Typecheck & Lint
+        runs-on: ubuntu-22.04
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+                  cache: "npm"
+                  cache-dependency-path: "package-lock.json"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: TypeScript type check
+              run: npm run typecheck
+
+            - name: Run ESLint
+              run: npm run lint
