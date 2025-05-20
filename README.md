@@ -44,11 +44,11 @@ yarn add tw-bootstrap-grid
 import TailwindBootstrapGrid from "tw-bootstrap-grid";
 
 export default {
-  content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
-  theme: {
-    extend: {},
-  },
-  plugins: [TailwindBootstrapGrid],
+    content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
+    theme: {
+        extend: {},
+    },
+    plugins: [TailwindBootstrapGrid],
 };
 ```
 
@@ -75,11 +75,11 @@ You can override the default container breakpoints in two ways:
 
 ```css
 @theme {
-  --breakpoint-sm: 40rem; /* 640px */
-  --breakpoint-md: 48rem; /* 768px */
-  --breakpoint-lg: 64rem; /* 1024px */
-  --breakpoint-xl: 80rem; /* 1280px */
-  --breakpoint-xxl: 96rem; /* 1536px */
+    --breakpoint-sm: 40rem; /* 640px */
+    --breakpoint-md: 48rem; /* 768px */
+    --breakpoint-lg: 64rem; /* 1024px */
+    --breakpoint-xl: 80rem; /* 1280px */
+    --breakpoint-xxl: 96rem; /* 1536px */
 }
 ```
 
@@ -93,18 +93,18 @@ You can override the default container breakpoints in two ways:
 import TailwindBootstrapGrid from "tw-bootstrap-grid";
 
 export default {
-  content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
-  theme: {
-    screens: {
-      sm: "40rem", // 640px
-      md: "48rem", // 768px
-      lg: "64rem", // 1024px
-      xl: "80rem", // 1280px
-      xxl: "96rem", // 1536px
+    content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
+    theme: {
+        screens: {
+            sm: "40rem", // 640px
+            md: "48rem", // 768px
+            lg: "64rem", // 1024px
+            xl: "80rem", // 1280px
+            xxl: "96rem", // 1536px
+        },
+        extend: {},
     },
-    extend: {},
-  },
-  plugins: [TailwindBootstrapGrid],
+    plugins: [TailwindBootstrapGrid],
 };
 ```
 
@@ -217,10 +217,10 @@ This makes it easy to maintain consistent spacing across your layout while allow
 
 ```html
 <div class="container">
-  <div class="row">
-    <div class="col-6">Left</div>
-    <div class="col-6">Right</div>
-  </div>
+    <div class="row">
+        <div class="col-6">Left</div>
+        <div class="col-6">Right</div>
+    </div>
 </div>
 ```
 
@@ -230,8 +230,8 @@ This makes it easy to maintain consistent spacing across your layout while allow
 
 ```html
 <div class="row">
-  <div class="col-12 md:col-6">50% on md and above</div>
-  <div class="col-12 md:col-6">50% on md and above</div>
+    <div class="col-12 md:col-6">50% on md and above</div>
+    <div class="col-12 md:col-6">50% on md and above</div>
 </div>
 ```
 
@@ -243,7 +243,7 @@ This demonstrates how you can use Tailwind’s responsive syntax (`sm:`, `md:`, 
 
 ```html
 <div class="row">
-  <div class="col-4 offset-4">Centered Column</div>
+    <div class="col-4 offset-4">Centered Column</div>
 </div>
 ```
 
@@ -253,8 +253,8 @@ This demonstrates how you can use Tailwind’s responsive syntax (`sm:`, `md:`, 
 
 ```html
 <div class="row">
-  <div class="col-6 order-2 order-md-1">Second on mobile, first on desktop</div>
-  <div class="col-6 order-1 order-md-2">First on mobile, second on desktop</div>
+    <div class="col-6 order-2 order-md-1">Second on mobile, first on desktop</div>
+    <div class="col-6 order-1 order-md-2">First on mobile, second on desktop</div>
 </div>
 ```
 
