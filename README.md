@@ -113,6 +113,104 @@ export default {
 
 ---
 
+## 🎛️ Customizing Gutters
+
+This plugin provides flexible ways to configure horizontal (`x`) and vertical (`y`) gutters:
+
+### ✅ Option 1: Via Tailwind Config (`tailwind.config.js` / `tailwind.config.ts`)
+
+You can configure gutter behavior directly through plugin options when adding the plugin:
+
+```ts
+import TailwindBootstrapGrid from "tw-bootstrap-grid";
+
+export default {
+    content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
+    plugins: [
+        TailwindBootstrapGrid({
+            // shared gutter values used when no specific values are set for container or row
+            gutters: {
+                x: "1.5rem",
+                y: "0",
+            },
+            // specific gutter values for `.container`
+            // overrides `gutters` if provided
+            containerGutters: {
+                x: "1.5rem", // used instead of gutters.x
+                // y not provided → falls back to gutters.y or default ("0")
+            },
+            // specific gutter values for `.row`
+            // overrides `gutters` if provided
+            rowGutters: {
+                // x not provided → falls back to gutters.x or default ("1.5rem")
+                y: "0",, // overrides gutters.y
+            },
+        }),
+    ],
+};
+```
+
+#### Priority:
+
+| Target Element | Priority Order                                                     |
+| -------------- | ------------------------------------------------------------------ |
+| `.container`   | 1️⃣ `containerGutters` → 2️⃣ `gutters` → 3️⃣ Default (`1.5rem` / `0`) |
+| `.row`         | 1️⃣ `rowGutters` → 2️⃣ `gutters` → 3️⃣ Default (`1.5rem` / `0`)       |
+
+> ✅ Compatible with both Tailwind v3 and v4.
+
+---
+
+### ✅ Option 2: Using CSS `@theme` directive (Tailwind v4 only)
+
+Tailwind CSS v4 introduces native CSS variable theming using @theme. You can declare gutter variables directly in your CSS:
+
+```css
+@theme {
+    --bs-global-gutter-x: 1.5rem;
+    --bs-global-gutter-y: 0;
+
+    --bs-container-gutter-x: var(--bs-global-gutter-x);
+    --bs-container-gutter-y: var(--bs-global-gutter-y);
+
+    --bs-row-gutter-x: var(--bs-global-gutter-x);
+    --bs-row-gutter-y: var(--bs-global-gutter-y);
+}
+```
+
+This approach is ideal when you want to control spacing purely from CSS or dynamically change gutter values in different themes/modes.
+
+#### Priority:
+
+| Variable                  | Fallback Chain                      |
+| ------------------------- | ----------------------------------- |
+| `--bs-container-gutter-x` | → `--bs-global-gutter-x` → `1.5rem` |
+| `--bs-container-gutter-y` | → `--bs-global-gutter-y` → `0`      |
+| `--bs-row-gutter-x`       | → `--bs-global-gutter-x` → `1.5rem` |
+| `--bs-row-gutter-y`       | → `--bs-global-gutter-y` → `0`      |
+
+> ⚠️ **This method requires Tailwind CSS v4**
+
+---
+
+### 🧠 How It Works
+
+Each component uses a fallback chain like:
+
+```
+--bs-container-gutter-x → --bs-global-gutter-x → 1.5rem
+--bs-row-gutter-y       → --bs-global-gutter-y → 0
+```
+
+- `containerGutters` and `rowGutters` always take top priority.
+- If not defined, it falls back to `gutters`.
+- If `gutters` is not defined, hardcoded defaults are used (`1.5rem` for x, `0` for y).
+- In Tailwind v4, CSS custom properties are resolved similarly.
+
+This makes it easy to maintain consistent spacing across your layout while allowing overrides at any layer.
+
+---
+
 ## 🧱 Examples
 
 ### 🔹 Basic Grid
