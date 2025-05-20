@@ -1,10 +1,17 @@
-import type { CSSRuleObject, PluginAPI } from "tailwindcss/types/config";
+import resolveGutters, { type IGridOptions } from "./utils/resolveGutters";
+import type { CSSRuleObject } from "tailwindcss/types/config";
 import plugin from "tailwindcss/plugin";
 
 // define a custom Tailwind plugin for Bootstrap-style grid system
-const TailwindBootstrapGrid = plugin(function ({ addComponents, theme }: PluginAPI) {
+const TailwindBootstrapGrid = plugin.withOptions((options: IGridOptions = {}) => ({ addComponents, theme }) => {
     // total number of columns in the grid system
     const totalCols = 12;
+
+    // resolve container-specific gutter values using provided options
+    const containerGutters = resolveGutters("container", options);
+
+    // resolve row-specific gutter values using provided options
+    const rowGutters = resolveGutters("row", options);
 
     // generate .col-{1-12} classes for column widths
     const generateColClasses = () => {
@@ -83,8 +90,8 @@ const TailwindBootstrapGrid = plugin(function ({ addComponents, theme }: PluginA
     addComponents({
         ".container, .container-fluid": {
             // define horizontal and vertical gutter spacing using CSS variables for container
-            "--bs-gutter-x": "1.5rem",
-            "--bs-gutter-y": "0",
+            "--bs-gutter-x": containerGutters.x,
+            "--bs-gutter-y": containerGutters.y,
 
             // full width with automatic horizontal centering
             width: "100%",
@@ -97,8 +104,8 @@ const TailwindBootstrapGrid = plugin(function ({ addComponents, theme }: PluginA
         // row class with negative margins and wrapping
         ".row": {
             // define horizontal and vertical gutter spacing using CSS variables for row
-            "--bs-gutter-x": "1.5rem",
-            "--bs-gutter-y": "0",
+            "--bs-gutter-x": rowGutters.x,
+            "--bs-gutter-y": rowGutters.y,
 
             display: "flex",
             flexWrap: "wrap",
