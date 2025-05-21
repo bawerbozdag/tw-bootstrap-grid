@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.0.0...v1.1.0) (2025-05-21)
+
+
+### Features
+
+* add GitHub Actions workflow for build checks ([dcdbf23](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/dcdbf23fe83ff3d19b6fc0d3762c0a0fbaaed99d))
+
 # 1.0.0 (2025-05-21)
 
 
