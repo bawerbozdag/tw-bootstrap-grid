@@ -1,3 +1,18 @@
+# 1.0.0 (2025-05-21)
+
+
+### Bug Fixes
+
+* remove redundant text in README description ([6cc7cd2](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/6cc7cd2cfa64a8e33f876edfd949cca701284316))
+
+
+### Features
+
+* add `.col-auto` class for auto width based on content ([dae1a8c](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/dae1a8c1eb677e4e98110183dd0223307d8e22e9))
+* implement `resolveGutters` utility for grid layout management ([9291240](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/9291240483d8f3b9d9a5745a9f63cebb10cac93c))
+* setup `semantic-release` and GitHub release integration ([72b7049](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/72b704999092bb75eeec5a8f06ba16d764f8707f))
+* setup Tailwind plugin providing Bootstrap-style grid system with responsive containers and gutters ([ea36473](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/ea36473ad113b58b8b605a7be0e42acab300a3d5))
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
