@@ -3,10 +3,12 @@
 [![npm version](https://img.shields.io/npm/v/tw-bootstrap-grid.svg)](https://www.npmjs.com/package/tw-bootstrap-grid)
 [![license](https://img.shields.io/npm/l/tw-bootstrap-grid.svg)](https://github.com/bawerbozdag/tw-bootstrap-grid/blob/master/LICENSE)
 [![npm downloads](https://img.shields.io/npm/dm/tw-bootstrap-grid.svg)](https://www.npmjs.com/package/tw-bootstrap-grid)
+[![RTL Support](https://img.shields.io/badge/RTL-Supported-blueviolet)](#)
 
 A **Tailwind CSS plugin** that brings a responsive, Bootstrap-like grid system to Tailwind, complete with rows, columns, gutters, offsets, and ordering utilities.
 
-> 📌 This plugin supports **Tailwind CSS v3 and v4**.
+> 📌 This plugin supports **Tailwind CSS v3 and v4**.  
+> 🌐 Includes full **RTL (Right-to-Left) support** for layouts in languages like Arabic, Hebrew, and Persian.
 
 ---
 
@@ -226,6 +228,21 @@ This makes it easy to maintain consistent spacing across your layout while allow
 
 ---
 
+### 🔹 RTL Example
+
+```html
+<div class="container" dir="rtl">
+    <div class="row">
+        <div class="col-4 offset-4">Right-Aligned Box</div>
+        <div class="col-4">Left Box</div>
+    </div>
+</div>
+```
+
+> `offset-*`, `.row`, and `.container` classes automatically adapt to `dir="rtl"`, making layouts RTL-friendly without extra configuration.
+
+---
+
 ### 🔹 Responsive Columns
 
 ```html
@@ -267,7 +284,7 @@ This demonstrates how you can use Tailwind’s responsive syntax (`sm:`, `md:`, 
 | `.row`             | Flex container with horizontal and vertical gutters |
 | `.col`             | Auto-width column (`flex: 1 0 0%`)                  |
 | `.col-{1-12}`      | Fixed-width column (1–12 / 12 fraction)             |
-| `.offset-{1-12}`   | Adds left margin offset based on column size        |
+| `.offset-{1-12}`   | Adds left/right margin offset based on direction    |
 | `.order-{0-12}`    | Sets flex item order                                |
 | `.order-first`     | Pushes item to the beginning                        |
 | `.order-last`      | Pushes item to the end                              |
@@ -284,6 +301,7 @@ This demonstrates how you can use Tailwind’s responsive syntax (`sm:`, `md:`, 
 - The plugin **does not override any core Tailwind utility**.
 - All grid utilities support **responsive variants** (`sm:`, `md:`, `lg:`, etc).
 - Gutters are handled using CSS custom properties: `--theme-gutter-x` and `--theme-gutter-y`.
+- Fully RTL-compatible: all directional utilities (offset, container, row) adapt automatically to dir="rtl".
 - This plugin is not compatible with Tailwind via CDN. Use it in a build environment (PostCSS, Vite, Webpack, etc.).
 
 ---
