@@ -145,7 +145,7 @@ export default {
             // overrides `gutters` if provided
             rowGutters: {
                 // x not provided → falls back to gutters.x or default ("1.5rem")
-                y: "0",, // overrides gutters.y
+                y: "0", // overrides gutters.y
             },
         }),
     ],
