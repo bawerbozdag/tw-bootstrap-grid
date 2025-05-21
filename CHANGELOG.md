@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.2.0...v1.2.1) (2025-05-21)
+
+
+### Bug Fixes
+
+* remove extra comma in rowGutters configuration ([a3df9b1](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/a3df9b16beba400378ae4cbc59729c0cfdc27196))
+
 # [1.2.0](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.1.1...v1.2.0) (2025-05-21)
 
 
