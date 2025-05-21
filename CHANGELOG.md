@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.1.0...v1.1.1) (2025-05-21)
+
+
+### Bug Fixes
+
+* trigger release ([e128332](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/e128332f12c6640092a10061853b980b57744bef))
+
 # [1.1.0](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.0.0...v1.1.0) (2025-05-21)
 
 
