@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.1.1...v1.2.0) (2025-05-21)
+
+
+### Features
+
+* add `RTL` support for offset classes ([b3ca47f](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/b3ca47fd2e250df495e897a79b0990d372f45f92))
+
 ## [1.1.1](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.1.0...v1.1.1) (2025-05-21)
 
 
