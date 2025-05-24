@@ -67,8 +67,5 @@
         "tsup": "^8.4.0",
         "typescript": "^5.8.3",
         "typescript-eslint": "^8.32.1"
-    },
-    "workspaces": [
-        "__tests__/tailwind_v3"
-    ]
+    }
 }
