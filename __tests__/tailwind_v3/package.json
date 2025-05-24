@@ -1,0 +1,12 @@
+{
+    "name": "tw-bootstrap-grid-test-tailwind-v3",
+    "private": true,
+    "scripts": {
+        "test": "jest"
+    },
+    "devDependencies": {
+        "postcss": "^8.5.3",
+        "tailwindcss": "^3.4.17",
+        "typescript": "^5.8.3"
+    }
+}
