@@ -1,5 +1,5 @@
-import { test, expect } from "@jest/globals";
-import type { IGridOptions } from "../../src/utils/resolveGutters";
+import { test, expect } from "vitest";
+import type { IGridOptions } from "../../../src/utils/resolveGutters";
 
 const CONTAINER_GUTTERS = {
     x: "3rem",

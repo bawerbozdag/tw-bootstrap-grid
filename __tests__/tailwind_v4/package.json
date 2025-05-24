@@ -1,11 +1,12 @@
 {
-    "name": "tw-bootstrap-grid-test-tailwind-v3",
+    "name": "tw-bootstrap-grid-test-tailwind-v4",
     "private": true,
     "type": "module",
     "scripts": {
         "test": "npx vitest run"
     },
     "devDependencies": {
-        "tailwindcss": "^3.4.17"
+        "@tailwindcss/postcss": "^4.1.7",
+        "tailwindcss": "^4.1.7"
     }
 }

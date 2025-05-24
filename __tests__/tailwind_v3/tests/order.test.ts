@@ -1,4 +1,4 @@
-import { test, expect } from "@jest/globals";
+import { test, expect } from "vitest";
 
 /* eslint-disable no-unused-vars */
 const testOrder = (runTailwind: (html: string) => Promise<string>) => {

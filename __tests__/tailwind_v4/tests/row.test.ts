@@ -1,4 +1,4 @@
-import { test, expect } from "@jest/globals";
+import { test, expect } from "vitest";
 
 /* eslint-disable no-unused-vars */
 const testRow = (runTailwind: (html: string) => Promise<string>) => {
@@ -20,7 +20,7 @@ const testRow = (runTailwind: (html: string) => Promise<string>) => {
     test("generates styles for .row > * children", async () => {
         const css = await runTailwind('<div class="row"><div>child</div></div>');
 
-        expect(css).toContain(".row > *");
+        expect(css).toMatch(/\.row\s*\{\s*[^}]*&\s*>\s*\*/s); // row > *
         expect(css).toContain("flex-shrink: 0");
         expect(css).toContain("width: 100%");
         expect(css).toContain("padding-right: calc(var(--bs-gutter-x, 1.5rem) * .5)");
