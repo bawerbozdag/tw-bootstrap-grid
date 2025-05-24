@@ -1,14 +1,14 @@
-import { describe } from "@jest/globals";
-import runTailwind from "./utils/runTailwind";
+import { runTailwind } from "./utils/runTailwind";
+import { describe } from "vitest";
 // TESTS
-import testCol from "../common/col.test";
-import testContainer from "../common/container.test";
-import testContainerWithOptions from "../common/container-with-options.test";
-import testGutter from "../common/gutter.test";
-import testOffset from "../common/offset.test";
-import testOrder from "../common/order.test";
-import testRow from "../common/row.test";
-import testRowWithOptions from "../common/row-with-options.test";
+import testCol from "./tests/col.test";
+import testContainer from "./tests/container.test";
+import testContainerWithOptions from "./tests/container-with-options.test";
+import testGutter from "./tests/gutter.test";
+import testOffset from "./tests/offset.test";
+import testOrder from "./tests/order.test";
+import testRow from "./tests/row.test";
+import testRowWithOptions from "./tests/row-with-options.test";
 
 describe("Col utilities (Tailwind v3)", () => {
     testCol(runTailwind);
