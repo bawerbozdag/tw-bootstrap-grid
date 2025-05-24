@@ -16,8 +16,12 @@ const testContainerWithOptions = (runTailwind: (html: string, options: IGridOpti
         expect(css).toContain(".container");
         expect(css).toContain(".container-fluid");
 
-        expect(css).toContain(`--bs-gutter-x: var(--bs-container-gutter-x, var(--bs-global-gutter-x, 1.5rem))`);
-        expect(css).toContain(`--bs-gutter-y: var(--bs-container-gutter-y, var(--bs-global-gutter-y, 0))`);
+        expect(css).toContain(
+            `--bs-gutter-x: var(--bs-container-gutter-x, var(--bs-global-gutter-x, ${CONTAINER_GUTTERS.x})`,
+        );
+        expect(css).toContain(
+            `--bs-gutter-y: var(--bs-container-gutter-y, var(--bs-global-gutter-y, ${CONTAINER_GUTTERS.y}))`,
+        );
 
         expect(css).toContain("width: 100%");
         expect(css).toContain("padding-right: calc(var(--bs-gutter-x, 1.5rem) * 0.5)");

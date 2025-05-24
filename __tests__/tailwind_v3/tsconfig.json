@@ -9,5 +9,5 @@
         "skipLibCheck": true,
         "types": ["jest", "node"]
     },
-    "include": ["**/*.ts", "tailwind.config.mjs "]
+    "include": ["**/*.ts"]
 }
