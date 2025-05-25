@@ -23,11 +23,12 @@ jobs:
                   cache-dependency-path: "package-lock.json"
 
             - name: Install dependencies
-              run: npm install
+              run: npm ci
 
     test-v3:
         name: Tailwind v3 Tests
         runs-on: ubuntu-22.04
+        needs: install
 
         steps:
             - uses: actions/checkout@v4
@@ -40,12 +41,13 @@ jobs:
             - name: Install v3 test dependencies
               run: |
                   cd __tests__/tailwind_v3
-                  npm install
+                  npm ci
                   npm test
 
     test-v4:
         name: Tailwind v4 Tests
         runs-on: ubuntu-22.04
+        needs: [install, test-v3]
 
         steps:
             - uses: actions/checkout@v4
@@ -58,5 +60,5 @@ jobs:
             - name: Install v4 test dependencies
               run: |
                   cd __tests__/tailwind_v4
-                  npm install
+                  npm ci
                   npm test
