@@ -4,12 +4,10 @@ on:
     push:
         paths:
             - "__tests__/tailwind_v3/**"
-            - ".github/workflows/vitest.yml"
             - "src/**"
     pull_request:
         paths:
             - "__tests__/tailwind_v3/**"
-            - ".github/workflows/vitest.yml"
             - "src/**"
 
 jobs:
@@ -31,6 +29,9 @@ jobs:
             - name: Install dependencies
               working-directory: __tests__/tailwind_v3
               run: npm ci
+
+            - name: Link src for tests
+              run: ln -s ../../../src __tests__/tailwind_v3/src
 
             - name: Run tests
               working-directory: __tests__/tailwind_v3
