@@ -37,8 +37,11 @@ jobs:
                   node-version: 20.x
                   cache: "npm"
 
-            - name: Install deps & test v3
-              run: npm run test:v3
+            - name: Install v3 test dependencies
+              run: |
+                  cd __tests__/tailwind_v3
+                  npm install
+                  npm test
 
     test-v4:
         name: Tailwind v4 Tests
@@ -52,5 +55,8 @@ jobs:
                   node-version: 20.x
                   cache: "npm"
 
-            - name: Install deps & test v4
-              run: npm run test:v4
+            - name: Install v4 test dependencies
+              run: |
+                  cd __tests__/tailwind_v4
+                  npm install
+                  npm test
