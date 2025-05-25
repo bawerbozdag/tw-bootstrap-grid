@@ -23,7 +23,7 @@ jobs:
                   cache-dependency-path: "package-lock.json"
 
             - name: Install dependencies
-              run: npm ci
+              run: npm install
 
         test-v3:
             name: Tailwind v3 Tests
