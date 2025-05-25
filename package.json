@@ -53,6 +53,10 @@
         "test:v4": "cd __tests__/tailwind_v4 && npm ci && npm test",
         "test": "npm run test:v3 && npm run test:v4"
     },
+    "workspaces": [
+        "__tests__/tailwind_v3",
+        "__tests__/tailwind_v4"
+    ],
     "peerDependencies": {
         "tailwindcss": ">=3.0.0"
     },

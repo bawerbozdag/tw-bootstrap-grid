@@ -5,6 +5,9 @@
     "scripts": {
         "test": "npx vitest run"
     },
+    "dependencies": {
+        "tw-bootstrap-grid": "*"
+    },
     "devDependencies": {
         "@tailwindcss/postcss": "^4.1.7",
         "tailwindcss": "^4.1.7",
