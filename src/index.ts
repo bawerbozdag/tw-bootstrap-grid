@@ -1,11 +1,13 @@
 import resolveGutters, { type IGridOptions } from "./utils/resolveGutters";
-import type { CSSRuleObject } from "tailwindcss/types/config";
-import plugin from "tailwindcss/plugin";
+import type { CSSRuleObject, PluginAPI } from "tailwindcss/types/config";
+import tailwindcss from "tailwindcss";
+
+const plugin = "plugin" in tailwindcss ? tailwindcss.plugin : require("tailwindcss/plugin");
 
 // define a custom Tailwind plugin for Bootstrap-style grid system
 const TailwindBootstrapGrid = plugin.withOptions(
     (options: IGridOptions = {}) =>
-        ({ addComponents, theme }) => {
+        ({ addComponents, theme }: PluginAPI) => {
             // total number of columns in the grid system
             const totalCols = 12;
 

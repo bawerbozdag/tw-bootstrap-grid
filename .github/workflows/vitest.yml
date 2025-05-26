@@ -1,0 +1,60 @@
+name: Vitest Tests
+
+on:
+  push:
+    paths:
+      - "__tests__/tailwind_v3/**"
+      - "__tests__/tailwind_v4/**"
+      - "src/**"
+  pull_request:
+    paths:
+      - "__tests__/tailwind_v3/**"
+      - "__tests__/tailwind_v4/**"
+      - "src/**"
+
+jobs:
+  test-v3:
+    name: Run Tailwind v3 Tests
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+          cache-dependency-path: |
+            package-lock.json
+            __tests__/tailwind_v3/package-lock.json
+      - name: Install all workspace deps
+        run: npm install
+
+      - name: Run tests for tailwind v3
+        working-directory: __tests__/tailwind_v3
+        run: npm test
+
+  test-v4:
+    name: Run Tailwind v4 Tests
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+          cache-dependency-path: |
+            package-lock.json
+            __tests__/tailwind_v4/package-lock.json
+      - name: Install all workspace deps
+        run: npm install
+
+      - name: Run tests for tailwind v4
+        working-directory: __tests__/tailwind_v4
+        run: npm test

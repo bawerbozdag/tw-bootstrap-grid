@@ -3,11 +3,9 @@ import postcss from "postcss";
 import tailwindcss from "tailwindcss";
 import plugin from "../../../src";
 
-const tailwind = ("default" in tailwindcss ? tailwindcss.default : tailwindcss) as typeof tailwindcss;
-
 export const runTailwind = async (html: string, options?: IGridOptions): Promise<string> => {
     const result = await postcss([
-        tailwind({
+        tailwindcss({
             content: [{ raw: html, extension: "html" }],
             safelist: [
                 "col",
