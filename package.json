@@ -49,8 +49,8 @@
         "format": "prettier --write ./**/*.{js,jsx,ts,tsx,cjs,json,css,scss}",
         "lint": "eslint src",
         "lint:fix": "eslint src --fix",
-        "test:v3": "cd __tests__/tailwind_v3 && npm ci && npm test",
-        "test:v4": "cd __tests__/tailwind_v4 && npm ci && npm test",
+        "test:v3": "cd __tests__/tailwind_v3 && npm install && npm test",
+        "test:v4": "cd __tests__/tailwind_v4 && npm install && npm test",
         "test": "npm run test:v3 && npm run test:v4"
     },
     "workspaces": [
