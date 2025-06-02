@@ -24,3 +24,56 @@ updates:
               update-types:
                   - "minor"
                   - "patch"
+
+    - package-ecosystem: "npm"
+      directory: "/__tests__/tailwind_v3"
+      schedule:
+          interval: "weekly"
+      commit-message:
+          prefix: "depbot(tailwind_v3): "
+      reviewers:
+          - "bawerbozdag"
+      assignees:
+          - "bawerbozdag"
+      labels:
+          - "dependencies"
+      groups:
+          security-updates:
+              applies-to: security-updates
+              patterns:
+                  - "*"
+          minor-updates:
+              applies-to: version-updates
+              patterns:
+                  - "*"
+              update-types:
+                  - "minor"
+                  - "patch"
+      ignore:
+          - dependency-name: "tailwindcss"
+            versions:
+                - "*"
+    - package-ecosystem: "npm"
+      directory: "/__tests__/tailwind_v4"
+      schedule:
+          interval: "weekly"
+      commit-message:
+          prefix: "depbot(tailwind_v4): "
+      reviewers:
+          - "bawerbozdag"
+      assignees:
+          - "bawerbozdag"
+      labels:
+          - "dependencies"
+      groups:
+          security-updates:
+              applies-to: security-updates
+              patterns:
+                  - "*"
+          minor-updates:
+              applies-to: version-updates
+              patterns:
+                  - "*"
+              update-types:
+                  - "minor"
+                  - "patch"
