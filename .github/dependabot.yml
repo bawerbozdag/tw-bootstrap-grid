@@ -24,6 +24,10 @@ updates:
               update-types:
                   - "minor"
                   - "patch"
+      ignore:
+          - dependency-name: "tailwindcss"
+            versions:
+                - "*"
 
     - package-ecosystem: "npm"
       directory: "/__tests__/tailwind_v3"
@@ -53,6 +57,7 @@ updates:
           - dependency-name: "tailwindcss"
             versions:
                 - "*"
+
     - package-ecosystem: "npm"
       directory: "/__tests__/tailwind_v4"
       schedule:
