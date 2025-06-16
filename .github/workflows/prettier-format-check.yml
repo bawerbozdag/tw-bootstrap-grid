@@ -2,30 +2,40 @@ name: Prettier Format Check
 
 on:
   pull_request:
+    branches:
+      - master
     paths:
       - "**"
-    branches:
-      - "master" 
+
+permissions:
+  contents: write
 
 jobs:
   prettier:
     name: Prettier
     runs-on: ubuntu-22.04
-    
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: 'package-lock.json' 
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
 
-      - run: npm install
-      - run: npm run format
+      - name: Install dependencies
+        run: npm install
 
-      - name: Commit the changes
+      - name: Run Prettier
+        run: npm run format
+
+      - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Fixes coding style"
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
