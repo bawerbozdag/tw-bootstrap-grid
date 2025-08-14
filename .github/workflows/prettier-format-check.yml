@@ -1,41 +1,41 @@
 name: Prettier Format Check
 
 on:
-  pull_request:
-    branches:
-      - master
-    paths:
-      - "**"
+    pull_request:
+        branches:
+            - master
+        paths:
+            - "**"
 
 permissions:
-  contents: write
+    contents: write
 
 jobs:
-  prettier:
-    name: Prettier
-    runs-on: ubuntu-22.04
+    prettier:
+        name: Prettier
+        runs-on: ubuntu-22.04
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: package-lock.json
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: npm
+                  cache-dependency-path: package-lock.json
 
-      - name: Install dependencies
-        run: npm install
+            - name: Install dependencies
+              run: npm install
 
-      - name: Run Prettier
-        run: npm run format
+            - name: Run Prettier
+              run: npm run format
 
-      - name: Commit and push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Fixes coding style"
-          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+            - name: Commit and push changes
+              uses: stefanzweifel/git-auto-commit-action@v5
+              with:
+                  commit_message: "Fixes coding style"
+                  commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GH_PAT }}
