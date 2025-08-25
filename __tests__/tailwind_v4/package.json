@@ -9,7 +9,7 @@
         "tw-bootstrap-grid": "*"
     },
     "devDependencies": {
-        "@tailwindcss/postcss": "^4.1.11",
+        "@tailwindcss/postcss": "^4.1.12",
         "tailwindcss": "^4.1.8"
     }
 }
