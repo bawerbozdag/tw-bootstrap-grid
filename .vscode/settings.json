@@ -1,0 +1,21 @@
+{
+    // set Prettier as the default formatter
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    // auto format when saving
+    "editor.formatOnSave": true,
+    // tab width (compatible with Prettier)
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "files.associations": {
+        // open .env files with dotenv language support (syntax highlighting)
+        ".env": "dotenv",
+        ".env.example": "dotenv",
+        // open all .css files with Tailwind CSS language support
+        "**/**.css": "tailwindcss",
+        // open all .scss files with SCSS language support
+        "**/**.scss": "scss"
+    },
+    // ignore unknown Tailwind at-rules
+    "css.lint.unknownAtRules": "ignore",
+    "scss.lint.unknownAtRules": "ignore"
+}
