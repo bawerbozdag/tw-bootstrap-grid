@@ -1,1 +1,4 @@
 @import "tailwindcss";
+
+/* plugins */
+@plugin "tw-bootstrap-grid";
