@@ -1,0 +1,69 @@
+button {
+    @apply cursor-pointer;
+}
+
+@layer components {
+    .btn {
+        --theme-btn-padding-x: 1.5rem /* 1.5rem = 24px */;
+        --theme-btn-padding-y: 0.625rem /* 0.625rem = 10px */;
+
+        @apply rounded-full shadow focus:outline-none;
+        @apply text-sm font-medium cursor-pointer;
+        @apply transition-colors;
+
+        padding-inline: var(--theme-btn-padding-x);
+        padding-block: var(--theme-btn-padding-y);
+
+        /* icon detect / fallback */
+        &:has(svg),
+        .btn-icon {
+            @apply inline-flex items-center justify-center gap-2;
+        }
+
+        /* size variants */
+        &.btn-sm {
+            --theme-btn-padding-x: 1rem /* 1rem = 16px*/;
+            --theme-btn-padding-y: 0.5rem /* 0.5rem = 8px */;
+
+            @apply text-xs;
+        }
+
+        &.btn-lg {
+            --theme-btn-padding-x: 2rem /* 2rem = 32px */;
+            --theme-btn-padding-y: 0.75rem /* 0.75rem = 12px */;
+
+            @apply text-base;
+        }
+
+        /* colors */
+        &.btn-primary {
+            @apply bg-gradient-to-r from-sky-500 to-indigo-600;
+            @apply text-white;
+
+            &:hover {
+                @apply from-sky-600 to-indigo-700;
+            }
+
+            &:disabled {
+                @apply from-sky-300 to-indigo-400 text-white/70;
+                @apply cursor-no-drop;
+            }
+
+            &:focus-visible {
+                @apply ring-2 ring-indigo-400;
+            }
+        }
+
+        &.btn-secondary {
+            @apply bg-white text-slate-600 border border-slate-200;
+
+            &:hover {
+                @apply text-indigo-600 border-indigo-200;
+            }
+
+            &:focus-visible {
+                @apply ring-2 ring-slate-400;
+            }
+        }
+    }
+}

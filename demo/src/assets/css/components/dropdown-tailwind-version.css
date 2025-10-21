@@ -1,0 +1,119 @@
+.dropdown-tailwind-version {
+    @apply relative;
+
+    .dropdown-tailwind-version__toggle {
+        @apply inline-flex items-center gap-2 w-full;
+        @apply text-indigo-700 text-sm font-medium;
+        @apply transition px-4 py-2 mb-2;
+        @apply active:scale-[0.99];
+
+        @apply border border-indigo-300/70;
+        @apply rounded-xl shadow-sm outline-none;
+        @apply focus-visible:ring-1 focus-visible:ring-indigo-500/60 focus-visible:border-indigo-400;
+
+        &:hover {
+            @apply border-indigo-400/80 shadow-md;
+        }
+
+        .dropdown-tailwind-version__status {
+            @apply relative top-[0.5px] h-2.5 w-2.5;
+            @apply inline-flex items-center justify-center;
+
+            .dropdown-tailwind-version__status-dot {
+                @apply bg-indigo-500/90 rounded-full;
+                @apply ring-2 ring-indigo-300/50;
+                @apply h-2.5 w-2.5;
+            }
+        }
+
+        svg.dropdown-tailwind-version__icon {
+            @apply absolute right-4;
+            @apply transform text-indigo-700 transition;
+        }
+
+        &.dropdown-tailwind-version__toggle--open {
+            @apply border-indigo-400 shadow-md;
+
+            .dropdown-tailwind-version__status-dot {
+                @apply animate-pulse;
+            }
+
+            svg.dropdown-tailwind-version__icon {
+                @apply rotate-180 text-indigo-800;
+            }
+        }
+    }
+
+    .dropdown-tailwind-version__menu {
+        @apply absolute left-0;
+        @apply bg-white p-2;
+        @apply border border-indigo-200/60 shadow-xl rounded-2xl;
+        @apply ring-1 ring-black/5;
+        @apply transition duration-100 ease-in;
+        @apply pointer-events-none scale-95 opacity-0;
+
+        .dropdown-tailwind-version__item {
+            @apply w-full rounded-xl px-3.5 py-2.5 text-left outline-none transition;
+
+            &:not(&:last-child) {
+                @apply mb-1.5;
+            }
+
+            &:active,
+            &.dropdown-tailwind-version__item--selected {
+                @apply bg-indigo-50/70;
+
+                .dropdown-tailwind-version__item-inner {
+                    .dropdown-tailwind-version__item-main .dropdown-tailwind-version__item-row {
+                        .dropdown-tailwind-version__item-label {
+                            @apply text-indigo-600;
+                        }
+
+                        svg {
+                            @apply text-indigo-600 opacity-100;
+                        }
+                    }
+                }
+            }
+
+            &:hover {
+                @apply bg-indigo-50;
+            }
+
+            .dropdown-tailwind-version__item-inner {
+                @apply flex items-center gap-3;
+
+                .dropdown-tailwind-version__item-badge {
+                    @apply bg-indigo-100 text-indigo-700;
+                    @apply flex items-center justify-center;
+                    @apply h-8 w-8 rounded-lg;
+                }
+
+                .dropdown-tailwind-version__item-main {
+                    @apply min-w-0 flex-1;
+
+                    .dropdown-tailwind-version__item-row {
+                        @apply flex items-center justify-between gap-3;
+
+                        .dropdown-tailwind-version__item-label {
+                            @apply truncate text-sm font-semibold text-slate-900;
+                        }
+
+                        svg {
+                            @apply opacity-0;
+                        }
+                    }
+
+                    .dropdown-tailwind-version__item-description {
+                        @apply mt-0.5 line-clamp-1 text-xs text-slate-500;
+                    }
+                }
+            }
+        }
+
+        &.dropdown-tailwind-version__menu--open {
+            @apply pointer-events-auto;
+            @apply scale-100 opacity-100 duration-150 ease-out;
+        }
+    }
+}

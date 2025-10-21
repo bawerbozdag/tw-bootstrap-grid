@@ -1,2 +1,13 @@
 @import "./tailwind.css";
 
+/* components */
+@import "./components/button";
+@import "./components/dropdown-tailwind-version";
+
+/* layout */
+@import "./layout/navbar";
+@import "./layout/sidebar";
+
+body {
+    @apply bg-indigo-50/30;
+}
