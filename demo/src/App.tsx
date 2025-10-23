@@ -3,9 +3,10 @@ import { DEFAULT_TAB_KEY, DEFAULT_TAILWIND_VERSION, LOCAL_STORAGE_KEY, SIDEBAR_T
 import AppContext, { type IAppContext } from "./contexts/AppContext";
 import Sidebar from "./components/Sidebar";
 import SectionIntroduction from "./components/SectionIntroduction";
+import SectionInstallation from "./components/SectionInstallation";
+import SectionConfiguration from "./components/SectionConfiguration";
 // style
 import "@/assets/css/main.css";
-import SectionInstallation from "./components/SectionInstallation";
 
 const App = () => {
     const [activeTabKey, setActiveTabKey] = useState<IAppContext["activeTabKey"]>(DEFAULT_TAB_KEY);
@@ -54,11 +55,12 @@ const App = () => {
                 },
             }}
         >
-            <main className="lg:grid lg:grid-cols-[288px_auto] lg:gap-12">
+            <main className="lg:grid lg:grid-cols-[280px_auto]">
                 <Sidebar />
                 <div>
                     <SectionIntroduction />
                     <SectionInstallation />
+                    <SectionConfiguration />
                 </div>
             </main>
         </AppContext.Provider>

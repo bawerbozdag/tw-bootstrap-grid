@@ -1,6 +1,6 @@
+import { LucidePackage } from "lucide-react";
 import useApp from "@/hooks/useApp";
 import CopyButton from "./CopyButton";
-import { LucidePackage } from "lucide-react";
 
 const SectionInstallation = () => {
     const { tailwindVersion } = useApp();
@@ -25,19 +25,23 @@ export default {
     return (
         <section
             id="installation"
-            className="container py-12 border-b border-slate-300"
+            className="container py-16 px-4 border-b border-slate-300"
             aria-labelledby="installation-title"
         >
             <h2
                 id="installation-title"
-                className="flex items-center gap-2 mb-6 text-2xl font-bold tracking-tight text-slate-700"
+                className="flex items-center gap-2 mb-3 text-2xl font-bold tracking-tight text-slate-700"
             >
-                <LucidePackage className="mt-0.5" size={24} />
+                <LucidePackage className="text-violet-500 mt-0.5" size={24} />
                 Installation
             </h2>
+            <p className="text-slate-600 mb-6">
+                Follow the steps below to install and configure <span className="font-semibold">tw-bootstrap-grid</span>{" "}
+                in your Tailwind project.
+            </p>
 
             {/* Step 1 – Install */}
-            <div className="mb-8 rounded-lg border border-slate-200 bg-white p-6 shadow space-y-4">
+            <div className="max-w-4xl mb-8 rounded-lg border border-slate-200 bg-white p-6 shadow space-y-4">
                 <h3 className="mb-3 text-lg font-semibold text-slate-700">1) Install the package</h3>
                 {(Object.keys(INSTALL_CMD) as Array<keyof typeof INSTALL_CMD>).map((key) => {
                     const cmd = INSTALL_CMD[key];
@@ -59,7 +63,7 @@ export default {
             </div>
 
             {/* Step 2 – Wire up (v3 vs v4) */}
-            <div className="mb-8 rounded-lg border border-slate-200 bg-white p-6 shadow">
+            <div className="max-w-4xl mb-8 rounded-lg border border-slate-200 bg-white p-6 shadow">
                 <h3 className="text-lg font-semibold text-slate-700 mb-3 flex items-center justify-between gap-2">
                     2) Wire up the plugin
                     <span className="inline-flex items-center rounded-full bg-indigo-100 text-indigo-700 px-2.5 py-0.5 text-[11px] font-semibold tracking-wider mt-0.5">
