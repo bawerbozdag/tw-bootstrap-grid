@@ -1,0 +1,77 @@
+@import "./tailwind.css";
+
+/* components */
+@import "./components/button";
+@import "./components/dropdown-tailwind-version";
+
+/* layout */
+@import "./layout/navbar";
+@import "./layout/sidebar";
+
+@layer base {
+    *,
+    ::before,
+    ::after {
+        @apply border-slate-300/70;
+    }
+}
+
+body {
+    @apply bg-indigo-50/20 text-slate-700;
+}
+
+h2 {
+    @apply flex items-center gap-2 text-2xl font-bold tracking-tight;
+}
+
+h3 {
+    @apply text-lg font-semibold;
+
+    svg {
+        @apply mt-0.5;
+    }
+
+    & ~ p {
+        @apply text-sm;
+    }
+}
+
+.card {
+    @apply rounded-lg border bg-white p-6 shadow;
+
+    .badge-version {
+        @apply inline-flex items-center rounded-full bg-indigo-100 text-indigo-700 px-2.5 py-0.5 text-[11px] font-semibold tracking-wider mt-0.5;
+    }
+}
+
+code.badge {
+    @apply px-1.5 py-0.5 rounded-md bg-slate-200 text-slate-700 font-mono text-xs mx-1;
+}
+
+.tip-info {
+    @apply text-sm text-slate-500 flex items-center flex-wrap gap-1;
+
+    svg {
+        @apply text-amber-500;
+    }
+
+    code.badge {
+        @apply text-[11px];
+    }
+}
+
+.doc-preview {
+    @apply min-h-60 max-h-[500px] overflow-auto;
+
+    .container {
+        @apply text-center;
+    }
+
+    .row:not(:last-child) {
+        @apply mb-6;
+    }
+
+    [class*="col-"] {
+        @apply bg-slate-50 border p-6;
+    }
+}

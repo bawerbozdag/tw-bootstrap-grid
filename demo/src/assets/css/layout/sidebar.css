@@ -1,0 +1,37 @@
+#sidebar {
+    @apply hidden xl:block;
+    @apply bg-white h-[100dvh];
+    @apply border-r;
+    @apply overflow-auto;
+    @apply sticky top-0;
+
+    header {
+        @apply border-b;
+        @apply p-6;
+    }
+
+    nav {
+        @apply p-6 text-sm;
+        /* @apply border-b; */
+
+        ul li {
+            span {
+                @apply block pl-2 mb-4 select-none;
+                @apply text-slate-500 uppercase font-semibold tracking-wider;
+            }
+
+            a {
+                @apply block px-4 py-2.5 w-full transition rounded-2xl;
+                @apply text-slate-600 text-left font-medium;
+
+                &.active {
+                    @apply bg-indigo-100 text-indigo-700;
+                }
+
+                &:hover {
+                    @apply bg-indigo-100/70 text-indigo-700/90;
+                }
+            }
+        }
+    }
+}

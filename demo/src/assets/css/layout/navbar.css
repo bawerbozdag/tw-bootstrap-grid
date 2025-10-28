@@ -1,0 +1,22 @@
+header#navbar {
+    --theme-navbar-height: 80px;
+
+    @apply bg-white shadow-sm;
+    @apply fixed left-0 right-0 top-0;
+    @apply z-[1030] h-[var(--theme-navbar-height)];
+
+    .navbar-container {
+        @apply container h-full;
+        @apply flex items-center justify-between;
+
+        .navbar-brand {
+            @apply flex items-center gap-2;
+
+            > span {
+                @apply bg-gradient-to-r from-sky-600/90 via-indigo-500 to-purple-600 bg-clip-text text-transparent;
+                @apply text-lg font-bold;
+                @apply select-none;
+            }
+        }
+    }
+}
