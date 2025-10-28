@@ -5,7 +5,6 @@
 @import "./components/dropdown-tailwind-version";
 
 /* layout */
-@import "./layout/navbar";
 @import "./layout/sidebar";
 
 @layer base {
