@@ -1,5 +1,5 @@
 #sidebar {
-    @apply hidden xl:block;
+    @apply hidden xl:flex xl:flex-col;
     @apply bg-white h-[100dvh];
     @apply border-r;
     @apply overflow-auto;
@@ -11,8 +11,8 @@
     }
 
     nav {
-        @apply p-6 text-sm;
-        /* @apply border-b; */
+        @apply p-6 text-sm flex-1;
+        @apply border-b;
 
         ul li {
             span {
