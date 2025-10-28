@@ -23,6 +23,8 @@ const DROPDOWN_ITEMS: IDropdownItem[] = [
     },
 ];
 
+const DROPDOWN_MENU_ID = "tw-version-dropdown-menu";
+
 const DropdownTailwindVersion = ({
     className,
     ...props
@@ -51,8 +53,20 @@ const DropdownTailwindVersion = ({
 
         document.addEventListener("mousedown", onDocClick);
 
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                setOpen(false);
+                refToggle.current?.focus();
+            }
+        };
+
+        document.addEventListener("keydown", onKey);
+
         // cleanup
-        return () => document.removeEventListener("mousedown", onDocClick);
+        return () => {
+            document.removeEventListener("mousedown", onDocClick);
+            document.removeEventListener("keydown", onKey);
+        };
 
         //
     }, [open]);
@@ -64,11 +78,12 @@ const DropdownTailwindVersion = ({
             <button
                 type="button"
                 className={clsx("dropdown-tailwind-version__toggle", open && "dropdown-tailwind-version__toggle--open")}
-                aria-haspopup="menu"
-                aria-expanded={open}
-                aria-label="Select Tailwind version"
                 onClick={() => setOpen(!open)}
                 ref={refToggle}
+                aria-haspopup="menu"
+                aria-controls={DROPDOWN_MENU_ID}
+                aria-expanded={open}
+                aria-label="Select Tailwind version"
             >
                 <span className="dropdown-tailwind-version__status" aria-hidden>
                     <span className="dropdown-tailwind-version__status-dot" />
@@ -84,63 +99,68 @@ const DropdownTailwindVersion = ({
                 <LucideChevronDown className="dropdown-tailwind-version__icon" size={16} />
             </button>
 
-            <div
-                role="menu"
-                aria-label="Tailwind versions"
-                className={clsx("dropdown-tailwind-version__menu", open && "dropdown-tailwind-version__menu--open")}
-            >
-                {DROPDOWN_ITEMS.map((item) => {
-                    const selected = item.id === tailwindVersion;
+            {open && (
+                <div
+                    id={DROPDOWN_MENU_ID}
+                    role="menu"
+                    aria-label="Tailwind versions"
+                    className={clsx("dropdown-tailwind-version__menu", open && "dropdown-tailwind-version__menu--open")}
+                >
+                    {DROPDOWN_ITEMS.map((item) => {
+                        const selected = item.id === tailwindVersion;
 
-                    return (
-                        <button
-                            key={item.id}
-                            role="menuitemradio"
-                            aria-checked={selected}
-                            onClick={() => {
-                                setTailwindVersion(item.id);
-                                setOpen(false);
-                            }}
-                            className={clsx(
-                                "dropdown-tailwind-version__item",
-                                selected && "dropdown-tailwind-version__item--selected",
-                            )}
-                        >
-                            <div className="dropdown-tailwind-version__item-inner">
-                                <div className="dropdown-tailwind-version__item-badge">
-                                    {item.id === "v4" ? (
-                                        <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-                                            <path
-                                                d="M4 6h16M7 12h13M10 18h10"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinecap="round"
-                                            />
-                                        </svg>
-                                    ) : (
-                                        <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-                                            <path
-                                                d="M4 12h16M4 17h10M4 7h14"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinecap="round"
-                                            />
-                                        </svg>
-                                    )}
-                                </div>
-
-                                <div className="dropdown-tailwind-version__item-main">
-                                    <div className="dropdown-tailwind-version__item-row">
-                                        <span className="dropdown-tailwind-version__item-label">{item.label}</span>
-                                        <LucideCheck size={16} />
+                        return (
+                            <button
+                                key={item.id}
+                                role="menuitemradio"
+                                aria-checked={selected}
+                                onClick={() => {
+                                    setTailwindVersion(item.id);
+                                    setOpen(false);
+                                }}
+                                className={clsx(
+                                    "dropdown-tailwind-version__item",
+                                    selected && "dropdown-tailwind-version__item--selected",
+                                )}
+                            >
+                                <div className="dropdown-tailwind-version__item-inner">
+                                    <div className="dropdown-tailwind-version__item-badge">
+                                        {item.id === "v4" ? (
+                                            <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+                                                <path
+                                                    d="M4 6h16M7 12h13M10 18h10"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2"
+                                                    strokeLinecap="round"
+                                                />
+                                            </svg>
+                                        ) : (
+                                            <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+                                                <path
+                                                    d="M4 12h16M4 17h10M4 7h14"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2"
+                                                    strokeLinecap="round"
+                                                />
+                                            </svg>
+                                        )}
                                     </div>
-                                    <p className="dropdown-tailwind-version__item-description">{item.description}</p>
+
+                                    <div className="dropdown-tailwind-version__item-main">
+                                        <div className="dropdown-tailwind-version__item-row">
+                                            <span className="dropdown-tailwind-version__item-label">{item.label}</span>
+                                            <LucideCheck size={16} />
+                                        </div>
+                                        <p className="dropdown-tailwind-version__item-description">
+                                            {item.description}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        </button>
-                    );
-                })}
-            </div>
+                            </button>
+                        );
+                    })}
+                </div>
+            )}
         </div>
     );
 };

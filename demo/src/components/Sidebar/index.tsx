@@ -2,16 +2,21 @@ import { Fragment } from "react/jsx-runtime";
 import { SIDEBAR_TABS } from "@/_constants";
 import DropdownTailwindVersion from "./components/DropdownTailwindVersion";
 import useApp from "@/hooks/useApp";
-import Logo from "@/components/Logo";
 import clsx from "clsx";
+import srcLogo from "@/assets/images/logo.png";
 
 const Sidebar = () => {
-    const { activeTabKey, setActiveTabKey } = useApp();
+    const { activeTab, setActiveTab } = useApp();
 
     return (
         <aside aria-label="Sidebar" id="sidebar">
             <header>
-                <Logo className="justify-center mb-6" />
+                <div className="select-none flex items-center justify-center gap-2 mb-6">
+                    <img src={srcLogo} width={30} height={30} alt="Logo" className="rounded" />
+                    <span className="bg-gradient-to-r from-sky-600/90 via-indigo-500 to-purple-600 bg-clip-text text-transparent font-bold">
+                        tw-bootstrap-grid
+                    </span>
+                </div>
                 <DropdownTailwindVersion />
             </header>
 
@@ -23,12 +28,12 @@ const Sidebar = () => {
                                 <span>{tab.title}</span>
                             </li>
                             {tab.items.map((item) => {
-                                const isActiveTab = activeTabKey == item.id;
+                                const isActiveTab = activeTab == item.id;
 
                                 return (
                                     <li key={item.id}>
                                         <a
-                                            aria-current={isActiveTab}
+                                            aria-current={isActiveTab ? "page" : undefined}
                                             href={`#${item.id.replace("tab-", "")}`}
                                             className={clsx(
                                                 isActiveTab && "active",
@@ -37,7 +42,7 @@ const Sidebar = () => {
                                             onClick={(e) => {
                                                 e.preventDefault();
 
-                                                setActiveTabKey(item.id);
+                                                setActiveTab(item.id);
 
                                                 return document
                                                     .getElementById(item.id.replace("tab-", ""))!
@@ -55,12 +60,12 @@ const Sidebar = () => {
             </nav>
 
             {/* Footer actions */}
-            {/* <div className="mt-auto border-t border-slate-200/70 px-5 py-3">
+            {/* <div className="mt-auto border-t px-5 py-3">
                 <div className="row items-center">
                     <div className="col-6">
                         <button
                             type="button"
-                            className="inline-flex items-center gap-2 rounded-lg border border-slate-300/70 px-3 py-2 text-sm hover:bg-slate-100"
+                            className="inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm hover:bg-slate-100"
                             aria-label="Toggle theme"
                         >
                             <span className="i">🌓</span>

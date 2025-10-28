@@ -39,6 +39,7 @@ const CopyButton = ({ text, className, iconSize = 16 }: ICopyButtonProps) => {
     return (
         <button
             type="button"
+            disabled={copied === true}
             onClick={handleClick}
             title={copyStatus}
             className={clsx(
@@ -49,8 +50,6 @@ const CopyButton = ({ text, className, iconSize = 16 }: ICopyButtonProps) => {
                 className,
             )}
             aria-live="polite"
-            aria-label={copyStatus}
-            aria-pressed={copied === true}
         >
             {copied === true ? (
                 <LucideCopyCheck size={iconSize} />
@@ -59,7 +58,9 @@ const CopyButton = ({ text, className, iconSize = 16 }: ICopyButtonProps) => {
             ) : (
                 <LucideCopy size={iconSize} />
             )}
-            <span className="sr-only">{copyStatus}</span>
+            <span aria-live="polite" role="status" className="sr-only">
+                {copyStatus}
+            </span>
         </button>
     );
 };

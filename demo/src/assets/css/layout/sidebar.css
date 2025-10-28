@@ -1,18 +1,18 @@
 #sidebar {
-    @apply hidden lg:block;
+    @apply hidden xl:block;
     @apply bg-white h-[100dvh];
-    @apply border-r border-slate-200/70;
+    @apply border-r;
     @apply overflow-auto;
     @apply sticky top-0;
 
     header {
-        @apply border-b border-slate-200/70;
+        @apply border-b;
         @apply p-6;
     }
 
     nav {
         @apply p-6 text-sm;
-        @apply border-b border-slate-200/70;
+        /* @apply border-b; */
 
         ul li {
             span {

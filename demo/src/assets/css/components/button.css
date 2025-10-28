@@ -55,7 +55,7 @@ button {
         }
 
         &.btn-secondary {
-            @apply bg-white text-slate-600 border border-slate-200;
+            @apply bg-white text-slate-600 border;
 
             &:hover {
                 @apply text-indigo-600 border-indigo-200;
