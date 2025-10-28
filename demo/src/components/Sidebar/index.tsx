@@ -3,7 +3,7 @@ import { SIDEBAR_TABS } from "@/_constants";
 import DropdownTailwindVersion from "./components/DropdownTailwindVersion";
 import useApp from "@/hooks/useApp";
 import clsx from "clsx";
-import srcLogo from "@/assets/images/logo.png";
+import srcLogo from "@/assets/images/logo.webp";
 
 const Sidebar = () => {
     const { activeTab, setActiveTab } = useApp();
