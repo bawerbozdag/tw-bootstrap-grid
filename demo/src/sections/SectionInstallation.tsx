@@ -124,7 +124,14 @@ export default {
                                 file.
                             </li>
                         </ul>
-
+                        <div className="rounded-md border-l-4 border-amber-400 bg-amber-50 px-4 py-3 mb-3 text-sm text-amber-800">
+                            <strong className="font-semibold">Important:</strong> In Tailwind v4, all plugin references
+                            must be declared inside your CSS file. Make sure to include
+                            <code className="badge !bg-amber-200/70 !text-amber-800">@plugin "tw-bootstrap-grid"</code>
+                            after<code className="badge !bg-amber-200/70 !text-amber-800">@import "tailwindcss"</code>.
+                            Otherwise, the grid system won’t be generated because Tailwind’s v4 compiler ignores
+                            unreferenced plugins.
+                        </div>
                         <div className="rounded-lg border overflow-hidden">
                             <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50">
                                 <span className="text-[11px] font-semibold tracking-wider text-slate-600">
