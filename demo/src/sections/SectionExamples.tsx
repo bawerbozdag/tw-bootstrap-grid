@@ -135,6 +135,24 @@ const SectionExamples = () => {
                     </>
                 }
             />
+            <EditablePreviewCard
+                title="6) Row columns"
+                description={
+                    <>
+                        Use <code className="badge">.row-cols-(1–6)</code> classes to automatically divide row children
+                        into equal-width columns. This helps you quickly create flexible grid layouts without manually
+                        defining column widths.
+                    </>
+                }
+                example={EXAMPLES.row_cols}
+                tip={
+                    <>
+                        You can combine <code className="badge">row-cols-*</code> with responsive prefixes like{" "}
+                        <code className="badge">lg:row-cols-3</code> to adjust the number of columns at different
+                        breakpoints.
+                    </>
+                }
+            />
         </section>
     );
 };

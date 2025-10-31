@@ -1,6 +1,6 @@
 import {
-    LucideArrowUpDown,
     LucideBox,
+    LucideColumns3,
     LucideGlobe,
     LucideLayoutGrid,
     LucideMoveRight,
@@ -54,13 +54,13 @@ const FeaturesList = () => (
         <li className="col-12 lg:col-6">
             <div className="group flex items-center gap-3 rounded-xl border bg-white/70 backdrop-blur p-5 shadow-sm transition-all hover:shadow-md hover:bg-white">
                 <span className="inline-flex items-center justify-center rounded-lg border bg-indigo-50 p-2 transition group-hover:scale-105">
-                    <LucideArrowUpDown className="text-indigo-600" size={22} />
+                    <LucideColumns3 className="text-sky-600" size={22} />
                 </span>
                 <div>
-                    <h3 className="text-sm font-semibold text-slate-800 mb-1.5">Ordering</h3>
+                    <h3 className="text-sm font-semibold text-slate-800 mb-1.5">Row columns</h3>
                     <p className="text-sm text-slate-600">
-                        <code className="badge">.order-*</code>, <code className="badge">.order-first</code>and
-                        <code className="badge">.order-last</code> for reordering flex items.
+                        <code className="badge">.row-cols-(1–6)</code>classes evenly divide row children into equal
+                        columns.
                     </p>
                 </div>
             </div>
