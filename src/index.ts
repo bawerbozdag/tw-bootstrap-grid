@@ -80,24 +80,6 @@ const TailwindBootstrapGrid = plugin.withOptions(
                 return offsets;
             };
 
-            // generate .order-{0-12}, .order-first, .order-last for ordering flex items
-            const generateOrderClasses = () => {
-                const orders: CSSRuleObject = {};
-
-                // .order-{0-12}
-                for (let i = 0; i <= 12; i++) {
-                    orders[`.order-${i}`] = { order: `${i}` };
-                }
-
-                // .order-first sets item to very beginning
-                orders[".order-first"] = { order: "-9999" };
-
-                // .order-last sets item to very end
-                orders[".order-last"] = { order: "9999" };
-
-                return orders;
-            };
-
             // generate .row-cols-* classes to evenly distribute columns within a .row
             const generateRowCols = () => {
                 // base classes object to hold all generated rules
@@ -171,7 +153,6 @@ const TailwindBootstrapGrid = plugin.withOptions(
                 ...generateColClasses(),
                 ...generateGutterVariableClasses(),
                 ...generateOffsetClasses(),
-                ...generateOrderClasses(),
                 ...generateRowCols(),
             });
         },
