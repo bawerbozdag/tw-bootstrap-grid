@@ -98,6 +98,28 @@ const TailwindBootstrapGrid = plugin.withOptions(
                 return orders;
             };
 
+            // generate .row-cols-* classes to evenly distribute columns within a .row
+            const generateRowCols = () => {
+                // base classes object to hold all generated rules
+                const classes: CSSRuleObject = {
+                    // .row-cols-auto sets columns to auto width (based on content)
+                    ".row-cols-auto > *": {
+                        flex: "0 0 auto",
+                        width: "auto",
+                    },
+                };
+
+                // loop through 1 to 6 to generate .row-cols-{1-6}
+                for (let i = 1; i <= 6; i++) {
+                    classes[`.row-cols-${i} > *`] = {
+                        flex: "0 0 auto",
+                        width: `${(1 / i) * 100}%`, // calculate percentage width per column
+                    };
+                }
+
+                return classes;
+            };
+
             addComponents({
                 ".container, .container-fluid": {
                     // define horizontal and vertical gutter spacing using CSS variables for container
@@ -150,6 +172,7 @@ const TailwindBootstrapGrid = plugin.withOptions(
                 ...generateGutterVariableClasses(),
                 ...generateOffsetClasses(),
                 ...generateOrderClasses(),
+                ...generateRowCols(),
             });
         },
     () => ({ name: "tw-bootstrap-grid" }),
