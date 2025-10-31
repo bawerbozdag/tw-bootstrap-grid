@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { LucideLightbulb, LucideRotateCcw } from "lucide-react";
+import { LucideAlignLeft, LucideAlignRight, LucideLightbulb, LucideRotateCcw } from "lucide-react";
 import DOMPurify from "dompurify";
 import CodeMirror from "@uiw/react-codemirror";
 import { html } from "@codemirror/lang-html";
 import { vscodeLight } from "@uiw/codemirror-theme-vscode";
 import CopyButton from "./CopyButton";
+import clsx from "clsx";
 
 interface IEditablePreviewCardProps {
     title: string;
@@ -15,12 +16,61 @@ interface IEditablePreviewCardProps {
 
 const EditablePreviewCard = ({ description, example, tip, title }: IEditablePreviewCardProps) => {
     const [code, setCode] = useState<string>(example);
+    const [isRTL, setIsRTL] = useState<boolean>(isRTLActive(code));
 
     useEffect(() => {
         setCode(example);
 
         //
     }, [example]);
+
+    const toggleRTL = () => {
+        const currentRTL = isRTL;
+
+        setIsRTL(!currentRTL);
+
+        try {
+            const wrapper = document.createElement("div");
+            wrapper.innerHTML = code;
+
+            const container = wrapper.querySelector(".container") as HTMLElement | null;
+
+            if (currentRTL === false) {
+                // RTL on
+                if (container) {
+                    // prefer a scoped RTL by setting dir on .container
+                    container.setAttribute("dir", "rtl");
+
+                    //
+                } else {
+                    // .container not found → wrap whole snippet with an RTL div
+                    wrapper.innerHTML = `<div dir="rtl">${wrapper.innerHTML}</div>`;
+                }
+
+                // RTL off
+            } else {
+                // remove scoped RTL from .container if it was applied
+                if (container && container.hasAttribute("dir")) {
+                    container.removeAttribute("dir");
+
+                    //
+                } else {
+                    // otherwise, look for a top-level RTL wrapper
+                    const outer = wrapper.querySelector("[dir='rtl']");
+
+                    if (outer) {
+                        outer.replaceWith(...Array.from(outer.childNodes));
+                    }
+                }
+            }
+
+            setCode(wrapper.innerHTML);
+
+            //
+        } catch {
+            //
+        }
+    };
 
     const previewHtml = useMemo(() => DOMPurify.sanitize(code), [code]);
 
@@ -50,16 +100,36 @@ const EditablePreviewCard = ({ description, example, tip, title }: IEditablePrev
                     <div className="rounded-lg border p-6 shadow h-full">
                         <div className="flex items-center justify-between gap-2 mb-3">
                             <span className="text-sm font-semibold text-slate-700">Editable HTML</span>
-                            <button
-                                type="button"
-                                onClick={() => setCode(example)}
-                                className="btn btn-secondary rounded-lg btn-size py-1 px-3"
-                                aria-label="Reset to default example"
-                                title="Reset"
-                            >
-                                <LucideRotateCcw size={14} />
-                                Reset
-                            </button>
+                            <div className="flex items-center gap-4">
+                                <button
+                                    type="button"
+                                    onClick={toggleRTL}
+                                    className={clsx(
+                                        "btn btn-secondary rounded-lg py-1 px-3 gap-1",
+                                        isRTL && "text-indigo-600 border-indigo-200",
+                                    )}
+                                    aria-pressed={isRTL}
+                                    aria-label="Toggle RTL preview"
+                                    title={isRTL ? "Switch to LTR" : "Switch to RTL"}
+                                >
+                                    {isRTL ? <LucideAlignRight size={14} /> : <LucideAlignLeft size={14} />}
+                                    RTL
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setCode(example);
+                                        setIsRTL(isRTLActive(example));
+                                    }}
+                                    className="btn btn-secondary rounded-lg py-1 px-3"
+                                    aria-label="Reset to default example"
+                                    title="Reset"
+                                >
+                                    <LucideRotateCcw size={14} />
+                                    Reset
+                                </button>
+                            </div>
                         </div>
 
                         <div className="rounded-lg border overflow-hidden">
@@ -104,6 +174,24 @@ const EditablePreviewCard = ({ description, example, tip, title }: IEditablePrev
             )}
         </div>
     );
+};
+
+const isRTLActive = (code: string): boolean => {
+    try {
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = code;
+
+        const container = wrapper.querySelector(".container") as HTMLElement | null;
+
+        if (container && container.getAttribute("dir") === "rtl") {
+            return true;
+        }
+
+        return false;
+        //
+    } catch {
+        return false;
+    }
 };
 
 export default EditablePreviewCard;
