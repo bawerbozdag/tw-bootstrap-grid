@@ -85,7 +85,7 @@ const TailwindBootstrapGrid = plugin.withOptions(
                 // base classes object to hold all generated rules
                 const classes: CSSRuleObject = {
                     // .row-cols-auto sets columns to auto width (based on content)
-                    ".row-cols-auto > *": {
+                    ".row-cols-auto > .col, .row-cols-auto > *": {
                         flex: "0 0 auto",
                         width: "auto",
                     },
@@ -93,7 +93,7 @@ const TailwindBootstrapGrid = plugin.withOptions(
 
                 // loop through 1 to 6 to generate .row-cols-{1-6}
                 for (let i = 1; i <= 6; i++) {
-                    classes[`.row-cols-${i} > *`] = {
+                    classes[`.row-cols-${i} > .col, .row-cols-${i} > *`] = {
                         flex: "0 0 auto",
                         width: `${(1 / i) * 100}%`, // calculate percentage width per column
                     };
