@@ -28,6 +28,9 @@ jobs:
             - name: Install all workspace deps
               run: npm install
 
+            - name: Run Build
+              run: npm run build
+
             - name: Run tests for tailwind v3
               working-directory: __tests__/tailwind_v3
               run: npm test
@@ -50,6 +53,9 @@ jobs:
                       __tests__/tailwind_v4/package-lock.json
             - name: Install all workspace deps
               run: npm install
+
+            - name: Run Build
+              run: npm run build
 
             - name: Run tests for tailwind v4
               working-directory: __tests__/tailwind_v4
