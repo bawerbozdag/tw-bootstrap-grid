@@ -150,8 +150,7 @@ export const EXAMPLES = {
         </div>
     </div>
 </div>`,
-    row_cols: `
-<div class="container">
+    row_cols: `<div class="container">
   <div class="row row-cols-2 lg:row-cols-3">
     <div class="col">1</div>
     <div class="col">2</div>
