@@ -63,11 +63,11 @@ const TailwindBootstrapGrid = plugin.withOptions(
             const generateOffsetClasses = () => {
                 const offsets: CSSRuleObject = {};
 
-                for (let i = 1; i <= totalCols; i++) {
+                for (let i = 0; i <= totalCols; i++) {
                     // calculate in %
-                    const percentage = `${(i / totalCols) * 100}%`;
+                    const percentage = i === 0 ? "0" : `${(i / totalCols) * 100}%`;
 
-                    // .offset-{1-12} => adds left margin to offset the column
+                    // .offset-{0-12} => adds left margin to offset the column
                     offsets[`.offset-${i}`] = {
                         marginLeft: percentage,
                         '[dir="rtl"] &': {
