@@ -70,6 +70,7 @@ code.badge {
         @apply mb-6;
     }
 
+    .col,
     [class*="col-"] {
         @apply bg-slate-50 border p-6;
     }
