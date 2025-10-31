@@ -6,6 +6,7 @@ import testContainer from "./tests/container.test";
 import testGutter from "./tests/gutter.test";
 import testRow from "./tests/row.test";
 import testOffset from "./tests/offset.test";
+import testRowCols from "./tests/row-col.test";
 
 describe("Col utilities (Tailwind v4)", () => {
     testCol(runTailwind);
@@ -25,4 +26,8 @@ describe("Gutter utilities (Tailwind v4)", () => {
 
 describe("Row utilities (Tailwind v4)", () => {
     testRow(runTailwind);
+});
+
+describe("Row cols utilities (Tailwind v4)", () => {
+    testRowCols(runTailwind);
 });
