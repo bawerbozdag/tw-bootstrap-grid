@@ -1,3 +1,17 @@
+## [1.3.1](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.3.0...v1.3.1) (2025-10-31)
+
+
+### Bug Fixes
+
+* **grid-row-cols:** update `row-cols` ([bc9902d](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/bc9902d2eca3441edd91810c54f492b6084608a4))
+
+# [1.3.0](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.2.3...v1.3.0) (2025-10-31)
+
+
+### Features
+
+* **grid:** release version bump ([ddc7698](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/ddc76989e9519733050996f29000d60c87a7f1de))
+
 ## [1.2.3](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.2.2...v1.2.3) (2025-06-13)
 
 

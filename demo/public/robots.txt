@@ -1,0 +1,13 @@
+# robots.txt for tw-bootstrap-grid documentation site
+
+User-agent: *
+Allow: /
+
+# Prevent search engines from indexing build or config artifacts
+Disallow: /node_modules/
+Disallow: /dist/
+Disallow: /build/
+Disallow: /api/
+
+# Sitemap reference (replace with your actual URL)
+Sitemap: https://tw-bootstrap-grid.vercel.app/sitemap.xml

@@ -4,9 +4,9 @@ import { describe } from "vitest";
 import testCol from "./tests/col.test";
 import testContainer from "./tests/container.test";
 import testGutter from "./tests/gutter.test";
-import testOrder from "./tests/order.test";
 import testRow from "./tests/row.test";
 import testOffset from "./tests/offset.test";
+import testRowCols from "./tests/row-col.test";
 
 describe("Col utilities (Tailwind v4)", () => {
     testCol(runTailwind);
@@ -24,10 +24,10 @@ describe("Gutter utilities (Tailwind v4)", () => {
     testGutter(runTailwind);
 });
 
-describe("Order utilities (Tailwind v4)", () => {
-    testOrder(runTailwind);
-});
-
 describe("Row utilities (Tailwind v4)", () => {
     testRow(runTailwind);
+});
+
+describe("Row cols utilities (Tailwind v4)", () => {
+    testRowCols(runTailwind);
 });

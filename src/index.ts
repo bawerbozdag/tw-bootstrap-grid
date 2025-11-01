@@ -63,11 +63,11 @@ const TailwindBootstrapGrid = plugin.withOptions(
             const generateOffsetClasses = () => {
                 const offsets: CSSRuleObject = {};
 
-                for (let i = 1; i <= totalCols; i++) {
+                for (let i = 0; i <= totalCols; i++) {
                     // calculate in %
-                    const percentage = `${(i / totalCols) * 100}%`;
+                    const percentage = i === 0 ? "0" : `${(i / totalCols) * 100}%`;
 
-                    // .offset-{1-12} => adds left margin to offset the column
+                    // .offset-{0-12} => adds left margin to offset the column
                     offsets[`.offset-${i}`] = {
                         marginLeft: percentage,
                         '[dir="rtl"] &': {
@@ -80,22 +80,26 @@ const TailwindBootstrapGrid = plugin.withOptions(
                 return offsets;
             };
 
-            // generate .order-{0-12}, .order-first, .order-last for ordering flex items
-            const generateOrderClasses = () => {
-                const orders: CSSRuleObject = {};
+            // generate .row-cols-* classes to evenly distribute columns within a .row
+            const generateRowCols = () => {
+                // base classes object to hold all generated rules
+                const classes: CSSRuleObject = {
+                    // .row-cols-auto sets columns to auto width (based on content)
+                    ".row-cols-auto > .col, .row-cols-auto > *": {
+                        flex: "0 0 auto",
+                        width: "auto",
+                    },
+                };
 
-                // .order-{0-12}
-                for (let i = 0; i <= 12; i++) {
-                    orders[`.order-${i}`] = { order: `${i}` };
+                // loop through 1 to 6 to generate .row-cols-{1-6}
+                for (let i = 1; i <= 6; i++) {
+                    classes[`.row-cols-${i} > .col, .row-cols-${i} > *`] = {
+                        flex: "0 0 auto",
+                        width: `${(1 / i) * 100}%`, // calculate percentage width per column
+                    };
                 }
 
-                // .order-first sets item to very beginning
-                orders[".order-first"] = { order: "-9999" };
-
-                // .order-last sets item to very end
-                orders[".order-last"] = { order: "9999" };
-
-                return orders;
+                return classes;
             };
 
             addComponents({
@@ -149,7 +153,7 @@ const TailwindBootstrapGrid = plugin.withOptions(
                 ...generateColClasses(),
                 ...generateGutterVariableClasses(),
                 ...generateOffsetClasses(),
-                ...generateOrderClasses(),
+                ...generateRowCols(),
             });
         },
     () => ({ name: "tw-bootstrap-grid" }),
