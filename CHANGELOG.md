@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.3.1...v1.3.2) (2025-11-01)
+
+
+### Bug Fixes
+
+* **docs:** update readme ([72f3b4f](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/72f3b4fca8b7c65da9b89f61c296be1c7aed3829))
+
 ## [1.3.1](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.3.0...v1.3.1) (2025-10-31)
 
 
