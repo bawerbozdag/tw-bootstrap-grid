@@ -2,3 +2,6 @@
 
 /* plugins */
 @plugin "tw-bootstrap-grid";
+
+/* safelist */
+@source "./safelist-tailwind.txt";
