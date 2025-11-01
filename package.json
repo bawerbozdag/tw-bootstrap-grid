@@ -51,7 +51,7 @@
         "lint:fix": "eslint src --fix",
         "test:v3": "cd __tests__/tailwind_v3 && npm install && npm test",
         "test:v4": "cd __tests__/tailwind_v4 && npm install && npm test",
-        "test": "npm run test:v3 && npm run test:v4"
+        "test": "npm run build && npm run test:v3 && npm run test:v4"
     },
     "workspaces": [
         "__tests__/tailwind_v3",
