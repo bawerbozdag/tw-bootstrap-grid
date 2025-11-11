@@ -88,7 +88,7 @@ export default {
             </p>
 
             <div className="card mb-10">
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex items-start justify-between mb-3">
                     <h3>1) Define custom breakpoints</h3>
                     <span className="badge-version">
                         {tailwindVersion === "v3" ? "Tailwind v3.4.x" : "Tailwind v4+"}
@@ -155,7 +155,7 @@ export default {
             </div>
 
             <div className="card">
-                <div className="flex items-center justify-between">
+                <div className="flex items-start justify-between">
                     <h3 className="mb-3">2) Configure gutter spacing</h3>
                     <span className="badge-version">
                         {tailwindVersion === "v3" ? "Tailwind v3.4.x" : "Tailwind v4+"}

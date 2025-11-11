@@ -40,7 +40,7 @@ h3 {
     @apply rounded-lg border bg-white dark:bg-slate-950 p-6 shadow dark:shadow-slate-600/50;
 
     .badge-version {
-        @apply inline-flex items-center rounded-full bg-indigo-100 text-indigo-700 px-2.5 py-0.5 text-[11px] font-semibold tracking-wider mt-0.5;
+        @apply inline-flex items-center rounded-full bg-indigo-100 text-indigo-700 px-2.5 py-0.5 whitespace-nowrap text-[11px] font-semibold tracking-wider mt-0.5;
         @apply dark:bg-indigo-800 dark:text-indigo-50;
     }
 }

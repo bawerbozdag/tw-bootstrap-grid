@@ -69,7 +69,7 @@ export default {
                 })}
             </div>
             <div className="card">
-                <h3 className="text-lg font-semibold mb-3 flex items-center justify-between gap-2">
+                <h3 className="text-lg font-semibold mb-3 flex items-start justify-between gap-2">
                     2) Wire up the plugin
                     <span className="badge-version">
                         {tailwindVersion === "v3" ? "Tailwind v3.4.x" : "Tailwind v4+"}
