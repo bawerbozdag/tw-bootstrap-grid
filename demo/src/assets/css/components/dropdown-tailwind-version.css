@@ -1,3 +1,7 @@
+#sidebar .dropdown-tailwind-version__menu {
+    @apply dark:bg-slate-950;
+}
+
 .dropdown-tailwind-version {
     @apply relative;
 
@@ -45,8 +49,8 @@
     }
 
     .dropdown-tailwind-version__menu {
-        @apply absolute left-0;
-        @apply bg-white dark:bg-slate-950 p-2;
+        @apply absolute left-0 right-0;
+        @apply bg-white dark:bg-slate-900 p-2;
         @apply border border-indigo-200/60 dark:border-slate-700 shadow-xl rounded-2xl;
         @apply ring-1 ring-black/5;
         @apply transition duration-100 ease-in;
