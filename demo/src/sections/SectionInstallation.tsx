@@ -3,12 +3,12 @@ import { Fragment } from "react/jsx-runtime";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { css } from "@codemirror/lang-css";
-import { vscodeLight } from "@uiw/codemirror-theme-vscode";
+import { vscodeLight, vscodeDark } from "@uiw/codemirror-theme-vscode";
 import CopyButton from "@/components/CopyButton";
 import useApp from "@/hooks/useApp";
 
 const SectionInstallation = () => {
-    const { tailwindVersion } = useApp();
+    const { tailwindVersion, theme } = useApp();
 
     const INSTALL_CMD = {
         npm: `npm install tw-bootstrap-grid`,
@@ -61,7 +61,7 @@ export default {
                                 </span>
                                 <CopyButton text={cmd} />
                             </div>
-                            <pre className="rounded-lg border bg-slate-50 px-4 py-3 text-sm font-mono tracking-tight">
+                            <pre className="rounded-lg border bg-slate-50 dark:bg-slate-800 px-4 py-3 text-sm font-mono tracking-tight">
                                 <code>{cmd}</code>
                             </pre>
                         </Fragment>
@@ -89,8 +89,8 @@ export default {
                             </li>
                         </ul>
                         <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600">
+                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
+                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
                                     tailwind.config.ts
                                 </span>
                                 <CopyButton text={v3Config} />
@@ -99,7 +99,7 @@ export default {
                                 aria-label="Read-only code example for Tailwind v3 plugin setup"
                                 className="text-sm"
                                 extensions={[javascript()]}
-                                theme={vscodeLight}
+                                theme={theme == "light" ? vscodeLight : vscodeDark}
                                 editable={false}
                                 basicSetup={{
                                     highlightActiveLine: false,
@@ -133,8 +133,8 @@ export default {
                             unreferenced plugins.
                         </div>
                         <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600">
+                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
+                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
                                     main.css
                                 </span>
                                 <CopyButton text={v4Css} />
@@ -143,7 +143,7 @@ export default {
                                 aria-label="Read-only code example for Tailwind v4 plugin setup"
                                 className="text-sm"
                                 extensions={[css()]}
-                                theme={vscodeLight}
+                                theme={theme == "light" ? vscodeLight : vscodeDark}
                                 editable={false}
                                 basicSetup={{
                                     highlightActiveLine: false,

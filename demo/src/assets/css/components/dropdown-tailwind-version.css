@@ -3,7 +3,7 @@
 
     .dropdown-tailwind-version__toggle {
         @apply inline-flex items-center gap-2 w-full;
-        @apply text-indigo-700 text-sm font-medium;
+        @apply text-indigo-700 text-sm font-medium dark:text-indigo-300;
         @apply transition px-4 py-2 mb-2;
         @apply active:scale-[0.99];
 
