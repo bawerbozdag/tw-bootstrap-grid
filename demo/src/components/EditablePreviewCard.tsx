@@ -142,7 +142,7 @@ const EditablePreviewCard = ({ description, example, tip, title }: IEditablePrev
                             <CodeMirror
                                 aria-label="Editable HTML"
                                 className="text-sm"
-                                value={code}
+                                value={code.trim()}
                                 height="500px"
                                 extensions={htmlExtensions}
                                 theme={vscodeLight}
