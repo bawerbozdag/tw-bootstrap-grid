@@ -16,8 +16,8 @@ interface IEditablePreviewCardProps {
 }
 
 const EditablePreviewCard = ({ description, example, tip, title }: IEditablePreviewCardProps) => {
-    const {theme} = useApp();
-    
+    const { theme } = useApp();
+
     const [code, setCode] = useState<string>(example);
     const [isRTL, setIsRTL] = useState<boolean>(isRTLActive(code));
 
@@ -102,14 +102,17 @@ const EditablePreviewCard = ({ description, example, tip, title }: IEditablePrev
                 <div className="order-1 xl:order-0 xl:col-6">
                     <div className="rounded-lg border p-6 shadow dark:shadow-slate-600/50 h-full">
                         <div className="flex items-center justify-between gap-2 mb-3">
-                            <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">Editable HTML</span>
+                            <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                                Editable HTML
+                            </span>
                             <div className="flex items-center gap-4">
                                 <button
                                     type="button"
                                     onClick={toggleRTL}
                                     className={clsx(
                                         "btn btn-secondary rounded-lg py-1 px-3 gap-1",
-                                        isRTL && "text-indigo-600 border-indigo-200 dark:text-indigo-400 dark:border-indigo-600",
+                                        isRTL &&
+                                            "text-indigo-600 border-indigo-200 dark:text-indigo-400 dark:border-indigo-600",
                                     )}
                                     aria-pressed={isRTL}
                                     aria-label="Toggle RTL preview"
@@ -158,7 +161,9 @@ const EditablePreviewCard = ({ description, example, tip, title }: IEditablePrev
 
                 <div className="order-0 xl:order-1 xl:col-6">
                     <div className="rounded-lg border p-6 pt-7 shadow dark:shadow-slate-600/50 h-full">
-                        <div className="text-sm font-semibold text-slate-700 dark:text-slate-200 mb-[18px]">Live Preview</div>
+                        <div className="text-sm font-semibold text-slate-700 dark:text-slate-200 mb-[18px]">
+                            Live Preview
+                        </div>
                         <div
                             aria-label="Live preview"
                             role="region"

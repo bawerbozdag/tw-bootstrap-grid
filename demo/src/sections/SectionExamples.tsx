@@ -18,13 +18,13 @@ const SectionExamples = () => {
                 Explore how <span className="font-semibold">tw-bootstrap-grid</span> helps you build responsive and
                 flexible layouts using familiar, easy-to-read Tailwind classes.
             </p>
-            <p className="text-xs text-slate-500 mb-6">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mb-6">
                 Reference:{" "}
                 <a
                     href="https://getbootstrap.com/docs/5.3/layout/grid/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="underline hover:text-indigo-600"
+                    className="underline hover:text-indigo-600 dark:hover:text-indigo-400"
                 >
                     Bootstrap 5 Grid System
                 </a>{" "}
@@ -33,7 +33,7 @@ const SectionExamples = () => {
                     href="https://getbootstrap.com/docs/4.0/layout/grid/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="underline hover:text-indigo-600"
+                    className="underline hover:text-indigo-600 dark:hover:text-indigo-400"
                 >
                     Bootstrap 4 Grid System
                 </a>

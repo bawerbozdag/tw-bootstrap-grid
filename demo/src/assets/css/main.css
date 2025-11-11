@@ -41,6 +41,7 @@ h3 {
 
     .badge-version {
         @apply inline-flex items-center rounded-full bg-indigo-100 text-indigo-700 px-2.5 py-0.5 text-[11px] font-semibold tracking-wider mt-0.5;
+        @apply dark:bg-indigo-800 dark:text-indigo-50;
     }
 }
 
@@ -49,7 +50,7 @@ code.badge {
 }
 
 .tip-info {
-    @apply text-sm text-slate-500 flex items-center flex-wrap gap-1;
+    @apply text-sm text-slate-500 dark:text-slate-400 flex items-center flex-wrap gap-1;
 
     svg {
         @apply text-amber-500;

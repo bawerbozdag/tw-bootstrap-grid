@@ -64,17 +64,17 @@ const SectionIntroduction = () => {
 
             <div className="mb-8 border-b pb-8">
                 <span
-                    className="mb-4 inline-flex items-center gap-2 rounded-full border bg-slate-100 px-3 py-1.5 text-sm text-slate-700"
+                    className="mb-4 inline-flex items-center gap-2 rounded-full border bg-slate-100 px-3 py-1.5 text-sm text-slate-700 dark:bg-slate-800 dark:text-slate-300"
                     aria-live="polite"
                     role="status"
                 >
                     <span className="inline-block size-2 rounded-full bg-indigo-500" aria-hidden="true" />
                     Currently viewing:
-                    <strong className="font-medium text-indigo-700">
+                    <strong className="font-medium text-indigo-700 dark:text-indigo-400">
                         {tailwindVersion === "v3" ? "Tailwind v3.4.x" : "Tailwind v4+"}
                     </strong>
                 </span>
-                <DropdownTailwindVersion className="mb-1 block lg:hidden" />
+                <DropdownTailwindVersion className="mb-1 block xl:hidden" />
                 <p className="text-sm mb-2">
                     Installation steps differ between Tailwind v3.4.x and v4+.
                     <span className="hidden lg:inline">
@@ -94,7 +94,7 @@ const SectionIntroduction = () => {
             </div>
 
             <h2 className="mb-3">
-                <LucideSparkles size={24} className="text-indigo-500 mt-0.5" />
+                <LucideSparkles size={24} className="text-indigo-500 dark:text-indigo-400 mt-0.5" />
                 Features
             </h2>
             <p className="mb-6">

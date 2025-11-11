@@ -78,7 +78,7 @@ export default {
             aria-describedby="configuration-description"
         >
             <h2 id="configuration-title" className="mb-3">
-                <LucideSettings className="text-indigo-600" size={24} />
+                <LucideSettings className="text-indigo-600 dark:text-indigo-400" size={24} />
                 Configuration
             </h2>
             <p id="configuration-description" className="mb-6">
@@ -94,7 +94,7 @@ export default {
                         {tailwindVersion === "v3" ? "Tailwind v3.4.x" : "Tailwind v4+"}
                     </span>
                 </div>
-                <p className="mb-6 text-slate-600">
+                <p className="mb-6">
                     You can override the default<code className="badge">.container</code>breakpoints to match your
                     project's responsive design system. The plugin automatically uses these values to generate
                     responsive container max-widths.
