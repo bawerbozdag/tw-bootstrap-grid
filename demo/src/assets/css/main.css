@@ -11,12 +11,13 @@
     *,
     ::before,
     ::after {
-        @apply border-slate-300/70;
+        @apply border-slate-300/70 dark:border-slate-700;
     }
 }
 
 body {
     @apply bg-indigo-50/20 text-slate-700;
+    @apply dark:bg-slate-900 dark:text-slate-300;
 }
 
 h2 {
@@ -36,19 +37,20 @@ h3 {
 }
 
 .card {
-    @apply rounded-lg border bg-white p-6 shadow;
+    @apply rounded-lg border bg-white dark:bg-slate-950 p-6 shadow dark:shadow-slate-600/50;
 
     .badge-version {
         @apply inline-flex items-center rounded-full bg-indigo-100 text-indigo-700 px-2.5 py-0.5 text-[11px] font-semibold tracking-wider mt-0.5;
+        @apply dark:bg-indigo-800 dark:text-indigo-50;
     }
 }
 
 code.badge {
-    @apply px-1.5 py-0.5 rounded-md bg-slate-200 text-slate-700 font-mono text-xs mx-1;
+    @apply px-1.5 py-0.5 rounded-md bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-mono text-xs mx-1;
 }
 
 .tip-info {
-    @apply text-sm text-slate-500 flex items-center flex-wrap gap-1;
+    @apply text-sm text-slate-500 dark:text-slate-400 flex items-center flex-wrap gap-1;
 
     svg {
         @apply text-amber-500;
@@ -72,6 +74,6 @@ code.badge {
 
     .col,
     [class*="col-"] {
-        @apply bg-slate-50 border p-6;
+        @apply bg-slate-50 dark:bg-slate-800 border p-6;
     }
 }

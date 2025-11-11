@@ -8,6 +8,7 @@ export interface IAppContext {
     setActiveTab: (tab: TTabKey) => void;
     tailwindVersion: TailwindVersionType;
     setTailwindVersion: (tailwindVersion: TailwindVersionType) => void;
+    theme: "light" | "dark";
 }
 
 const AppContext = createContext<IAppContext | undefined>(undefined);

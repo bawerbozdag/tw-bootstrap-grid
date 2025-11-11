@@ -104,6 +104,7 @@ const App = () => {
 
                     return setTailwindVersion(tailwindVersion);
                 },
+                theme: matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light",
             }}
         >
             <main className="xl:grid xl:grid-cols-[280px_auto]">

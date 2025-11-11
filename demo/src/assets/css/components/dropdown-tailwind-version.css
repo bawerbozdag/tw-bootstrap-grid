@@ -3,7 +3,7 @@
 
     .dropdown-tailwind-version__toggle {
         @apply inline-flex items-center gap-2 w-full;
-        @apply text-indigo-700 text-sm font-medium;
+        @apply text-indigo-700 text-sm font-medium dark:text-indigo-300;
         @apply transition px-4 py-2 mb-2;
         @apply active:scale-[0.99];
 
@@ -46,8 +46,8 @@
 
     .dropdown-tailwind-version__menu {
         @apply absolute left-0;
-        @apply bg-white p-2;
-        @apply border border-indigo-200/60 shadow-xl rounded-2xl;
+        @apply bg-white dark:bg-slate-950 p-2;
+        @apply border border-indigo-200/60 dark:border-slate-700 shadow-xl rounded-2xl;
         @apply ring-1 ring-black/5;
         @apply transition duration-100 ease-in;
         @apply pointer-events-none scale-95 opacity-0;
@@ -61,23 +61,23 @@
 
             &:active,
             &.dropdown-tailwind-version__item--selected {
-                @apply bg-indigo-50/70;
+                @apply bg-indigo-50/70 dark:bg-indigo-900/70;
 
                 .dropdown-tailwind-version__item-inner {
                     .dropdown-tailwind-version__item-main .dropdown-tailwind-version__item-row {
                         .dropdown-tailwind-version__item-label {
-                            @apply text-indigo-600;
+                            @apply text-indigo-600 dark:text-indigo-300;
                         }
 
                         svg {
-                            @apply text-indigo-600 opacity-100;
+                            @apply text-indigo-600 dark:text-indigo-300 opacity-100;
                         }
                     }
                 }
             }
 
             &:hover {
-                @apply bg-indigo-50;
+                @apply bg-indigo-50 dark:bg-indigo-900/60;
             }
 
             .dropdown-tailwind-version__item-inner {
@@ -85,6 +85,7 @@
 
                 .dropdown-tailwind-version__item-badge {
                     @apply bg-indigo-100 text-indigo-700;
+                    @apply dark:bg-indigo-600 dark:text-indigo-100;
                     @apply flex items-center justify-center;
                     @apply h-8 w-8 rounded-lg;
                 }
@@ -96,7 +97,7 @@
                         @apply flex items-center justify-between gap-3;
 
                         .dropdown-tailwind-version__item-label {
-                            @apply truncate text-sm font-semibold text-slate-900;
+                            @apply truncate text-sm font-semibold text-slate-900 dark:text-slate-200;
                         }
 
                         svg {
@@ -105,7 +106,7 @@
                     }
 
                     .dropdown-tailwind-version__item-description {
-                        @apply mt-0.5 line-clamp-1 text-xs text-slate-500;
+                        @apply mt-0.5 line-clamp-1 text-xs text-slate-500 dark:text-slate-400;
                     }
                 }
             }

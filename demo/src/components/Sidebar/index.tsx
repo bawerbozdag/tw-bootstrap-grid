@@ -65,7 +65,7 @@ const Sidebar = () => {
                     href="https://github.com/bawerbozdag/tw-bootstrap-grid"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 font-medium text-slate-700 hover:text-indigo-600 transition mb-3"
+                    className="inline-flex items-center gap-2 font-medium text-slate-700 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition mb-3"
                     aria-label="GitHub repository"
                 >
                     <LucideGithub size={18} />

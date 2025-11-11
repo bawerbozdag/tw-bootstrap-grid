@@ -2,12 +2,12 @@ import { LucideSettings, LucideLightbulb } from "lucide-react";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { css } from "@codemirror/lang-css";
-import { vscodeLight } from "@uiw/codemirror-theme-vscode";
+import { vscodeLight, vscodeDark } from "@uiw/codemirror-theme-vscode";
 import CopyButton from "@/components/CopyButton";
 import useApp from "@/hooks/useApp";
 
 const SectionConfiguration = () => {
-    const { tailwindVersion } = useApp();
+    const { tailwindVersion, theme } = useApp();
 
     const v3Config = `import Grid from "tw-bootstrap-grid";
 
@@ -78,7 +78,7 @@ export default {
             aria-describedby="configuration-description"
         >
             <h2 id="configuration-title" className="mb-3">
-                <LucideSettings className="text-indigo-600" size={24} />
+                <LucideSettings className="text-indigo-600 dark:text-indigo-400" size={24} />
                 Configuration
             </h2>
             <p id="configuration-description" className="mb-6">
@@ -94,7 +94,7 @@ export default {
                         {tailwindVersion === "v3" ? "Tailwind v3.4.x" : "Tailwind v4+"}
                     </span>
                 </div>
-                <p className="mb-6 text-slate-600">
+                <p className="mb-6">
                     You can override the default<code className="badge">.container</code>breakpoints to match your
                     project's responsive design system. The plugin automatically uses these values to generate
                     responsive container max-widths.
@@ -102,8 +102,8 @@ export default {
                 <div className="mb-6">
                     {tailwindVersion === "v3" ? (
                         <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600">
+                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
+                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
                                     tailwind.config.ts
                                 </span>
                                 <CopyButton text={v3Config} />
@@ -112,7 +112,7 @@ export default {
                                 aria-label="Read-only Tailwind v3 config example defining custom breakpoints"
                                 className="text-sm"
                                 extensions={[javascript()]}
-                                theme={vscodeLight}
+                                theme={theme == "light" ? vscodeLight : vscodeDark}
                                 editable={false}
                                 basicSetup={{
                                     highlightActiveLine: false,
@@ -124,8 +124,8 @@ export default {
                         </div>
                     ) : (
                         <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600">
+                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
+                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
                                     main.css
                                 </span>
                                 <CopyButton text={v4Theme} />
@@ -134,7 +134,7 @@ export default {
                                 aria-label="Read-only Tailwind v4 config example defining custom breakpoints "
                                 className="text-sm"
                                 extensions={[css()]}
-                                theme={vscodeLight}
+                                theme={theme == "light" ? vscodeLight : vscodeDark}
                                 editable={false}
                                 basicSetup={{
                                     highlightActiveLine: false,
@@ -169,8 +169,8 @@ export default {
                 <div className="mb-6">
                     {tailwindVersion === "v3" ? (
                         <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600">
+                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
+                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
                                     tailwind.config.ts
                                 </span>
                                 <CopyButton text={v3Gutters} />
@@ -179,7 +179,7 @@ export default {
                                 aria-label="Tailwind v3 config example for gutter spacing"
                                 className="text-sm"
                                 extensions={[javascript()]}
-                                theme={vscodeLight}
+                                theme={theme == "light" ? vscodeLight : vscodeDark}
                                 editable={false}
                                 basicSetup={{
                                     highlightActiveLine: false,
@@ -191,8 +191,8 @@ export default {
                         </div>
                     ) : (
                         <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600">
+                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
+                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
                                     main.css
                                 </span>
                                 <CopyButton text={v4ThemeGutters} />
@@ -201,7 +201,7 @@ export default {
                                 aria-label="Tailwind v4 config example for gutter spacing"
                                 className="text-sm"
                                 extensions={[css()]}
-                                theme={vscodeLight}
+                                theme={theme == "light" ? vscodeLight : vscodeDark}
                                 editable={false}
                                 basicSetup={{
                                     highlightActiveLine: false,

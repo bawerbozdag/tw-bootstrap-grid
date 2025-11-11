@@ -3,12 +3,12 @@ import { Fragment } from "react/jsx-runtime";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { css } from "@codemirror/lang-css";
-import { vscodeLight } from "@uiw/codemirror-theme-vscode";
+import { vscodeLight, vscodeDark } from "@uiw/codemirror-theme-vscode";
 import CopyButton from "@/components/CopyButton";
 import useApp from "@/hooks/useApp";
 
 const SectionInstallation = () => {
-    const { tailwindVersion } = useApp();
+    const { tailwindVersion, theme } = useApp();
 
     const INSTALL_CMD = {
         npm: `npm install tw-bootstrap-grid`,
@@ -35,7 +35,7 @@ export default {
             aria-describedby="installation-description"
         >
             <h2 id="installation-title" className="mb-3">
-                <LucidePackage className="text-violet-500" size={24} />
+                <LucidePackage className="text-violet-500 dark:text-violet-400" size={24} />
                 Installation
             </h2>
             <p id="installation-description" className="mb-6">
@@ -56,12 +56,12 @@ export default {
                     return (
                         <Fragment key={key}>
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                     {key}
                                 </span>
                                 <CopyButton text={cmd} />
                             </div>
-                            <pre className="rounded-lg border bg-slate-50 px-4 py-3 text-sm font-mono tracking-tight">
+                            <pre className="rounded-lg border bg-slate-50 dark:bg-slate-800 px-4 py-3 text-sm font-mono tracking-tight">
                                 <code>{cmd}</code>
                             </pre>
                         </Fragment>
@@ -79,7 +79,7 @@ export default {
                 {tailwindVersion === "v3" ? (
                     <>
                         {/* Body */}
-                        <ul className="mb-4 text-sm text-slate-600 space-y-1.5 list-decimal ps-4">
+                        <ul className="mb-4 text-sm space-y-1.5 list-decimal ps-4">
                             <li>
                                 Import the plugin in<code className="badge">tailwind.config.ts</code>and register it
                                 under<code className="badge">plugins</code>array.
@@ -89,8 +89,8 @@ export default {
                             </li>
                         </ul>
                         <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600">
+                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
+                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
                                     tailwind.config.ts
                                 </span>
                                 <CopyButton text={v3Config} />
@@ -99,7 +99,7 @@ export default {
                                 aria-label="Read-only code example for Tailwind v3 plugin setup"
                                 className="text-sm"
                                 extensions={[javascript()]}
-                                theme={vscodeLight}
+                                theme={theme == "light" ? vscodeLight : vscodeDark}
                                 editable={false}
                                 basicSetup={{
                                     highlightActiveLine: false,
@@ -112,29 +112,34 @@ export default {
                     </>
                 ) : (
                     <>
-                        <ul className="mb-4 text-sm text-slate-600 space-y-1.5 list-decimal ps-4">
+                        <ul className="mb-4 text-sm space-y-1.5 list-decimal ps-4">
                             <li>
                                 Add<code className="badge">@import "tailwindcss"</code>and
                                 <code className="badge">@plugin "tw-bootstrap-grid"</code>to your main CSS file.
                             </li>
                             <li>
                                 Make sure your build tool (e.g.,{" "}
-                                <span className="text-slate-900 font-semibold">Vite</span>,{" "}
-                                <span className="text-slate-900 font-semibold">PostCSS</span>, etc.) processes this CSS
-                                file.
+                                <span className="text-slate-900 dark:text-slate-50 font-semibold">Vite</span>,{" "}
+                                <span className="text-slate-900 dark:text-slate-50 font-semibold">PostCSS</span>, etc.)
+                                processes this CSS file.
                             </li>
                         </ul>
-                        <div className="rounded-md border-l-4 border-amber-400 bg-amber-50 px-4 py-3 mb-3 text-sm text-amber-800">
+                        <div className="rounded-md border-l-4 border-amber-400 bg-amber-50 px-4 py-3 mb-3 text-sm text-amber-800 dark:bg-amber-900/30 dark:text-amber-100 dark:border-amber-500/80">
                             <strong className="font-semibold">Important:</strong> In Tailwind v4, all plugin references
                             must be declared inside your CSS file. Make sure to include
-                            <code className="badge !bg-amber-200/70 !text-amber-800">@plugin "tw-bootstrap-grid"</code>
-                            after<code className="badge !bg-amber-200/70 !text-amber-800">@import "tailwindcss"</code>.
-                            Otherwise, the grid system won’t be generated because Tailwind’s v4 compiler ignores
+                            <code className="badge !bg-amber-200/70 !text-amber-800 dark:!bg-amber-900/60 dark:!text-amber-200">
+                                @plugin "tw-bootstrap-grid"
+                            </code>
+                            after
+                            <code className="badge !bg-amber-200/70 !text-amber-800 dark:!bg-amber-900/60 dark:!text-amber-200">
+                                @import "tailwindcss"
+                            </code>
+                            . Otherwise, the grid system won’t be generated because Tailwind’s v4 compiler ignores
                             unreferenced plugins.
                         </div>
                         <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600">
+                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
+                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
                                     main.css
                                 </span>
                                 <CopyButton text={v4Css} />
@@ -143,7 +148,7 @@ export default {
                                 aria-label="Read-only code example for Tailwind v4 plugin setup"
                                 className="text-sm"
                                 extensions={[css()]}
-                                theme={vscodeLight}
+                                theme={theme == "light" ? vscodeLight : vscodeDark}
                                 editable={false}
                                 basicSetup={{
                                     highlightActiveLine: false,

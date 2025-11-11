@@ -55,10 +55,10 @@ button {
         }
 
         &.btn-secondary {
-            @apply bg-white text-slate-600 border;
+            @apply bg-white text-slate-600 dark:bg-slate-800 dark:text-slate-300 border;
 
             &:hover {
-                @apply text-indigo-600 border-indigo-200;
+                @apply text-indigo-600 border-indigo-200 dark:text-indigo-400 dark:border-indigo-700;
             }
 
             &:focus-visible {

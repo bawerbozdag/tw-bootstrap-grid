@@ -1,6 +1,6 @@
 #sidebar {
     @apply hidden xl:flex xl:flex-col;
-    @apply bg-white h-[100dvh];
+    @apply bg-white dark:bg-slate-950 h-[100dvh];
     @apply border-r;
     @apply overflow-auto;
     @apply sticky top-0;
@@ -26,10 +26,12 @@
 
                 &.active {
                     @apply bg-indigo-100 text-indigo-700;
+                    @apply dark:bg-indigo-950 dark:text-indigo-300;
                 }
 
                 &:hover {
                     @apply bg-indigo-100/70 text-indigo-700/90;
+                    @apply dark:bg-indigo-950/80 dark:text-indigo-300/90;
                 }
             }
         }

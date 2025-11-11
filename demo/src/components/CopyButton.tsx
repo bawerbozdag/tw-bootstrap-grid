@@ -46,7 +46,8 @@ const CopyButton = ({ text, className, iconSize = 16 }: ICopyButtonProps) => {
                 "inline-flex items-center gap-1.5 text-xs transition duration-200",
                 copied === true && "scale-110 text-green-600",
                 copied === undefined && "scale-110 text-red-600",
-                copied === false && "text-indigo-500 hover:text-indigo-700",
+                copied === false &&
+                    "text-indigo-500 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-500",
                 className,
             )}
             aria-live="polite"
