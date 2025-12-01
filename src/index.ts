@@ -38,23 +38,25 @@ const TailwindBootstrapGrid = plugin.withOptions(
                 const spacing = theme("spacing") as Record<string, string>;
                 const classes: CSSRuleObject = {};
 
-                Object.entries(spacing).forEach(([key, value]) => {
-                    // .g-{key} => applies both horizontal and vertical gutter
-                    classes[`.g-${key}`] = {
-                        "--bs-gutter-x": value,
-                        "--bs-gutter-y": value,
-                    };
+                Object.entries(spacing)
+                    .filter(([key]) => !key.includes(".")) // ignore fractional spacing keys (e.g., 0.5)
+                    .forEach(([key, value]) => {
+                        // .g-{key} => applies both horizontal and vertical gutter
+                        classes[`.g-${key}`] = {
+                            "--bs-gutter-x": value,
+                            "--bs-gutter-y": value,
+                        };
 
-                    // .gx-{key} => horizontal gutter only
-                    classes[`.gx-${key}`] = {
-                        "--bs-gutter-x": value,
-                    };
+                        // .gx-{key} => horizontal gutter only
+                        classes[`.gx-${key}`] = {
+                            "--bs-gutter-x": value,
+                        };
 
-                    // .gy-{key} => vertical gutter only
-                    classes[`.gy-${key}`] = {
-                        "--bs-gutter-y": value,
-                    };
-                });
+                        // .gy-{key} => vertical gutter only
+                        classes[`.gy-${key}`] = {
+                            "--bs-gutter-y": value,
+                        };
+                    });
 
                 return classes;
             };
