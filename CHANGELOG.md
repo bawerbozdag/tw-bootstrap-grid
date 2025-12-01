@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.3.2...v1.3.3) (2025-12-01)
+
+
+### Bug Fixes
+
+* **grid:** ignore spacing keys with decimals to avoid invalid selectors in gutter utilities ([646db8f](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/646db8f1289bb8bf5e3eba9b2e1211b1583d2808))
+
 ## [1.3.2](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.3.1...v1.3.2) (2025-11-01)
 
 
