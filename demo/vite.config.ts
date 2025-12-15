@@ -14,7 +14,7 @@ export default defineConfig({
     },
     plugins: [
         react(),
-        tsconfigPaths(),
+        tsconfigPaths({ projectDiscovery: "lazy" }),
         tailwindcss(), //
     ],
     build: {
