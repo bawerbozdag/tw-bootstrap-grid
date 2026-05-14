@@ -46,6 +46,7 @@
     ],
     "scripts": {
         "build": "tsup",
+        "prepare": "npm run build",
         "typecheck": "tsc --noEmit",
         "format": "prettier --write ./**/*.{js,jsx,ts,tsx,cjs,json,css,scss}",
         "lint": "eslint src",
