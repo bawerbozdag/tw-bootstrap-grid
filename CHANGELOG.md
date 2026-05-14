@@ -1,3 +1,10 @@
+## [1.3.4](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.3.3...v1.3.4) (2026-05-14)
+
+
+### Bug Fixes
+
+* add `default` condition to `exports` field ([#158](https://github.com/bawerbozdag/tw-bootstrap-grid/issues/158)) ([aa4f152](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/aa4f152d1fc2e4b26d6cfd97a6ef9cf069af053b))
+
 ## [1.3.3](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.3.2...v1.3.3) (2025-12-01)
 
 
