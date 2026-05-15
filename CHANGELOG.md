@@ -1,3 +1,10 @@
+## [1.3.5](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.3.4...v1.3.5) (2026-05-15)
+
+
+### Bug Fixes
+
+* align `main`/`module`/`exports` paths with actual tsup output ([#160](https://github.com/bawerbozdag/tw-bootstrap-grid/issues/160)) ([a7616cd](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/a7616cdb6f0a494c676abfc9a58936eab163a3aa))
+
 ## [1.3.4](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.3.3...v1.3.4) (2026-05-14)
 
 
