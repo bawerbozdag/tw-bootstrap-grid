@@ -1,3 +1,10 @@
+## [1.3.6](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.3.5...v1.3.6) (2026-05-18)
+
+
+### Bug Fixes
+
+* **row-cols:** use css nesting for tailwind v4 compatibility ([f8a40b3](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/f8a40b308f23dc7ca2bda21006ccb6c1182a8a5b))
+
 ## [1.3.5](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.3.4...v1.3.5) (2026-05-15)
 
 
