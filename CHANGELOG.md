@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.3.6...v1.4.0) (2026-05-20)
+
+
+### Features
+
+* add generateContainers option ([ef0de2f](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/ef0de2f455c3706f97912a0a8b0e76b6cc2e221b))
+
 ## [1.3.6](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.3.5...v1.3.6) (2026-05-18)
 
 
