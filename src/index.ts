@@ -4,9 +4,13 @@ import tailwindcss from "tailwindcss";
 
 const plugin = "plugin" in tailwindcss ? tailwindcss.plugin : require("tailwindcss/plugin");
 
+export interface ITwBootstrapGridOptions extends IGridOptions {
+    generateContainers?: boolean;
+}
+
 // define a custom Tailwind plugin for Bootstrap-style grid system
 const TailwindBootstrapGrid = plugin.withOptions(
-    (options: IGridOptions = {}) =>
+    (options: ITwBootstrapGridOptions = {}) =>
         ({ addComponents, theme }: PluginAPI) => {
             // total number of columns in the grid system
             const totalCols = 12;
@@ -16,6 +20,9 @@ const TailwindBootstrapGrid = plugin.withOptions(
 
             // resolve row-specific gutter values using provided options
             const rowGutters = resolveGutters("row", options);
+
+            // determine whether container generation is enabled
+            const generateContainers = options.generateContainers !== false;
 
             // generate .col-{1-12} classes for column widths
             const generateColClasses = () => {
@@ -109,18 +116,23 @@ const TailwindBootstrapGrid = plugin.withOptions(
             };
 
             addComponents({
-                ".container, .container-fluid": {
-                    // define horizontal and vertical gutter spacing using CSS variables for container
-                    "--bs-gutter-x": containerGutters.x,
-                    "--bs-gutter-y": containerGutters.y,
+                // generate default container styles when container support is enabled
+                ...(generateContainers
+                    ? {
+                          ".container, .container-fluid": {
+                              // define horizontal and vertical gutter spacing using CSS variables for container
+                              "--bs-gutter-x": containerGutters.x,
+                              "--bs-gutter-y": containerGutters.y,
 
-                    // full width with automatic horizontal centering
-                    width: "100%",
-                    paddingRight: "calc(var(--bs-gutter-x, 1.5rem) * 0.5)",
-                    paddingLeft: "calc(var(--bs-gutter-x, 1.5rem) * 0.5)",
-                    marginRight: "auto",
-                    marginLeft: "auto",
-                },
+                              // full width with automatic horizontal centering
+                              width: "100%",
+                              paddingRight: "calc(var(--bs-gutter-x, 1.5rem) * 0.5)",
+                              paddingLeft: "calc(var(--bs-gutter-x, 1.5rem) * 0.5)",
+                              marginRight: "auto",
+                              marginLeft: "auto",
+                          },
+                      }
+                    : {}),
 
                 // row class with negative margins and wrapping
                 ".row": {
