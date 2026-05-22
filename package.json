@@ -37,7 +37,7 @@
     "bugs": {
         "url": "https://github.com/bawerbozdag/tw-bootstrap-grid/issues"
     },
-    "homepage": "https://github.com/bawerbozdag/tw-bootstrap-grid#readme",
+    "homepage": "https://tw-bootstrap-grid.vercel.app",
     "engines": {
         "node": ">=18.0.0"
     },
