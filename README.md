@@ -81,6 +81,8 @@ export default {
 
 Found a bug or have a feature request? Feel free to open an [issue](https://github.com/bawerbozdag/tw-bootstrap-grid/issues) or submit a [pull request](https://github.com/bawerbozdag/tw-bootstrap-grid/pulls)!
 
+Before opening a pull request, run `npm run format` to apply the project's Prettier style. CI runs `npm run format:check` and fails on unformatted files.
+
 ---
 
 ## 🪪 License
