@@ -1,8 +1,10 @@
 import resolveGutters, { type IGridOptions } from "./utils/resolveGutters";
 import type { CSSRuleObject, PluginAPI } from "tailwindcss/types/config";
-import tailwindcss from "tailwindcss";
-
-const plugin = "plugin" in tailwindcss ? tailwindcss.plugin : require("tailwindcss/plugin");
+// the plugin subpath is a JS entry in both v3 and v4, unlike the package root, which v4
+// maps to CSS / its compile API rather than the plugin factory. the ".js" suffix is
+// required: v3 ships no "exports" map, so Node's ESM resolver cannot resolve the
+// extensionless "tailwindcss/plugin" there, while v4 maps "./plugin.js" explicitly
+import plugin from "tailwindcss/plugin.js";
 
 export interface ITwBootstrapGridOptions extends IGridOptions {
     generateContainers?: boolean;
