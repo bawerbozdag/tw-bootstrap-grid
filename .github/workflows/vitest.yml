@@ -22,11 +22,10 @@ jobs:
               with:
                   node-version: 20
                   cache: "npm"
-                  cache-dependency-path: |
-                      package-lock.json
-                      __tests__/tailwind_v3/package-lock.json
+                  cache-dependency-path: "package-lock.json"
+
             - name: Install all workspace deps
-              run: npm install
+              run: npm ci
 
             - name: Run Build
               run: npm run build
@@ -48,11 +47,10 @@ jobs:
               with:
                   node-version: 20
                   cache: "npm"
-                  cache-dependency-path: |
-                      package-lock.json
-                      __tests__/tailwind_v4/package-lock.json
+                  cache-dependency-path: "package-lock.json"
+
             - name: Install all workspace deps
-              run: npm install
+              run: npm ci
 
             - name: Run Build
               run: npm run build

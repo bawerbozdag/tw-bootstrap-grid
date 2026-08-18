@@ -18,9 +18,11 @@ jobs:
               with:
                   node-version: 22.14.0
                   registry-url: "https://registry.npmjs.org/"
+                  cache: "npm"
+                  cache-dependency-path: "package-lock.json"
 
             - name: Install dependencies
-              run: npm install
+              run: npm ci
 
             - name: Build package
               run: npm run build
