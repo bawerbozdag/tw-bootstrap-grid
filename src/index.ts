@@ -76,8 +76,7 @@ const TailwindBootstrapGrid = plugin.withOptions(
                     // calculate in %
                     const percentage = i === 0 ? "0" : `${(i / totalCols) * 100}%`;
 
-                    // .offset-{0-12} => adds inline-start margin to offset the column,
-                    // so it flips automatically in RTL without a [dir="rtl"] override
+                    // .offset-{0-12} => adds inline-start margin to offset the column
                     offsets[`.offset-${i}`] = {
                         marginInlineStart: percentage,
                     };
