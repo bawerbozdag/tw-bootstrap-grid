@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.4.0...v1.4.1) (2026-08-18)
+
+
+### Bug Fixes
+
+* **offset:** use logical margin-inline-start for reliable RTL support ([#205](https://github.com/bawerbozdag/tw-bootstrap-grid/issues/205)) ([879d7e7](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/879d7e7f7e21c03f947f09c9d0512a4bea227da8))
+
 # [1.4.0](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.3.6...v1.4.0) (2026-05-20)
 
 
