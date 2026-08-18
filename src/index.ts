@@ -68,7 +68,7 @@ const TailwindBootstrapGrid = plugin.withOptions(
                 return classes;
             };
 
-            // generate .offset-{1-12} to add left margin as offset
+            // generate .offset-{1-12} to add inline-start margin as offset
             const generateOffsetClasses = () => {
                 const offsets: CSSRuleObject = {};
 
@@ -76,13 +76,9 @@ const TailwindBootstrapGrid = plugin.withOptions(
                     // calculate in %
                     const percentage = i === 0 ? "0" : `${(i / totalCols) * 100}%`;
 
-                    // .offset-{0-12} => adds left margin to offset the column
+                    // .offset-{0-12} => adds inline-start margin to offset the column
                     offsets[`.offset-${i}`] = {
-                        marginLeft: percentage,
-                        '[dir="rtl"] &': {
-                            marginLeft: "0",
-                            marginRight: percentage,
-                        },
+                        marginInlineStart: percentage,
                     };
                 }
 
