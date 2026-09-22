@@ -8,7 +8,7 @@ export default defineConfig({
     resolve: {
         alias: {
             // define a custom alias "@tailwind-core" for the Tailwind CSS core file
-            "@tailwind-core": path.resolve(__dirname, "./app/assets/css/tailwind.css"),
+            "@tailwind-core": path.resolve(import.meta.dirname, "./app/assets/css/tailwind.css"),
         },
         tsconfigPaths: true,
     },
