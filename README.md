@@ -67,6 +67,25 @@ export default {
 
 ---
 
+## 🤖 AI Agent Skill
+
+Using an AI coding agent? Install the official skill so it knows this plugin's
+classes and configuration instead of guessing them:
+
+```bash
+npx skills add bawerbozdag/tw-bootstrap-grid
+```
+
+Works with Claude Code, Cursor, Codex, OpenCode, GitHub Copilot and other
+[supported agents](https://github.com/vercel-labs/skills#supported-agents). Add
+`-g` to install it globally, or `--list` to preview what's included. Once
+installed, the agent picks it up automatically whenever it works on a
+`tw-bootstrap-grid` layout.
+
+👉 Details in [`skills/README.md`](skills/README.md).
+
+---
+
 ## 🧠 Notes
 
 - The plugin **does not override any core Tailwind utility**.
