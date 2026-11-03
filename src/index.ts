@@ -1,8 +1,6 @@
 import resolveGutters, { type IGridOptions } from "./utils/resolveGutters";
 import type { CSSRuleObject, PluginAPI } from "tailwindcss/types/config";
-import tailwindcss from "tailwindcss";
-
-const plugin = "plugin" in tailwindcss ? tailwindcss.plugin : require("tailwindcss/plugin");
+import plugin from "tailwindcss/plugin.js";
 
 export interface ITwBootstrapGridOptions extends IGridOptions {
     generateContainers?: boolean;
