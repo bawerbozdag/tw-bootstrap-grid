@@ -1,3 +1,12 @@
+## [1.4.2](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.4.1...v1.4.2) (2026-11-03)
+
+
+### Bug Fixes
+
+* import tailwind plugin helper statically to support native ESM ([2024a5e](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/2024a5e))
+* make CJS require return the plugin directly ([2b7a839](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/2b7a839))
+* add types conditions to package exports ([f7ae13f](https://github.com/bawerbozdag/tw-bootstrap-grid/commit/f7ae13f))
+
 ## [1.4.1](https://github.com/bawerbozdag/tw-bootstrap-grid/compare/v1.4.0...v1.4.1) (2026-08-18)
 
 
