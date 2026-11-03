@@ -8,4 +8,11 @@ export default defineConfig({
     clean: true,
     sourcemap: false,
     target: "es2018",
+    // let require("tw-bootstrap-grid") return the plugin itself, while keeping .default working
+    footer: ({ format }) =>
+        format === "cjs"
+            ? {
+                  js: "module.exports=Object.assign(module.exports.default,{default:module.exports.default,__esModule:true});",
+              }
+            : {},
 });
