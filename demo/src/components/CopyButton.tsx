@@ -48,9 +48,9 @@ const CopyButton = ({ text, className, label, compact }: ICopyButtonProps) => {
             )}
         >
             {state === "copied" ? (
-                <LucideCheck size={14} />
+                <LucideCheck size={14} className="icon-pop" />
             ) : state === "failed" ? (
-                <LucideX size={14} />
+                <LucideX size={14} className="icon-pop" />
             ) : (
                 <LucideCopy size={14} />
             )}

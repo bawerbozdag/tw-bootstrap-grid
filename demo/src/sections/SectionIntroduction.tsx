@@ -80,7 +80,7 @@ const SectionIntroduction = () => {
             <ul role="list" className="row mt-16 gy-6">
                 {m.intro.features.map((feature, index) => (
                     <li key={feature.title} className="col-12 sm:col-6 lg:col-4">
-                        <div className="panel h-full p-5">
+                        <div className="panel feature-card h-full p-5">
                             <span className="mb-3 inline-flex size-9 items-center justify-center rounded-lg bg-accent-soft text-accent">
                                 {FEATURE_ICONS[index]}
                             </span>

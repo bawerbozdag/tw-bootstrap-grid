@@ -42,7 +42,11 @@ const Header = () => {
                         title={theme === "dark" ? m.common.lightTheme : m.common.darkTheme}
                         className="inline-flex size-8 cursor-pointer items-center justify-center rounded-lg border bg-surface text-muted transition hover:text-accent"
                     >
-                        {theme === "dark" ? <LucideSun size={16} /> : <LucideMoon size={16} />}
+                        {theme === "dark" ? (
+                            <LucideSun key="sun" size={16} className="icon-swap" />
+                        ) : (
+                            <LucideMoon key="moon" size={16} className="icon-swap" />
+                        )}
                     </button>
 
                     <a
