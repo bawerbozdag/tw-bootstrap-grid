@@ -4,7 +4,6 @@ import useApp from "@/hooks/useApp";
 import { IconGithub, IconNpm } from "./BrandIcons";
 import SectionNav from "./SectionNav";
 import VersionSelect from "./VersionSelect";
-import srcLogo from "@/assets/images/logo.webp";
 
 const ICON_LINK =
     "inline-flex size-8 items-center justify-center rounded-lg border bg-surface text-muted transition hover:text-accent";
@@ -19,9 +18,10 @@ const Header = () => {
                 <div className="flex h-14 items-center">
                     <a
                         href="#introduction"
+                        aria-label="tw-bootstrap-grid, back to the top"
                         className="-m-1.5 flex shrink-0 items-center gap-2.5 whitespace-nowrap p-1.5 font-semibold tracking-tight"
                     >
-                        <img src={srcLogo} width={26} height={26} alt="" className="rounded-md" />
+                        <img src="/favicon-48x48.webp" width={26} height={26} alt="" className="rounded-md" />
                         <span className="hidden sm:inline lg:hidden">tw-bootstrap-grid</span>
                     </a>
                 </div>
@@ -45,7 +45,7 @@ const Header = () => {
                         href={GITHUB_URL}
                         target="_blank"
                         rel="noreferrer"
-                        aria-label="GitHub repository"
+                        aria-label="GitHub repository (opens in a new tab)"
                         title="GitHub"
                         className={ICON_LINK}
                     >
@@ -55,7 +55,7 @@ const Header = () => {
                         href={NPM_URL}
                         target="_blank"
                         rel="noreferrer"
-                        aria-label="npm package"
+                        aria-label="npm package (opens in a new tab)"
                         title="npm"
                         className={ICON_LINK}
                     >

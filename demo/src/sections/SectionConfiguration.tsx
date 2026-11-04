@@ -108,21 +108,36 @@ const SectionConfiguration = () => (
                     v4={{ file: "main.css", code: V4_GUTTERS }}
                 />
 
-                <div className="overflow-x-auto rounded-xl border">
+                <div
+                    role="group"
+                    tabIndex={0}
+                    aria-label="Gutter resolution order, scrollable table"
+                    className="overflow-x-auto rounded-xl border"
+                >
                     <table className="w-full min-w-[34rem] text-left text-sm">
                         <caption className="sr-only">Gutter resolution order</caption>
                         <thead className="bg-sunken text-xs uppercase tracking-wider text-muted">
                             <tr>
-                                <th className="px-4 py-2.5 font-medium">Priority</th>
-                                <th className="px-4 py-2.5 font-medium">CSS variable</th>
-                                <th className="px-4 py-2.5 font-medium">Option</th>
-                                <th className="px-4 py-2.5 font-medium">Notes</th>
+                                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                                    Priority
+                                </th>
+                                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                                    CSS variable
+                                </th>
+                                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                                    Option
+                                </th>
+                                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                                    Notes
+                                </th>
                             </tr>
                         </thead>
                         <tbody className="divide-y">
                             {ORDER.map(([priority, variable, option, notes]) => (
                                 <tr key={priority}>
-                                    <td className="px-4 py-2.5 text-muted">{priority}</td>
+                                    <th scope="row" className="px-4 py-2.5 text-left font-normal text-muted">
+                                        {priority}
+                                    </th>
                                     <td className="px-4 py-2.5">
                                         <code>{variable}</code>
                                     </td>

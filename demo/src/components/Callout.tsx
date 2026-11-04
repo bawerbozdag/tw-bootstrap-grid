@@ -19,7 +19,8 @@ const Callout = ({ kind = "note", title, children, className }: ICalloutProps) =
     const Icon = ICONS[kind];
 
     return (
-        <aside
+        <div
+            role="note"
             className={clsx(
                 "flex gap-3 rounded-xl border p-4 text-sm leading-relaxed",
                 kind === "warning" ? "border-amber-500/40 bg-amber-500/10" : "bg-surface",
@@ -37,7 +38,7 @@ const Callout = ({ kind = "note", title, children, className }: ICalloutProps) =
                 {title && <p className="mb-1 font-semibold">{title}</p>}
                 <div className="text-muted [&_strong]:text-ink">{children}</div>
             </div>
-        </aside>
+        </div>
     );
 };
 

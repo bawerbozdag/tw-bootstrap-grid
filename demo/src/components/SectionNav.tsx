@@ -103,7 +103,7 @@ const SectionNav = () => {
                     >
                         <a
                             href={`#${section.id}`}
-                            aria-current={activeSection === section.id ? "true" : undefined}
+                            aria-current={activeSection === section.id ? "location" : undefined}
                             className={clsx(
                                 LINK,
                                 activeSection === section.id
@@ -155,7 +155,7 @@ const SectionNav = () => {
                             <li key={section.id}>
                                 <a
                                     href={`#${section.id}`}
-                                    aria-current={activeSection === section.id ? "true" : undefined}
+                                    aria-current={activeSection === section.id ? "location" : undefined}
                                     onClick={() => setOpen(false)}
                                     className={clsx(
                                         "block rounded-lg px-3 py-2 text-sm font-medium transition",

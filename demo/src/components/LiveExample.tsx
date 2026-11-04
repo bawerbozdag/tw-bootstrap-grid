@@ -68,7 +68,7 @@ const LiveExample = ({ example }: ILiveExampleProps) => {
                         <span className="text-xs font-semibold uppercase tracking-widest text-muted">Preview</span>
                         <div className="flex items-center gap-2">
                             <div
-                                role="radiogroup"
+                                role="group"
                                 aria-label="Preview width"
                                 className="flex rounded-lg border bg-surface p-0.5"
                             >
@@ -79,8 +79,7 @@ const LiveExample = ({ example }: ILiveExampleProps) => {
                                         <button
                                             key={item.id}
                                             type="button"
-                                            role="radio"
-                                            aria-checked={deviceId === item.id}
+                                            aria-pressed={deviceId === item.id}
                                             aria-label={item.label}
                                             title={item.label}
                                             onClick={() => setDeviceId(item.id)}
@@ -107,7 +106,7 @@ const LiveExample = ({ example }: ILiveExampleProps) => {
                             </button>
                         </div>
                     </div>
-                    <PreviewFrame html={code} width={device.width} matchEditor={!expanded} />
+                    <PreviewFrame title={example.title} html={code} width={device.width} matchEditor={!expanded} />
                 </div>
 
                 <div className={clsx("col-12 min-w-0", expanded ? "xl:order-2" : "xl:col-6 xl:order-1")}>
@@ -132,6 +131,9 @@ const LiveExample = ({ example }: ILiveExampleProps) => {
                         <Suspense
                             fallback={
                                 <pre
+                                    tabIndex={0}
+                                    role="group"
+                                    aria-label={`Editable HTML, ${example.title} (loading the editor)`}
                                     className={clsx(
                                         "code-scroll max-h-[360px] min-h-48 overflow-auto bg-sunken p-4 font-mono text-[13px] leading-6",
                                         !expanded && "xl:h-[360px]",
@@ -141,7 +143,13 @@ const LiveExample = ({ example }: ILiveExampleProps) => {
                                 </pre>
                             }
                         >
-<CodeEditor value={code} onChange={setCode} revision={revision} matchPreview={!expanded} />
+                            <CodeEditor
+                                label={`Editable HTML, ${example.title}`}
+                                value={code}
+                                onChange={setCode}
+                                revision={revision}
+                                matchPreview={!expanded}
+                            />
                         </Suspense>
                     </div>
                 </div>

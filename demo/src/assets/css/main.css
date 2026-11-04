@@ -45,19 +45,19 @@
     --sub-b: #a5f3fc;
     --sub-ink: #0c4a6e;
 
-    /* code colors, taken from VS Code Light+ */
+    /* code colors, VS Code Light+ with the two that missed 4.5:1 on the code background nudged a little darker */
     --tok-comment: #008000;
     --tok-keyword: #0000ff;
     --tok-control: #af00db;
     --tok-string: #a31515;
     --tok-attr-value: #0000ff;
-    --tok-number: #098658;
+    --tok-number: #067a50;
     --tok-property: #001080;
     --tok-variable: #001080;
     --tok-function: #795e26;
     --tok-tag: #800000;
     --tok-bracket: #800000;
-    --tok-attr: #e50000;
+    --tok-attr: #d40000;
     --tok-type: #267f99;
 }
 
@@ -292,4 +292,14 @@
 :not(pre) > code.code-wrap {
     white-space: normal;
     overflow-wrap: anywhere;
+}
+
+/* jumps past the header to the content, only visible while it has keyboard focus */
+.skip-link {
+    @apply absolute left-3 z-[100] -translate-y-24 rounded-lg border bg-surface px-4 py-2 text-sm font-medium text-ink shadow-lg transition-transform;
+}
+
+.skip-link:focus {
+    @apply translate-y-3;
+    top: 0;
 }

@@ -123,7 +123,7 @@ const MappingTable = ({ caption, heads, rows }: { caption: string; heads: [strin
         <h3 className="border-b bg-sunken px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-muted">
             {caption}
         </h3>
-        <div className="overflow-x-auto">
+        <div role="group" tabIndex={0} aria-label={`${caption}, scrollable table`} className="overflow-x-auto">
             <table className="w-full min-w-[34rem] table-fixed text-left text-sm">
                 <caption className="sr-only">{caption}</caption>
                 <colgroup>
@@ -143,9 +143,9 @@ const MappingTable = ({ caption, heads, rows }: { caption: string; heads: [strin
                 <tbody className="divide-y">
                     {rows.map(([bootstrap, here, note]) => (
                         <tr key={bootstrap}>
-                            <td className="px-5 py-3 align-top">
+                            <th scope="row" className="px-5 py-3 text-left align-top font-normal">
                                 <code>{bootstrap}</code>
-                            </td>
+                            </th>
                             <td className="px-5 py-3 align-top">
                                 <code>{here}</code>
                             </td>
@@ -166,9 +166,9 @@ const SectionMigration = () => (
         description="The grid works the way you remember. Three things look different: how responsive classes are written, the spacing numbers, and the breakpoint widths."
     >
         <div className="space-y-5">
-            <div className="row gy-5">
+            <ul role="list" className="row gy-5">
                 {CARDS.map((card) => (
-                    <div key={card.title} className="col-12 md:col-4">
+                    <li key={card.title} className="col-12 md:col-4">
                         <div className="panel h-full p-5">
                             <span className="mb-3 inline-flex size-9 items-center justify-center rounded-lg bg-accent-soft text-accent">
                                 {card.icon}
@@ -176,9 +176,9 @@ const SectionMigration = () => (
                             <h3 className="mb-1.5 font-semibold">{card.title}</h3>
                             <p className="prose-sm-muted">{card.body}</p>
                         </div>
-                    </div>
+                    </li>
                 ))}
-            </div>
+            </ul>
 
             <div className="panel space-y-4 p-4 sm:p-6">
                 <h3 className="text-lg font-semibold">The same layout, before and after</h3>

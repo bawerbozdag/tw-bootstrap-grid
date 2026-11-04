@@ -4,17 +4,20 @@ import clsx from "clsx";
 import Callout from "@/components/Callout";
 import { FAQ } from "@/faq";
 import { ISSUES_URL, PULLS_URL } from "@/_constants";
+import NewTabHint from "@/components/NewTabHint";
 import Section from "@/components/Section";
 
 // one question, the answer slides open and closed
 const FaqItem = ({ question, answer }: { question: string; answer: ReactNode }) => {
     const [open, setOpen] = useState(false);
     const panelId = useId();
+    const buttonId = `${panelId}-question`;
 
     return (
         <div>
-            <h4>
+            <h3>
                 <button
+                    id={buttonId}
                     type="button"
                     aria-expanded={open}
                     aria-controls={panelId}
@@ -31,11 +34,12 @@ const FaqItem = ({ question, answer }: { question: string; answer: ReactNode }) 
                         )}
                     />
                 </button>
-            </h4>
+            </h3>
             {/* animating grid-template-rows from 0fr to 1fr lets the height follow the content, even after a resize */}
             <div
                 id={panelId}
                 role="region"
+                aria-labelledby={buttonId}
                 inert={!open}
                 className={clsx(
                     "grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none",
@@ -73,6 +77,7 @@ const SectionFaq = () => (
                     className="font-medium text-accent underline underline-offset-4"
                 >
                     open an issue
+                    <NewTabHint />
                 </a>{" "}
                 or send a{" "}
                 <a
@@ -82,6 +87,7 @@ const SectionFaq = () => (
                     className="font-medium text-accent underline underline-offset-4"
                 >
                     pull request
+                    <NewTabHint />
                 </a>{" "}
                 on GitHub. Small fixes and documentation improvements are very welcome.
             </Callout>

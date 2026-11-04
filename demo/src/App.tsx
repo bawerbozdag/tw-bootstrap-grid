@@ -66,8 +66,11 @@ const App = () => {
 
     return (
         <AppContext.Provider value={value}>
+            <a href="#main" className="skip-link">
+                Skip to content
+            </a>
             <Header />
-            <main className="container max-w-6xl">
+            <main id="main" tabIndex={-1} className="container max-w-6xl outline-none">
                 <SectionIntroduction />
                 <SectionInstallation />
                 <SectionConfiguration />

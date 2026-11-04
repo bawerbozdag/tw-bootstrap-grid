@@ -1,4 +1,5 @@
 import LiveExample from "@/components/LiveExample";
+import NewTabHint from "@/components/NewTabHint";
 import Section from "@/components/Section";
 import { EXAMPLES } from "@/examples";
 
@@ -17,6 +18,7 @@ const SectionExamples = () => (
                     className="underline decoration-line underline-offset-4 hover:text-accent"
                 >
                     Bootstrap grid
+                    <NewTabHint />
                 </a>
                 , this will feel familiar.
             </>

@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { GITHUB_URL } from "@/_constants";
 import CopyButton from "@/components/CopyButton";
+import NewTabHint from "@/components/NewTabHint";
 import HeroGrid from "@/components/HeroGrid";
 
 interface IFeature {
@@ -86,7 +87,7 @@ const SectionIntroduction = () => (
             <div className="col-12 xl:col-6">
                 <p className="mb-4 inline-flex items-center gap-2 rounded-full border bg-surface px-3 py-1 text-xs font-medium text-muted">
                     <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />
-                    Tailwind CSS plugin · v3.4 and v4
+                    Tailwind CSS plugin · v{__PLUGIN_VERSION__}
                 </p>
                 <h1
                     id="introduction-title"
@@ -107,6 +108,7 @@ const SectionIntroduction = () => (
                     </a>
                     <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="btn btn-secondary">
                         View on GitHub
+                        <NewTabHint />
                     </a>
                 </div>
 
@@ -122,9 +124,10 @@ const SectionIntroduction = () => (
             </div>
         </div>
 
-        <div className="row mt-16 gy-6">
+        <h2 className="sr-only">What you get</h2>
+        <ul role="list" className="row mt-16 gy-6">
             {FEATURES.map((feature) => (
-                <div key={feature.title} className="col-12 sm:col-6 lg:col-4">
+                <li key={feature.title} className="col-12 sm:col-6 lg:col-4">
                     <div className="panel h-full p-5">
                         <span className="mb-3 inline-flex size-9 items-center justify-center rounded-lg bg-accent-soft text-accent">
                             {feature.icon}
@@ -132,9 +135,9 @@ const SectionIntroduction = () => (
                         <h3 className="mb-1.5 font-semibold">{feature.title}</h3>
                         <p className="prose-sm-muted">{feature.body}</p>
                     </div>
-                </div>
+                </li>
             ))}
-        </div>
+        </ul>
 
         <p className="mt-8 max-w-3xl text-sm leading-relaxed text-muted">
             It only does layout: no colors, no components, no resets. It adds to Tailwind rather than replacing any of

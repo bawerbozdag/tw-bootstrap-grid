@@ -1,6 +1,7 @@
 import { LucideHistory } from "lucide-react";
 import { CHANGELOG_URL, GITHUB_URL, NPM_URL } from "@/_constants";
 import { IconGithub, IconNpm } from "./BrandIcons";
+import NewTabHint from "./NewTabHint";
 
 const LINK = "inline-flex items-center gap-2 rounded-md px-2.5 py-2 transition hover:text-accent";
 
@@ -11,20 +12,24 @@ const Footer = () => (
                 MIT © {new Date().getFullYear()}{" "}
                 <a href="https://github.com/bawerbozdag" target="_blank" rel="noreferrer" className="hover:text-accent">
                     Baver Bozdağ
+                    <NewTabHint />
                 </a>
             </p>
             <nav aria-label="Project links" className="flex flex-wrap justify-center gap-x-2">
                 <a href={GITHUB_URL} target="_blank" rel="noreferrer" className={LINK}>
                     <IconGithub size={16} />
                     GitHub
+                    <NewTabHint />
                 </a>
                 <a href={NPM_URL} target="_blank" rel="noreferrer" className={LINK}>
                     <IconNpm size={16} />
                     npm
+                    <NewTabHint />
                 </a>
                 <a href={CHANGELOG_URL} target="_blank" rel="noreferrer" className={LINK}>
                     <LucideHistory size={16} aria-hidden="true" />
                     Changelog
+                    <NewTabHint />
                 </a>
             </nav>
         </div>

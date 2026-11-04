@@ -57,7 +57,12 @@ const SectionClasses = () => (
                     <h3 className="border-b bg-sunken px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-muted">
                         {group.title}
                     </h3>
-                    <div className="overflow-x-auto">
+                    <div
+                        role="group"
+                        tabIndex={0}
+                        aria-label={`${group.title}, scrollable table`}
+                        className="overflow-x-auto"
+                    >
                         <table className="w-full min-w-[40rem] table-fixed text-left text-sm">
                             <caption className="sr-only">{group.title} classes</caption>
                             <colgroup>
@@ -67,17 +72,17 @@ const SectionClasses = () => (
                             </colgroup>
                             <thead className="sr-only">
                                 <tr>
-                                    <th>Class</th>
-                                    <th>What it does</th>
-                                    <th>Notes</th>
+                                    <th scope="col">Class</th>
+                                    <th scope="col">What it does</th>
+                                    <th scope="col">Notes</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y">
                                 {group.rows.map(([name, css, notes]) => (
                                     <tr key={name}>
-                                        <td className="px-5 py-3 align-top">
+                                        <th scope="row" className="px-5 py-3 text-left align-top font-normal">
                                             <code>{name}</code>
-                                        </td>
+                                        </th>
                                         <td className="px-5 py-3 align-top font-mono text-xs text-muted">{css}</td>
                                         <td className="px-5 py-3 align-top text-muted">{notes}</td>
                                     </tr>

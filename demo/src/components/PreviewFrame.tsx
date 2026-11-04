@@ -5,6 +5,8 @@ import useApp from "@/hooks/useApp";
 import { breakpointFor } from "@/lib/devices";
 
 interface IPreviewFrameProps {
+    // names the frame for screen readers
+    title: string;
     // the HTML to show, it is sanitized before it goes into the frame
     html: string;
     // the viewport width to pretend to have, or null to use the width of the panel
@@ -21,7 +23,7 @@ const SKELETON =
 
 // A real viewport for the live examples. Media queries look at the iframe's own width, so md: and lg: apply
 // exactly as they would on a screen of that size. Wider viewports are scaled down to fit the panel.
-const PreviewFrame = ({ html, width, matchEditor }: IPreviewFrameProps) => {
+const PreviewFrame = ({ title, html, width, matchEditor }: IPreviewFrameProps) => {
     const { theme } = useApp();
 
     const outerRef = useRef<HTMLDivElement>(null);
@@ -156,7 +158,7 @@ const PreviewFrame = ({ html, width, matchEditor }: IPreviewFrameProps) => {
                 {near && (
                     <iframe
                         ref={iframeRef}
-                        title="Live preview"
+                        title={`Live preview: ${title}`}
                         srcDoc={SKELETON}
                         sandbox="allow-same-origin"
                         onLoad={handleLoad}
@@ -172,7 +174,7 @@ const PreviewFrame = ({ html, width, matchEditor }: IPreviewFrameProps) => {
             </div>
 
             {viewport > 0 && (
-                <span className="pointer-events-none absolute bottom-2 right-2 rounded-md border bg-surface/90 px-2 py-1 font-mono text-[10px] text-muted">
+                <span className="pointer-events-none absolute bottom-2 right-2 rounded-md border bg-surface/90 px-2 py-1 font-mono text-[11px] text-muted">
                     {Math.round(viewport)}px · {breakpointFor(viewport)}
                     {scale < 1 && ` · ${Math.round(scale * 100)}%`}
                 </span>
