@@ -43,6 +43,18 @@ src/
   snippets are shown.
 - **Theme.** Light and dark are class based (`.dark` on `<html>`). The choice is saved in `localStorage` and falls back
   to the system preference. A tiny inline script in `index.html` applies it before first paint.
+- **Prerendering.** The site is a client-side React app, but `npm run build` also renders the page to static HTML
+  (`src/entry-server.tsx`, then `scripts/prerender.mjs`) and writes it into `dist/index.html`. Crawlers that don't run
+  JavaScript, which includes most AI crawlers, therefore get the real content. The same step writes the JSON-LD
+  structured data (the plugin version comes from the installed package, the FAQ from `src/faq.tsx`) and the sitemap, and
+  it fails the build if the page comes out without its heading or sections. In the browser the app still mounts with
+  `createRoot`, so nothing is hydrated.
+- **For search engines and AI assistants.** `public/llms.txt` is a plain summary of the plugin and the docs, and
+  `public/robots.txt` welcomes crawlers. `llms.txt` is written by hand, so when the plugin's options or classes change,
+  update it along with the page. The social image is `public/og-image.png` (1200 × 630).
+- **Accessibility.** There is a skip link, the headings never skip a level, code and table areas that scroll can be
+  reached with the keyboard, and the preview frames and editors are named after their example. The colors were checked
+  with axe-core in the light and dark themes.
 - **Live preview.** Each example renders in a sandboxed `<iframe>`, so Tailwind's breakpoints respond to the frame's own
   width rather than the browser window. The page's stylesheets are copied into it at runtime, which works the same in
   dev and in production. The buttons above the preview pick a phone, tablet or desktop width, and wider ones are scaled
