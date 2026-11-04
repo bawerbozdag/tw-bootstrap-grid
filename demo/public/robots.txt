@@ -9,5 +9,5 @@ Disallow: /dist/
 Disallow: /build/
 Disallow: /api/
 
-# Sitemap reference (replace with your actual URL)
+# Sitemap reference
 Sitemap: https://tw-bootstrap-grid.vercel.app/sitemap.xml

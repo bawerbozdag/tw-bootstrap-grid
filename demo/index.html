@@ -2,13 +2,19 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>tw-bootstrap-grid</title>
         <meta
             name="description"
-            content="tw-bootstrap-grid is a Tailwind CSS plugin that adds a responsive Bootstrap-like grid system with containers, rows, columns, gutters, offsets, ordering, and RTL support."
+            content="A Tailwind CSS plugin that brings the Bootstrap 12-column grid to Tailwind v3.4 and v4: rows, columns, gutters, offsets, row-cols and RTL support."
         />
+        <meta name="theme-color" content="#4f46e5" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="tw-bootstrap-grid" />
+        <meta property="og:description" content="The Bootstrap grid, for Tailwind CSS." />
+        <meta property="og:url" content="https://tw-bootstrap-grid.vercel.app/" />
+        <meta property="og:image" content="https://tw-bootstrap-grid.vercel.app/favicon-128x128.png" />
 
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/webp" sizes="32x32" href="/favicon-32x32.webp" />
@@ -17,16 +23,26 @@
         <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
         <link rel="icon" type="image/webp" sizes="128x128" href="/favicon-128x128.webp" />
         <link rel="icon" type="image/png" sizes="128x128" href="/favicon-128x128.png" />
-    </head>
-    <body>
-        <div id="root"></div>
-        <script type="module" src="/src/main.tsx"></script>
+
+        <!-- apply the saved or system theme before first paint to avoid a flash -->
         <script>
             (() => {
-                if (matchMedia("(prefers-color-scheme: dark)").matches) {
+                let theme = null;
+
+                try {
+                    theme = localStorage.getItem("theme");
+                } catch {
+                    // storage can be blocked
+                }
+
+                if (theme === "dark" || (theme !== "light" && matchMedia("(prefers-color-scheme: dark)").matches)) {
                     document.documentElement.classList.add("dark");
                 }
             })();
         </script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="module" src="/src/main.tsx"></script>
     </body>
 </html>

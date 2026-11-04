@@ -1,15 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
     resolve: {
-        alias: {
-            // define a custom alias "@tailwind-core" for the Tailwind CSS core file
-            "@tailwind-core": path.resolve(import.meta.dirname, "./app/assets/css/tailwind.css"),
-        },
         tsconfigPaths: true,
     },
     plugins: [
@@ -24,7 +19,7 @@ export default defineConfig({
                     // This helps reduce the size of the main bundle and improves initial page load performance.
                     if (id.includes("node_modules")) {
                         // Group all CodeMirror-related packages into a dedicated "codemirror" chunk.
-                        // These packages are heavy and only needed on specific pages (e.g., Examples).
+                        // It is loaded lazily, only once the live examples are rendered.
                         if (id.includes("@uiw/react-codemirror") || id.includes("@codemirror")) {
                             return "codemirror";
                         }
@@ -44,6 +39,6 @@ export default defineConfig({
                 },
             },
         },
-        chunkSizeWarningLimit: 1200,
+        chunkSizeWarningLimit: 600,
     },
 });
