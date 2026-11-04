@@ -1,18 +1,19 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { DEFAULT_TAILWIND_VERSION, SECTION_IDS, THEME_STORAGE_KEY, VERSION_STORAGE_KEY } from "./_constants";
+import {
+    DEFAULT_TAILWIND_VERSION,
+    SECTION_IDS,
+    THEME_STORAGE_KEY,
+    VERSION_STORAGE_KEY,
+    type SectionId,
+} from "./_constants";
 import AppContext, { type IAppContext, type TailwindVersion, type Theme } from "./contexts/AppContext";
 import useScrollSpy from "./hooks/useScrollSpy";
 import { readStorage, writeStorage } from "./lib/storage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import SectionIntroduction from "./sections/SectionIntroduction";
-import SectionInstallation from "./sections/SectionInstallation";
-import SectionConfiguration from "./sections/SectionConfiguration";
-import SectionClasses from "./sections/SectionClasses";
-import SectionMigration from "./sections/SectionMigration";
-import SectionExamples from "./sections/SectionExamples";
-import SectionRtl from "./sections/SectionRtl";
-import SectionFaq from "./sections/SectionFaq";
+import HomePage from "./pages/HomePage";
+import MigrationPage from "./pages/MigrationPage";
+import type { PageId } from "./site";
 // style
 import "@/assets/css/main.css";
 
@@ -33,11 +34,15 @@ const readTheme = (): Theme => {
     return typeof matchMedia !== "undefined" && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 };
 
-const App = () => {
+const NO_SECTIONS: readonly SectionId[] = [];
+
+const App = ({ page }: { page: PageId }) => {
     const [tailwindVersion, setVersionState] = useState<TailwindVersion>(readVersion);
     const [theme, setTheme] = useState<Theme>(readTheme);
 
-    const activeSection = useScrollSpy(SECTION_IDS, "introduction");
+    // only the home page has sections to follow, the migration page is a section of its own
+    const spied = useScrollSpy(page === "home" ? SECTION_IDS : NO_SECTIONS, "introduction");
+    const activeSection = page === "home" ? spied : "migration";
 
     const setTailwindVersion = useCallback((version: TailwindVersion) => {
         writeStorage(VERSION_STORAGE_KEY, version);
@@ -60,8 +65,8 @@ const App = () => {
     }, [theme]);
 
     const value = useMemo<IAppContext>(
-        () => ({ activeSection, tailwindVersion, setTailwindVersion, theme, toggleTheme }),
-        [activeSection, tailwindVersion, setTailwindVersion, theme, toggleTheme],
+        () => ({ page, activeSection, tailwindVersion, setTailwindVersion, theme, toggleTheme }),
+        [page, activeSection, tailwindVersion, setTailwindVersion, theme, toggleTheme],
     );
 
     return (
@@ -71,14 +76,7 @@ const App = () => {
             </a>
             <Header />
             <main id="main" tabIndex={-1} className="container max-w-6xl outline-none">
-                <SectionIntroduction />
-                <SectionInstallation />
-                <SectionConfiguration />
-                <SectionClasses />
-                <SectionMigration />
-                <SectionExamples />
-                <SectionRtl />
-                <SectionFaq />
+                {page === "home" ? <HomePage /> : <MigrationPage />}
             </main>
             <Footer />
         </AppContext.Provider>

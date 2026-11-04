@@ -2,14 +2,20 @@ import { useEffect, useId, useRef, useState } from "react";
 import { LucideChevronDown } from "lucide-react";
 import clsx from "clsx";
 import { useOverflowTabs } from "react-overflow-tabs";
-import { SECTIONS } from "@/_constants";
+import { SECTIONS, type SectionId } from "@/_constants";
+import { MIGRATION_PATH } from "@/site";
 import useApp from "@/hooks/useApp";
 
 const LINK = "block whitespace-nowrap rounded-md px-3 py-2 text-xs font-medium transition lg:px-2 lg:py-1.5 lg:text-sm";
 
 // the section links: those that don't fit move into a "More" menu as the space shrinks
 const SectionNav = () => {
-    const { activeSection } = useApp();
+    const { activeSection, page } = useApp();
+
+    // the migration guide is a page of its own, the other links are sections of the home page
+    const hrefFor = (id: SectionId) => (id === "migration" ? MIGRATION_PATH : page === "home" ? `#${id}` : `/#${id}`);
+    const currentFor = (id: SectionId) =>
+        id !== activeSection ? undefined : page === "migration" ? ("page" as const) : ("location" as const);
 
     const navRef = useRef<HTMLElement>(null);
     const listRef = useRef<HTMLUListElement>(null);
@@ -102,8 +108,8 @@ const SectionNav = () => {
                         className={clsx("shrink-0", overflowKeys.includes(section.id) && "invisible")}
                     >
                         <a
-                            href={`#${section.id}`}
-                            aria-current={activeSection === section.id ? "location" : undefined}
+                            href={hrefFor(section.id)}
+                            aria-current={currentFor(section.id)}
                             className={clsx(
                                 LINK,
                                 activeSection === section.id
@@ -154,8 +160,8 @@ const SectionNav = () => {
                         {overflowSections.map((section) => (
                             <li key={section.id}>
                                 <a
-                                    href={`#${section.id}`}
-                                    aria-current={activeSection === section.id ? "location" : undefined}
+                                    href={hrefFor(section.id)}
+                                    aria-current={currentFor(section.id)}
                                     onClick={() => setOpen(false)}
                                     className={clsx(
                                         "block rounded-lg px-3 py-2 text-sm font-medium transition",

@@ -9,7 +9,7 @@ const ICON_LINK =
     "inline-flex size-8 items-center justify-center rounded-lg border bg-surface text-muted transition hover:text-accent";
 
 const Header = () => {
-    const { theme, toggleTheme } = useApp();
+    const { theme, toggleTheme, page } = useApp();
 
     return (
         <header className="sticky top-0 z-30 border-b bg-canvas/85 backdrop-blur">
@@ -17,7 +17,7 @@ const Header = () => {
             <div className="container max-w-6xl flex flex-wrap items-center justify-between gap-x-3">
                 <div className="flex h-14 items-center">
                     <a
-                        href="#introduction"
+                        href={page === "home" ? "#introduction" : "/"}
                         aria-label="tw-bootstrap-grid, back to the top"
                         className="-m-1.5 flex shrink-0 items-center gap-2.5 whitespace-nowrap p-1.5 font-semibold tracking-tight"
                     >

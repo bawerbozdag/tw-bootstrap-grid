@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { MIGRATION_PATH } from "./site";
 
 export interface IFaqItem {
     question: string;
@@ -51,6 +52,19 @@ export const FAQ: IFaqItem[] = [
             <>
                 Tailwind v3.4 and v4, on Node 18 or newer. The package ships ESM and CommonJS builds with TypeScript
                 types.
+            </>
+        ),
+    },
+    {
+        question: "I'm moving from Bootstrap. How do I migrate?",
+        answer: (
+            <>
+                The class names are close: <code>col-md-6</code> becomes <code>md:col-6</code>, and gutter numbers
+                follow Tailwind's scale. The{" "}
+                <a href={MIGRATION_PATH} className="underline decoration-line underline-offset-4 hover:text-accent">
+                    migration guide
+                </a>{" "}
+                has the full mapping and a command that converts your markup.
             </>
         ),
     },
