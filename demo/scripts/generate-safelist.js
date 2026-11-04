@@ -54,6 +54,9 @@ const spacingScale = [
     "96",
 ];
 
+// order-{0..12}, order-first, order-last, order-none (core tailwind, used by the editable examples)
+const orderClasses = [...Array.from({ length: 13 }, (_, i) => `order-${i}`), "order-first", "order-last", "order-none"];
+
 // g, gx, gy classes
 const gutterPrefixes = ["g", "gx", "gy"];
 const gutterClasses = gutterPrefixes.flatMap((gp) => spacingScale.map((s) => `${gp}-${s}`));
@@ -70,6 +73,7 @@ const allClasses = [
     ...withBreakpoints(offsetClasses),
     ...withBreakpoints(rowCols),
     ...withBreakpoints(gutterClasses),
+    ...withBreakpoints(orderClasses),
 ];
 
 // sort

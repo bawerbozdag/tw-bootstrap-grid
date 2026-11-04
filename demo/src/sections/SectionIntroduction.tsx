@@ -1,106 +1,101 @@
-import { LucideSparkles } from "lucide-react";
-import DropdownTailwindVersion from "@/components/Sidebar/components/DropdownTailwindVersion";
-import FeaturesList from "@/components/FeaturesList";
-import useApp from "@/hooks/useApp";
+import {
+    LucideArrowRight,
+    LucideBox,
+    LucideColumns3,
+    LucideGlobe,
+    LucideLayoutGrid,
+    LucideMoveRight,
+    LucideStretchHorizontal,
+} from "lucide-react";
+import { GITHUB_URL } from "@/_constants";
+import CopyButton from "@/components/CopyButton";
+import HeroGrid from "@/components/HeroGrid";
+import NewTabHint from "@/components/NewTabHint";
+import Rich from "@/components/Rich";
+import useI18n from "@/hooks/useI18n";
+import { fmt } from "@/i18n/format";
+
+// in the same order as the features in the messages
+const FEATURE_ICONS = [
+    <LucideLayoutGrid key="grid" size={20} />,
+    <LucideStretchHorizontal key="gutters" size={20} />,
+    <LucideMoveRight key="offsets" size={20} />,
+    <LucideColumns3 key="row-cols" size={20} />,
+    <LucideBox key="containers" size={20} />,
+    <LucideGlobe key="responsive" size={20} />,
+];
 
 const SectionIntroduction = () => {
-    const { tailwindVersion } = useApp();
+    const { m } = useI18n();
 
     return (
         <section
             id="introduction"
-            className="container py-16 px-4 border-b"
-            aria-labelledby="section-introduction-title"
-            aria-describedby="section-introduction-description"
+            aria-labelledby="introduction-title"
+            className="pb-12 pt-8 sm:pb-16 sm:pt-12 lg:pt-16"
         >
-            <h1
-                id="section-introduction-title"
-                className="text-nowrap mb-3 text-4xl font-bold inline-block tracking-tight bg-gradient-to-r from-sky-600/90 via-indigo-500 to-purple-600 bg-clip-text text-transparent leading-13"
-            >
-                tw-bootstrap-grid
-            </h1>
+            <div className="row items-center gy-10">
+                <div className="col-12 xl:col-6">
+                    <p className="mb-4 inline-flex items-center gap-2 rounded-full border bg-surface px-3 py-1 text-xs font-medium text-muted">
+                        <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />
+                        {fmt(m.intro.chip, { version: __PLUGIN_VERSION__ })}
+                    </p>
+                    <h1
+                        id="introduction-title"
+                        className="mb-5 text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl"
+                    >
+                        {m.intro.titleStart} <span className="text-accent">{m.intro.titleEnd}</span>
+                    </h1>
+                    <p className="lead mb-8 max-w-xl">
+                        <Rich text={m.intro.lead} />
+                    </p>
 
-            <p id="section-introduction-description" className="mb-4 leading-relaxed">
-                A lightweight and intuitive grid system that brings the simplicity of Bootstrap's layout to Tailwind
-                CSS. Fully compatible with Tailwind v3.4.x and v4+.
-            </p>
+                    <div className="mb-6 flex flex-wrap items-center gap-3">
+                        <a href="#installation" className="btn btn-primary">
+                            {m.intro.getStarted}
+                            <LucideArrowRight size={16} className="rtl:-scale-x-100" />
+                        </a>
+                        <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="btn btn-secondary">
+                            {m.intro.viewOnGithub}
+                            <NewTabHint />
+                        </a>
+                    </div>
 
-            <div className="mb-6 flex items-center gap-3">
-                <a
-                    href="#installation"
-                    className="btn btn-primary"
-                    onClick={(e) => {
-                        e.preventDefault();
+                    <div
+                        dir="ltr"
+                        className="inline-flex max-w-full items-center gap-3 rounded-lg border bg-surface py-1.5 pl-4 pr-2 font-mono text-sm"
+                    >
+                        <span className="shrink-0 select-none text-muted">$</span>
+                        <span className="min-w-0 truncate">npm install tw-bootstrap-grid</span>
+                        <CopyButton text="npm install tw-bootstrap-grid" className="shrink-0" />
+                    </div>
+                </div>
 
-                        const element = document.querySelector("section#installation");
-
-                        if (!element) {
-                            return;
-                        }
-
-                        return element.scrollIntoView({ behavior: "smooth" });
-                    }}
-                >
-                    Get Started
-                </a>
-                {/* <a
-                    href="#playground"
-                    className="btn btn-secondary"
-                    onClick={(e) => {
-                        e.preventDefault();
-
-                        const element = document.querySelector("section#playground");
-
-                        if (!element) {
-                            return;
-                        }
-
-                        return element.scrollIntoView({ behavior: "smooth" });
-                    }}
-                >
-                    Try Playground
-                </a> */}
+                <div className="col-12 xl:col-6">
+                    <HeroGrid />
+                </div>
             </div>
 
-            <div className="mb-8 border-b pb-8">
-                <span
-                    className="mb-4 inline-flex items-center gap-2 rounded-full border bg-slate-100 px-3 py-1.5 text-sm text-slate-700 dark:bg-slate-800 dark:text-slate-300"
-                    aria-live="polite"
-                    role="status"
-                >
-                    <span className="inline-block size-2 rounded-full bg-indigo-500" aria-hidden="true" />
-                    Currently viewing:
-                    <strong className="font-medium text-indigo-700 dark:text-indigo-400">
-                        {tailwindVersion === "v3" ? "Tailwind v3.4.x" : "Tailwind v4+"}
-                    </strong>
-                </span>
-                <DropdownTailwindVersion className="mb-1 block xl:hidden" />
-                <p className="text-sm mb-2">
-                    Installation steps differ between Tailwind v3.4.x and v4+.
-                    <span className="hidden lg:inline">
-                        {" "}
-                        Use the version selector in the sidebar to switch examples.
-                    </span>
-                </p>
-                <p className="mb-2 text-sm">
-                    <strong>tw-bootstrap-grid</strong> bridges two worlds, the structured, reliable grid system of
-                    Bootstrap and the utility-first flexibility of Tailwind. It focuses solely on layout, providing a
-                    clean, predictable, and minimal grid layer without extra bloat or visual opinions.
-                </p>
-                <p className="text-sm">
-                    Whether you're building quick prototypes or production-grade dashboards, this plugin gives you the
-                    power of a proven 12-column grid while keeping the expressive Tailwind syntax you already know.
-                </p>
-            </div>
+            <h2 className="sr-only">{m.intro.whatYouGet}</h2>
+            <ul role="list" className="row mt-16 gy-6">
+                {m.intro.features.map((feature, index) => (
+                    <li key={feature.title} className="col-12 sm:col-6 lg:col-4">
+                        <div className="panel feature-card h-full p-5">
+                            <span className="mb-3 inline-flex size-9 items-center justify-center rounded-lg bg-accent-soft text-accent">
+                                {FEATURE_ICONS[index]}
+                            </span>
+                            <h3 className="mb-1.5 font-semibold">{feature.title}</h3>
+                            <p className="prose-sm-muted">
+                                <Rich text={feature.body} />
+                            </p>
+                        </div>
+                    </li>
+                ))}
+            </ul>
 
-            <h2 className="mb-3">
-                <LucideSparkles size={24} className="text-indigo-500 dark:text-indigo-400 mt-0.5" />
-                Features
-            </h2>
-            <p className="mb-6">
-                Explore the core utilities that make responsive layouts simple, predictable, and flexible.
+            <p className="mt-8 max-w-3xl text-sm leading-relaxed text-muted">
+                <Rich text={m.intro.note} />
             </p>
-            <FeaturesList />
         </section>
     );
 };

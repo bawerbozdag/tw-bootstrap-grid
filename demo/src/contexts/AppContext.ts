@@ -1,14 +1,17 @@
 import { createContext } from "react";
+import type { SectionId } from "@/_constants";
+import type { PageId } from "@/site";
 
-type TailwindVersionType = "v3" | "v4" | undefined;
-type TTabKey = "tab-introduction" | "tab-installation" | "tab-configuration" | "tab-examples" | "tab-playground";
+export type TailwindVersion = "v3" | "v4";
+export type Theme = "light" | "dark";
 
 export interface IAppContext {
-    activeTab: TTabKey;
-    setActiveTab: (tab: TTabKey) => void;
-    tailwindVersion: TailwindVersionType;
-    setTailwindVersion: (tailwindVersion: TailwindVersionType) => void;
-    theme: "light" | "dark";
+    page: PageId;
+    activeSection: SectionId;
+    tailwindVersion: TailwindVersion;
+    setTailwindVersion: (version: TailwindVersion) => void;
+    theme: Theme;
+    toggleTheme: () => void;
 }
 
 const AppContext = createContext<IAppContext | undefined>(undefined);

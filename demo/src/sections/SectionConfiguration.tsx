@@ -1,227 +1,163 @@
-import { LucideSettings, LucideLightbulb } from "lucide-react";
-import CodeMirror from "@uiw/react-codemirror";
-import { javascript } from "@codemirror/lang-javascript";
-import { css } from "@codemirror/lang-css";
-import { vscodeLight, vscodeDark } from "@uiw/codemirror-theme-vscode";
-import CopyButton from "@/components/CopyButton";
-import useApp from "@/hooks/useApp";
+import Callout from "@/components/Callout";
+import Rich from "@/components/Rich";
+import Section from "@/components/Section";
+import VersionCode from "@/components/VersionCode";
+import useI18n from "@/hooks/useI18n";
+import { fmt } from "@/i18n/format";
 
-const SectionConfiguration = () => {
-    const { tailwindVersion, theme } = useApp();
-
-    const v3Config = `import Grid from "tw-bootstrap-grid";
-
-export default {
-  content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
+const V3_SCREENS = `export default {
   theme: {
     screens: {
-      sm: "40rem", // 640px
-      md: "48rem", // 768px
-      lg: "64rem", // 1024px
-      xl: "80rem", // 1280px
-      2xl: "96rem", // 1536px
+      sm: "40rem",  // 640px
+      md: "48rem",  // 768px
+      lg: "64rem",  // 1024px
+      xl: "80rem",  // 1280px
+      "2xl": "96rem", // 1536px
     },
-    extend: {},
   },
   plugins: [Grid],
 };`;
 
-    const v4Theme = `@import "tailwindcss";
+const V4_SCREENS = `@import "tailwindcss";
 @plugin "tw-bootstrap-grid";
 
 @theme {
-  --breakpoint-sm: 40rem; /* 640px */
-  --breakpoint-md: 48rem; /* 768px */
-  --breakpoint-lg: 64rem; /* 1024px */
-  --breakpoint-xl: 80rem; /* 1280px */
+  --breakpoint-sm: 40rem;  /* 640px */
+  --breakpoint-md: 48rem;  /* 768px */
+  --breakpoint-lg: 64rem;  /* 1024px */
+  --breakpoint-xl: 80rem;  /* 1280px */
   --breakpoint-2xl: 96rem; /* 1536px */
 }`;
 
-    const v3Gutters = `import Grid from "tw-bootstrap-grid";
+const V3_GUTTERS = `import Grid from "tw-bootstrap-grid";
 
 export default {
-  content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
   plugins: [
     Grid({
-      /* Global gutter options */
+      // used by containers and rows
       gutters: { x: "1.5rem", y: "0" },
-      /* Container-specific */
-      containerGutters: {x: "1.5rem", y: "0" },
-      /* Row-specific */
-      rowGutters: { x: "1.5rem", y: "0" },
+
+      // overrides for one of them only
+      containerGutters: { x: "1rem" },
+      rowGutters: { x: "2rem", y: "1rem" },
     }),
   ],
 };`;
 
-    const v4ThemeGutters = `@import "tailwindcss";
+const V4_GUTTERS = `@import "tailwindcss";
 @plugin "tw-bootstrap-grid";
 
-@theme {
-  /* Global gutter variables */
+:root {
+  /* used by containers and rows */
   --bs-global-gutter-x: 1.5rem;
   --bs-global-gutter-y: 0;
 
-  /* Container-specific */
-  --bs-container-gutter-x: var(--bs-global-gutter-x);
-  --bs-container-gutter-y: var(--bs-global-gutter-y);
-
-  /* Row-specific */
-  --bs-row-gutter-x: var(--bs-global-gutter-x);
-  --bs-row-gutter-y: var(--bs-global-gutter-y);
+  /* overrides for one of them only */
+  --bs-container-gutter-x: 1rem;
+  --bs-row-gutter-x: 2rem;
+  --bs-row-gutter-y: 1rem;
 }`;
 
+const V3_CONTAINERS = `export default {
+  plugins: [Grid({ generateContainers: false })],
+};`;
+
+const V4_CONTAINERS = `@import "tailwindcss";
+@plugin "tw-bootstrap-grid" {
+  generateContainers: false;
+}`;
+
+const SectionConfiguration = () => {
+    const { m } = useI18n();
+    const t = m.configuration;
+    const g = t.gutters;
+
+    // the first two rows are names from the plugin, the last one is a description of the built-in default
+    const order = [
+        ["1", "--bs-row-gutter-x / --bs-container-gutter-x", "rowGutters / containerGutters"],
+        ["2", "--bs-global-gutter-x", "gutters"],
+        ["3", g.defaultVariable, g.defaultOption],
+    ];
+
     return (
-        <section
-            id="configuration"
-            className="container py-16 px-4 border-b"
-            aria-labelledby="configuration-title"
-            aria-describedby="configuration-description"
-        >
-            <h2 id="configuration-title" className="mb-3">
-                <LucideSettings className="text-indigo-600 dark:text-indigo-400" size={24} />
-                Configuration
-            </h2>
-            <p id="configuration-description" className="mb-6">
-                The <span className="font-semibold">tw-bootstrap-grid</span> plugin provides several configuration
-                options that let you tailor its behavior to your project's layout system. You can adjust container
-                breakpoints, gutter spacing, and layout behavior for both Tailwind v3 and v4.
-            </p>
+        <Section id="configuration" eyebrow={t.eyebrow} title={t.title} description={t.description}>
+            <div className="space-y-5">
+                <div className="panel space-y-4 p-4 sm:p-6">
+                    <h3 className="text-lg font-semibold">{t.breakpoints.title}</h3>
+                    <p className="prose-sm-muted">
+                        <Rich text={t.breakpoints.body} />
+                    </p>
+                    <VersionCode
+                        v3={{ file: "tailwind.config.ts", code: V3_SCREENS }}
+                        v4={{ file: "main.css", code: V4_SCREENS }}
+                    />
+                </div>
 
-            <div className="card mb-10">
-                <div className="flex items-start justify-between mb-3">
-                    <h3>1) Define custom breakpoints</h3>
-                    <span className="badge-version">
-                        {tailwindVersion === "v3" ? "Tailwind v3.4.x" : "Tailwind v4+"}
-                    </span>
-                </div>
-                <p className="mb-6">
-                    You can override the default<code className="badge">.container</code>breakpoints to match your
-                    project's responsive design system. The plugin automatically uses these values to generate
-                    responsive container max-widths.
-                </p>
-                <div className="mb-6">
-                    {tailwindVersion === "v3" ? (
-                        <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
-                                    tailwind.config.ts
-                                </span>
-                                <CopyButton text={v3Config} />
-                            </div>
-                            <CodeMirror
-                                aria-label="Read-only Tailwind v3 config example defining custom breakpoints"
-                                className="text-sm"
-                                extensions={[javascript()]}
-                                theme={theme == "light" ? vscodeLight : vscodeDark}
-                                editable={false}
-                                basicSetup={{
-                                    highlightActiveLine: false,
-                                    highlightActiveLineGutter: false,
-                                    foldGutter: false,
-                                }}
-                                value={v3Config}
-                            />
-                        </div>
-                    ) : (
-                        <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
-                                    main.css
-                                </span>
-                                <CopyButton text={v4Theme} />
-                            </div>
-                            <CodeMirror
-                                aria-label="Read-only Tailwind v4 config example defining custom breakpoints "
-                                className="text-sm"
-                                extensions={[css()]}
-                                theme={theme == "light" ? vscodeLight : vscodeDark}
-                                editable={false}
-                                basicSetup={{
-                                    highlightActiveLine: false,
-                                    highlightActiveLineGutter: false,
-                                    foldGutter: false,
-                                }}
-                                value={v4Theme}
-                            />
-                        </div>
-                    )}
-                </div>
-                <p className="tip-info">
-                    <LucideLightbulb size={16} />
-                    Tip: Breakpoints defined here automatically affect<code className="badge">.container</code>widths
-                    and responsive column utilities (<code className="badge">md:col-*</code>,
-                    <code className="badge">lg:col-*</code>, etc.).
-                </p>
-            </div>
+                <div className="panel space-y-4 p-4 sm:p-6">
+                    <h3 className="text-lg font-semibold">{g.title}</h3>
+                    <p className="prose-sm-muted">
+                        <Rich text={g.body} />
+                    </p>
+                    <VersionCode
+                        v3={{ file: "tailwind.config.ts", code: V3_GUTTERS }}
+                        v4={{ file: "main.css", code: V4_GUTTERS }}
+                    />
 
-            <div className="card">
-                <div className="flex items-start justify-between">
-                    <h3 className="mb-3">2) Configure gutter spacing</h3>
-                    <span className="badge-version">
-                        {tailwindVersion === "v3" ? "Tailwind v3.4.x" : "Tailwind v4+"}
-                    </span>
+                    <div
+                        role="group"
+                        tabIndex={0}
+                        aria-label={fmt(m.classes.scrollableTable, { title: g.tableCaption })}
+                        className="overflow-x-auto rounded-xl border"
+                    >
+                        <table className="w-full min-w-[34rem] text-start text-sm">
+                            <caption className="sr-only">{g.tableCaption}</caption>
+                            <thead className="bg-sunken text-xs uppercase tracking-wider text-muted">
+                                <tr>
+                                    {[g.priority, g.cssVariable, g.option, g.notes].map((head) => (
+                                        <th key={head} scope="col" className="px-4 py-2.5 text-start font-medium">
+                                            {head}
+                                        </th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y">
+                                {order.map(([priority, variable, option], index) => (
+                                    <tr key={priority}>
+                                        <th scope="row" className="px-4 py-2.5 text-start font-normal text-muted">
+                                            {priority}
+                                        </th>
+                                        <td className="px-4 py-2.5">
+                                            <code>{variable}</code>
+                                        </td>
+                                        <td className="px-4 py-2.5">{index === 2 ? option : <code>{option}</code>}</td>
+                                        <td className="px-4 py-2.5 text-muted">{g.orderNotes[index]}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p className="prose-sm-muted">
+                        <Rich text={g.after} />
+                    </p>
                 </div>
-                <p className="mb-6">
-                    Gutters control the horizontal (<code className="badge">gx-*</code>) and vertical (
-                    <code className="badge">gy-*</code>) spacing between columns and rows. You can customize their
-                    default values globally or per-container/row level.
-                </p>
-                <div className="mb-6">
-                    {tailwindVersion === "v3" ? (
-                        <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
-                                    tailwind.config.ts
-                                </span>
-                                <CopyButton text={v3Gutters} />
-                            </div>
-                            <CodeMirror
-                                aria-label="Tailwind v3 config example for gutter spacing"
-                                className="text-sm"
-                                extensions={[javascript()]}
-                                theme={theme == "light" ? vscodeLight : vscodeDark}
-                                editable={false}
-                                basicSetup={{
-                                    highlightActiveLine: false,
-                                    highlightActiveLineGutter: false,
-                                    foldGutter: false,
-                                }}
-                                value={v3Gutters}
-                            />
-                        </div>
-                    ) : (
-                        <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
-                                    main.css
-                                </span>
-                                <CopyButton text={v4ThemeGutters} />
-                            </div>
-                            <CodeMirror
-                                aria-label="Tailwind v4 config example for gutter spacing"
-                                className="text-sm"
-                                extensions={[css()]}
-                                theme={theme == "light" ? vscodeLight : vscodeDark}
-                                editable={false}
-                                basicSetup={{
-                                    highlightActiveLine: false,
-                                    highlightActiveLineGutter: false,
-                                    foldGutter: false,
-                                }}
-                                value={v4ThemeGutters}
-                            />
-                        </div>
-                    )}
+
+                <div className="panel space-y-4 p-4 sm:p-6">
+                    <h3 className="text-lg font-semibold">{t.containers.title}</h3>
+                    <p className="prose-sm-muted">
+                        <Rich text={t.containers.body} />
+                    </p>
+                    <VersionCode
+                        v3={{ file: "tailwind.config.ts", code: V3_CONTAINERS }}
+                        v4={{ file: "main.css", code: V4_CONTAINERS }}
+                    />
                 </div>
-                <p className="tip-info">
-                    <LucideLightbulb size={16} />
-                    Tip: <code className="badge">g-*</code>, <code className="badge">gx-*</code>, and
-                    <code className="badge">gy-*</code> classes use Tailwind's{" "}
-                    <code className="badge">theme.spacing</code> scale. Updating your spacing scale automatically
-                    updates all gutter utilities.
-                </p>
+
+                <Callout kind="note" title={t.variablesNote.title}>
+                    <Rich text={t.variablesNote.body} />
+                </Callout>
             </div>
-        </section>
+        </Section>
     );
 };
 

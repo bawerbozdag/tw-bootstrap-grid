@@ -1,122 +1,116 @@
-import { useEffect, useState } from "react";
-import { DEFAULT_TAB_KEY, DEFAULT_TAILWIND_VERSION, LOCAL_STORAGE_KEY, SIDEBAR_TABS, TAB_KEYS } from "./_constants";
-import AppContext, { type IAppContext } from "./contexts/AppContext";
-import Sidebar from "./components/Sidebar";
-import SectionIntroduction from "./sections/SectionIntroduction";
-import SectionInstallation from "./sections/SectionInstallation";
-import SectionConfiguration from "./sections/SectionConfiguration";
-import SectionExamples from "./sections/SectionExamples";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+    DEFAULT_TAILWIND_VERSION,
+    SECTION_IDS,
+    THEME_STORAGE_KEY,
+    VERSION_STORAGE_KEY,
+    type SectionId,
+} from "./_constants";
+import AppContext, { type IAppContext, type TailwindVersion, type Theme } from "./contexts/AppContext";
+import useScrollSpy from "./hooks/useScrollSpy";
+import { readStorage, writeStorage } from "./lib/storage";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import HomePage from "./pages/HomePage";
+import MigrationPage from "./pages/MigrationPage";
+import I18nContext, { type II18n } from "./i18n/I18nContext";
+import { localizePath, type ILanguage } from "./i18n/languages";
+import type { Messages } from "./i18n/messages/en";
+import type { PageId } from "./site";
 // style
 import "@/assets/css/main.css";
 
-const isTabKey = (key: string): key is IAppContext["activeTab"] => {
-    return (TAB_KEYS as readonly string[]).includes(key);
+const readVersion = (): TailwindVersion => {
+    const stored = readStorage(VERSION_STORAGE_KEY);
+
+    return stored === "v3" || stored === "v4" ? stored : DEFAULT_TAILWIND_VERSION;
 };
 
-const App = () => {
-    const [activeTab, setActiveTab] = useState<IAppContext["activeTab"]>(DEFAULT_TAB_KEY);
+const readTheme = (): Theme => {
+    const stored = readStorage(THEME_STORAGE_KEY);
 
-    const updateActiveTabOnScroll = () => {
-        const tabSections = document.querySelectorAll<HTMLElement>("#sections > section");
+    if (stored === "light" || stored === "dark") {
+        return stored;
+    }
 
-        if (!tabSections || !tabSections.length) {
-            return;
-        }
+    // there is no matchMedia while the page is prerendered at build time
+    return typeof matchMedia !== "undefined" && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+};
 
-        const visibleSection = Array.from(tabSections).find((section) => {
-            const { top, bottom } = section.getBoundingClientRect();
+const NO_SECTIONS: readonly SectionId[] = [];
 
-            return top < 100 && bottom > 100;
-        });
+interface IAppProps {
+    page: PageId;
+    language: ILanguage;
+    messages: Messages;
+}
 
-        if (!visibleSection) {
-            return;
-        }
+const App = ({ page, language, messages }: IAppProps) => {
+    const [tailwindVersion, setVersionState] = useState<TailwindVersion>(readVersion);
+    const [theme, setTheme] = useState<Theme>(readTheme);
 
-        const visibleTab = `tab-${visibleSection.id}`;
+    // only the home page has sections to follow, the migration page is a section of its own
+    const spied = useScrollSpy(page === "home" ? SECTION_IDS : NO_SECTIONS, "introduction");
+    const activeSection = page === "home" ? spied : "migration";
 
-        if (!isTabKey(visibleTab)) {
-            return;
-        }
-
-        return setActiveTab((currentTab) => {
-            // if the current active tab matches the new tab, do nothing
-            if (currentTab == visibleTab) {
-                return currentTab;
-            }
-
-            // update
-            return visibleTab;
-        });
-    };
-
-    useEffect(() => {
-        // run first time
-        updateActiveTabOnScroll();
-
-        window.addEventListener("scroll", updateActiveTabOnScroll);
-
-        // cleanup
-        return () => window.removeEventListener("scroll", updateActiveTabOnScroll);
-
-        //
+    const setTailwindVersion = useCallback((version: TailwindVersion) => {
+        writeStorage(VERSION_STORAGE_KEY, version);
+        setVersionState(version);
     }, []);
 
-    const [tailwindVersion, setTailwindVersion] = useState<IAppContext["tailwindVersion"]>(() => {
-        const currentTailwindVersion = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const toggleTheme = useCallback(() => {
+        setTheme((current) => {
+            const next = current === "dark" ? "light" : "dark";
 
-        if (!currentTailwindVersion || (currentTailwindVersion !== "v3" && currentTailwindVersion !== "v4")) {
-            localStorage.setItem(LOCAL_STORAGE_KEY, DEFAULT_TAILWIND_VERSION);
+            writeStorage(THEME_STORAGE_KEY, next);
 
-            return DEFAULT_TAILWIND_VERSION;
-        }
-
-        return currentTailwindVersion;
-    });
+            return next;
+        });
+    }, []);
 
     useEffect(() => {
-        if (!document) {
-            return;
+        document.documentElement.classList.toggle("dark", theme === "dark");
+        document.documentElement.style.colorScheme = theme;
+    }, [theme]);
+
+    // The prerendered page is replaced when the app mounts, which can move or reset the scroll position, and a saved
+    // Tailwind version can change the height of what is above a #link's target. Navigating to the same fragment again
+    // makes the browser align the target the way it does for any link, without adding a history entry.
+    useEffect(() => {
+        if (location.hash.length > 1) {
+            location.replace(location.hash);
         }
+    }, []);
 
-        const currentTab = SIDEBAR_TABS.flatMap((tab) => tab.items).find((item) => item.id === activeTab)?.label;
+    // the prerendered HTML already has these, this keeps them right in development and after any client-side change
+    useEffect(() => {
+        document.documentElement.lang = language.hreflang;
+        document.documentElement.dir = language.dir;
+    }, [language]);
 
-        document.title = `${currentTab ?? "Docs"} / tw-bootstrap-grid`;
+    const i18n = useMemo<II18n>(
+        () => ({ language, m: messages, url: (path: string) => localizePath(language, path) }),
+        [language, messages],
+    );
 
-        //
-    }, [activeTab]);
+    const value = useMemo<IAppContext>(
+        () => ({ page, activeSection, tailwindVersion, setTailwindVersion, theme, toggleTheme }),
+        [page, activeSection, tailwindVersion, setTailwindVersion, theme, toggleTheme],
+    );
 
     return (
-        <AppContext.Provider
-            value={{
-                activeTab,
-                setActiveTab,
-                tailwindVersion,
-                setTailwindVersion: (tailwindVersion) => {
-                    // validate tailwind version
-                    if (tailwindVersion !== "v3" && tailwindVersion !== "v4") {
-                        localStorage.setItem(LOCAL_STORAGE_KEY, DEFAULT_TAILWIND_VERSION);
-
-                        return setTailwindVersion(DEFAULT_TAILWIND_VERSION);
-                    }
-
-                    localStorage.setItem(LOCAL_STORAGE_KEY, tailwindVersion);
-
-                    return setTailwindVersion(tailwindVersion);
-                },
-                theme: matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light",
-            }}
-        >
-            <main className="xl:grid xl:grid-cols-[280px_auto]">
-                <Sidebar />
-                <div id="sections">
-                    <SectionIntroduction />
-                    <SectionInstallation />
-                    <SectionConfiguration />
-                    <SectionExamples />
-                </div>
-            </main>
-        </AppContext.Provider>
+        <I18nContext.Provider value={i18n}>
+            <AppContext.Provider value={value}>
+                <a href="#main" className="skip-link">
+                    {messages.common.skipToContent}
+                </a>
+                <Header />
+                <main id="main" tabIndex={-1} className="container max-w-6xl outline-none">
+                    {page === "home" ? <HomePage /> : <MigrationPage />}
+                </main>
+                <Footer />
+            </AppContext.Provider>
+        </I18nContext.Provider>
     );
 };
 

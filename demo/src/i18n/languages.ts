@@ -1,0 +1,54 @@
+export interface ILanguage {
+    // the code used internally and in the messages file name
+    code: string;
+    // the first segment of the URL, English has none
+    path: string;
+    // what search engines are told in hreflang and <html lang>
+    hreflang: string;
+    // Open Graph locale
+    locale: string;
+    // the language's own name, shown in the language menu
+    name: string;
+    dir: "ltr" | "rtl";
+}
+
+export const LANGUAGES: ILanguage[] = [
+    { code: "en", path: "", hreflang: "en", locale: "en_US", name: "English", dir: "ltr" },
+    { code: "tr", path: "tr", hreflang: "tr", locale: "tr_TR", name: "Türkçe", dir: "ltr" },
+    { code: "es", path: "es", hreflang: "es", locale: "es_ES", name: "Español", dir: "ltr" },
+    { code: "de", path: "de", hreflang: "de", locale: "de_DE", name: "Deutsch", dir: "ltr" },
+    { code: "fr", path: "fr", hreflang: "fr", locale: "fr_FR", name: "Français", dir: "ltr" },
+    { code: "pt", path: "pt", hreflang: "pt-BR", locale: "pt_BR", name: "Português (Brasil)", dir: "ltr" },
+    { code: "ru", path: "ru", hreflang: "ru", locale: "ru_RU", name: "Русский", dir: "ltr" },
+    { code: "zh", path: "zh", hreflang: "zh-CN", locale: "zh_CN", name: "简体中文", dir: "ltr" },
+    { code: "ja", path: "ja", hreflang: "ja", locale: "ja_JP", name: "日本語", dir: "ltr" },
+];
+
+export const DEFAULT_LANGUAGE = LANGUAGES[0];
+
+export const languageByCode = (code: string): ILanguage => LANGUAGES.find((l) => l.code === code) ?? DEFAULT_LANGUAGE;
+
+// "/migrate-from-bootstrap/" or "/#faq" in a language: English stays as it is, the others get their prefix
+export const localizePath = (language: ILanguage, path: string): string => {
+    if (!language.path || !path.startsWith("/")) {
+        return path;
+    }
+
+    const hashAt = path.indexOf("#");
+    const base = hashAt === -1 ? path : path.slice(0, hashAt);
+    const hash = hashAt === -1 ? "" : path.slice(hashAt);
+
+    return `/${language.path}${base}${hash}`;
+};
+
+// the language a URL path belongs to, and what is left of the path once the language prefix is removed
+export const parsePath = (pathname: string): { language: ILanguage; rest: string } => {
+    const [, first = "", ...others] = pathname.split("/");
+    const language = LANGUAGES.find((l) => l.path && l.path === first);
+
+    if (!language) {
+        return { language: DEFAULT_LANGUAGE, rest: pathname };
+    }
+
+    return { language, rest: `/${others.join("/")}` };
+};

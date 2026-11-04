@@ -1,0 +1,43 @@
+name: Demo
+
+on:
+    push:
+        paths:
+            - "demo/**"
+            - ".github/workflows/demo.yml"
+    pull_request:
+        paths:
+            - "demo/**"
+            - ".github/workflows/demo.yml"
+
+permissions:
+    contents: read
+
+jobs:
+    demo:
+        name: Lint & Build
+        runs-on: ubuntu-22.04
+
+        defaults:
+            run:
+                working-directory: demo
+
+        steps:
+            - uses: actions/checkout@v4
+
+            # Vite 8 needs Node 20.19+ or 22.12+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: "22"
+                  cache: "npm"
+                  cache-dependency-path: "demo/package-lock.json"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run ESLint
+              run: npm run lint
+
+            # runs tsc first, so this also type-checks the demo
+            - name: Build
+              run: npm run build
