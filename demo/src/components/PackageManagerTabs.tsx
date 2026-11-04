@@ -2,9 +2,11 @@ import { useId, useRef, useState, type KeyboardEvent } from "react";
 import clsx from "clsx";
 import { PACKAGE_MANAGERS, type PackageManager } from "@/_constants";
 import CopyButton from "./CopyButton";
+import useI18n from "@/hooks/useI18n";
 import HighlightedCode from "./HighlightedCode";
 
 const PackageManagerTabs = () => {
+    const { m } = useI18n();
     const [active, setActive] = useState<PackageManager>("npm");
     const baseId = useId();
     const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -38,7 +40,7 @@ const PackageManagerTabs = () => {
     return (
         <div className="overflow-hidden rounded-xl border bg-sunken">
             <div className="flex items-center justify-between border-b bg-surface pr-3">
-                <div role="tablist" aria-label="Package manager" className="flex">
+                <div role="tablist" aria-label={m.common.packageManager} className="flex">
                     {managers.map((manager, index) => (
                         <button
                             key={manager}

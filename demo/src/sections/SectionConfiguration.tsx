@@ -1,6 +1,9 @@
 import Callout from "@/components/Callout";
+import Rich from "@/components/Rich";
 import Section from "@/components/Section";
 import VersionCode from "@/components/VersionCode";
+import useI18n from "@/hooks/useI18n";
+import { fmt } from "@/i18n/format";
 
 const V3_SCREENS = `export default {
   theme: {
@@ -64,120 +67,98 @@ const V4_CONTAINERS = `@import "tailwindcss";
   generateContainers: false;
 }`;
 
-const ORDER = [
-    [
-        "1",
-        "--bs-row-gutter-x / --bs-container-gutter-x",
-        "rowGutters / containerGutters",
-        "The most specific value wins.",
-    ],
-    ["2", "--bs-global-gutter-x", "gutters", "Shared fallback for both."],
-    ["3", "1.5rem (x) and 0 (y)", "built-in default", "The same defaults Bootstrap uses."],
-];
+const SectionConfiguration = () => {
+    const { m } = useI18n();
+    const t = m.configuration;
+    const g = t.gutters;
 
-const SectionConfiguration = () => (
-    <Section
-        id="configuration"
-        eyebrow="Getting started"
-        title="Configuration"
-        description="The defaults match Bootstrap, so you can skip this page. Come back when you want different breakpoints or gutter sizes."
-    >
-        <div className="space-y-5">
-            <div className="panel space-y-4 p-4 sm:p-6">
-                <h3 className="text-lg font-semibold">Breakpoints</h3>
-                <p className="prose-sm-muted">
-                    The plugin has no breakpoints of its own. Prefixes like <code>md:col-6</code> and the max-width of{" "}
-                    <code>.container</code> both come from Tailwind, so changing your screens changes the grid with
-                    them.
-                </p>
-                <VersionCode
-                    v3={{ file: "tailwind.config.ts", code: V3_SCREENS }}
-                    v4={{ file: "main.css", code: V4_SCREENS }}
-                />
-            </div>
+    // the first two rows are names from the plugin, the last one is a description of the built-in default
+    const order = [
+        ["1", "--bs-row-gutter-x / --bs-container-gutter-x", "rowGutters / containerGutters"],
+        ["2", "--bs-global-gutter-x", "gutters"],
+        ["3", g.defaultVariable, g.defaultOption],
+    ];
 
-            <div className="panel space-y-4 p-4 sm:p-6">
-                <h3 className="text-lg font-semibold">Gutter sizes</h3>
-                <p className="prose-sm-muted">
-                    Gutters are the space between columns. By default it's <code>1.5rem</code> horizontally and{" "}
-                    <code>0</code> vertically. Set it once for everything, or separately for containers and rows. In v3
-                    you pass options to the plugin, in v4 you set CSS variables.
-                </p>
-                <VersionCode
-                    v3={{ file: "tailwind.config.ts", code: V3_GUTTERS }}
-                    v4={{ file: "main.css", code: V4_GUTTERS }}
-                />
-
-                <div
-                    role="group"
-                    tabIndex={0}
-                    aria-label="Gutter resolution order, scrollable table"
-                    className="overflow-x-auto rounded-xl border"
-                >
-                    <table className="w-full min-w-[34rem] text-left text-sm">
-                        <caption className="sr-only">Gutter resolution order</caption>
-                        <thead className="bg-sunken text-xs uppercase tracking-wider text-muted">
-                            <tr>
-                                <th scope="col" className="px-4 py-2.5 text-left font-medium">
-                                    Priority
-                                </th>
-                                <th scope="col" className="px-4 py-2.5 text-left font-medium">
-                                    CSS variable
-                                </th>
-                                <th scope="col" className="px-4 py-2.5 text-left font-medium">
-                                    Option
-                                </th>
-                                <th scope="col" className="px-4 py-2.5 text-left font-medium">
-                                    Notes
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y">
-                            {ORDER.map(([priority, variable, option, notes]) => (
-                                <tr key={priority}>
-                                    <th scope="row" className="px-4 py-2.5 text-left font-normal text-muted">
-                                        {priority}
-                                    </th>
-                                    <td className="px-4 py-2.5">
-                                        <code>{variable}</code>
-                                    </td>
-                                    <td className="px-4 py-2.5">
-                                        <code>{option}</code>
-                                    </td>
-                                    <td className="px-4 py-2.5 text-muted">{notes}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+    return (
+        <Section id="configuration" eyebrow={t.eyebrow} title={t.title} description={t.description}>
+            <div className="space-y-5">
+                <div className="panel space-y-4 p-4 sm:p-6">
+                    <h3 className="text-lg font-semibold">{t.breakpoints.title}</h3>
+                    <p className="prose-sm-muted">
+                        <Rich text={t.breakpoints.body} />
+                    </p>
+                    <VersionCode
+                        v3={{ file: "tailwind.config.ts", code: V3_SCREENS }}
+                        v4={{ file: "main.css", code: V4_SCREENS }}
+                    />
                 </div>
 
-                <p className="prose-sm-muted">
-                    The CSS variables are read at runtime, so in either version you can also override them on any
-                    element to change the gutters for just that section. For a single row, use <code>.g-*</code>,{" "}
-                    <code>.gx-*</code> and <code>.gy-*</code>.
-                </p>
-            </div>
+                <div className="panel space-y-4 p-4 sm:p-6">
+                    <h3 className="text-lg font-semibold">{g.title}</h3>
+                    <p className="prose-sm-muted">
+                        <Rich text={g.body} />
+                    </p>
+                    <VersionCode
+                        v3={{ file: "tailwind.config.ts", code: V3_GUTTERS }}
+                        v4={{ file: "main.css", code: V4_GUTTERS }}
+                    />
 
-            <div className="panel space-y-4 p-4 sm:p-6">
-                <h3 className="text-lg font-semibold">Turn off the containers</h3>
-                <p className="prose-sm-muted">
-                    Prefer Tailwind's own <code>container</code> alone? Set <code>generateContainers</code> to{" "}
-                    <code>false</code> and the plugin stops generating <code>.container-fluid</code> and its
-                    gutter-aware padding. Rows and columns are unaffected.
-                </p>
-                <VersionCode
-                    v3={{ file: "tailwind.config.ts", code: V3_CONTAINERS }}
-                    v4={{ file: "main.css", code: V4_CONTAINERS }}
-                />
-            </div>
+                    <div
+                        role="group"
+                        tabIndex={0}
+                        aria-label={fmt(m.classes.scrollableTable, { title: g.tableCaption })}
+                        className="overflow-x-auto rounded-xl border"
+                    >
+                        <table className="w-full min-w-[34rem] text-start text-sm">
+                            <caption className="sr-only">{g.tableCaption}</caption>
+                            <thead className="bg-sunken text-xs uppercase tracking-wider text-muted">
+                                <tr>
+                                    {[g.priority, g.cssVariable, g.option, g.notes].map((head) => (
+                                        <th key={head} scope="col" className="px-4 py-2.5 text-start font-medium">
+                                            {head}
+                                        </th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y">
+                                {order.map(([priority, variable, option], index) => (
+                                    <tr key={priority}>
+                                        <th scope="row" className="px-4 py-2.5 text-start font-normal text-muted">
+                                            {priority}
+                                        </th>
+                                        <td className="px-4 py-2.5">
+                                            <code>{variable}</code>
+                                        </td>
+                                        <td className="px-4 py-2.5">{index === 2 ? option : <code>{option}</code>}</td>
+                                        <td className="px-4 py-2.5 text-muted">{g.orderNotes[index]}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
 
-            <Callout kind="note" title="Why variables in v4?">
-                Tailwind v4 can pass simple values like <code>generateContainers: false;</code> to a plugin, but not
-                nested objects such as <code>gutters</code>. CSS variables cover that case and have the bonus of being
-                overridable per element.
-            </Callout>
-        </div>
-    </Section>
-);
+                    <p className="prose-sm-muted">
+                        <Rich text={g.after} />
+                    </p>
+                </div>
+
+                <div className="panel space-y-4 p-4 sm:p-6">
+                    <h3 className="text-lg font-semibold">{t.containers.title}</h3>
+                    <p className="prose-sm-muted">
+                        <Rich text={t.containers.body} />
+                    </p>
+                    <VersionCode
+                        v3={{ file: "tailwind.config.ts", code: V3_CONTAINERS }}
+                        v4={{ file: "main.css", code: V4_CONTAINERS }}
+                    />
+                </div>
+
+                <Callout kind="note" title={t.variablesNote.title}>
+                    <Rich text={t.variablesNote.body} />
+                </Callout>
+            </div>
+        </Section>
+    );
+};
 
 export default SectionConfiguration;

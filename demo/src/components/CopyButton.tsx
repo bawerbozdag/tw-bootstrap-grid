@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { LucideCheck, LucideCopy, LucideX } from "lucide-react";
 import clsx from "clsx";
+import useI18n from "@/hooks/useI18n";
 
 interface ICopyButtonProps {
     text: string;
@@ -12,7 +13,8 @@ interface ICopyButtonProps {
 
 type TCopyState = "idle" | "copied" | "failed";
 
-const CopyButton = ({ text, className, label = "Copy", compact }: ICopyButtonProps) => {
+const CopyButton = ({ text, className, label, compact }: ICopyButtonProps) => {
+    const { m } = useI18n();
     const [state, setState] = useState<TCopyState>("idle");
     const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -36,7 +38,7 @@ const CopyButton = ({ text, className, label = "Copy", compact }: ICopyButtonPro
         <button
             type="button"
             onClick={handleClick}
-            title={label}
+            title={label ?? m.common.copy}
             className={clsx(
                 "inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-md px-2 py-1 text-xs transition",
                 state === "idle" && "text-muted hover:text-accent",
@@ -53,7 +55,7 @@ const CopyButton = ({ text, className, label = "Copy", compact }: ICopyButtonPro
                 <LucideCopy size={14} />
             )}
             <span aria-live="polite" className={compact ? "sr-only sm:not-sr-only" : undefined}>
-                {state === "copied" ? "Copied" : state === "failed" ? "Failed" : label}
+                {state === "copied" ? m.common.copied : state === "failed" ? m.common.failed : (label ?? m.common.copy)}
             </span>
         </button>
     );

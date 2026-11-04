@@ -2,16 +2,18 @@ import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 import { LucideCheck, LucideChevronDown } from "lucide-react";
 import clsx from "clsx";
 import useApp from "@/hooks/useApp";
+import useI18n from "@/hooks/useI18n";
 import type { TailwindVersion } from "@/contexts/AppContext";
 
-const OPTIONS: { value: TailwindVersion; label: string; short: string; hint: string }[] = [
-    { value: "v3", label: "Tailwind v3.4", short: "v3.4", hint: "tailwind.config.js" },
-    { value: "v4", label: "Tailwind v4", short: "v4", hint: "@plugin in CSS" },
+const OPTIONS: { value: TailwindVersion; label: string; short: string }[] = [
+    { value: "v3", label: "Tailwind v3.4", short: "v3.4" },
+    { value: "v4", label: "Tailwind v4", short: "v4" },
 ];
 
 // a styled replacement for <select>: same keyboard behaviour (arrows, Home/End, Enter, Escape)
 const VersionSelect = () => {
     const { tailwindVersion, setTailwindVersion } = useApp();
+    const { m } = useI18n();
 
     const [open, setOpen] = useState(false);
     const [highlight, setHighlight] = useState(0);
@@ -105,17 +107,17 @@ const VersionSelect = () => {
                 ref={buttonRef}
                 type="button"
                 role="combobox"
-                aria-label="Tailwind version"
+                aria-label={m.common.tailwindVersion}
                 aria-haspopup="listbox"
                 aria-expanded={open}
                 aria-controls={listId}
                 aria-activedescendant={open ? `${listId}-${highlight}` : undefined}
                 onClick={() => (open ? setOpen(false) : openList())}
                 onKeyDown={handleKeyDown}
-                className="inline-flex h-8 min-w-[4.5rem] cursor-pointer sm:min-w-32 items-center justify-between gap-2 rounded-lg border bg-surface pl-3 pr-2.5 text-xs font-medium text-ink transition hover:border-accent"
+                className="inline-flex h-8 min-w-[4.5rem] cursor-pointer xl:min-w-32 items-center justify-between gap-2 rounded-lg border bg-surface pl-3 pr-2.5 text-xs font-medium text-ink transition hover:border-accent"
             >
-                <span className="sm:hidden">{selected.short}</span>
-                <span className="hidden sm:inline">{selected.label}</span>
+                <span className="xl:hidden">{selected.short}</span>
+                <span className="hidden xl:inline">{selected.label}</span>
                 <LucideChevronDown
                     size={14}
                     aria-hidden="true"
@@ -129,7 +131,7 @@ const VersionSelect = () => {
             <ul
                 id={listId}
                 role="listbox"
-                aria-label="Tailwind version"
+                aria-label={m.common.tailwindVersion}
                 className={clsx(
                     "absolute right-0 top-full z-40 mt-2 w-52 origin-top-right rounded-xl border bg-surface p-1 shadow-lg",
                     "transition-[opacity,transform,visibility] duration-150 motion-reduce:transition-none",
@@ -160,7 +162,9 @@ const VersionSelect = () => {
                             >
                                 {option.label}
                             </span>
-                            <span className="block font-mono text-[11px] text-muted">{option.hint}</span>
+                            <span className="block font-mono text-[11px] text-muted">
+                                {option.value === "v3" ? m.versions.v3Hint : m.versions.v4Hint}
+                            </span>
                         </span>
                         {option.value === tailwindVersion && (
                             <LucideCheck size={16} aria-hidden="true" className="shrink-0 text-accent" />

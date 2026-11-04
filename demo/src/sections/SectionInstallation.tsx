@@ -2,7 +2,9 @@ import Callout from "@/components/Callout";
 import CodeBlock from "@/components/CodeBlock";
 import PackageManagerTabs from "@/components/PackageManagerTabs";
 import Section, { Step } from "@/components/Section";
+import Rich from "@/components/Rich";
 import VersionCode from "@/components/VersionCode";
+import useI18n from "@/hooks/useI18n";
 
 const V3_CONFIG = `import Grid from "tw-bootstrap-grid";
 
@@ -22,47 +24,43 @@ const USAGE = `<div class="container">
   </div>
 </div>`;
 
-const SectionInstallation = () => (
-    <Section
-        id="installation"
-        eyebrow="Getting started"
-        title="Installation"
-        description="Three steps: install the package, register the plugin, start using the classes."
-    >
-        <div className="space-y-5">
-            <Step index={1} title="Install the package">
-                <PackageManagerTabs />
-            </Step>
+const SectionInstallation = () => {
+    const { m } = useI18n();
+    const t = m.installation;
 
-            <Step index={2} title="Register the plugin">
-                <p className="prose-sm-muted">
-                    Pick your Tailwind version in the header and the snippet below follows. Tailwind v4 registers
-                    plugins in CSS, v3 in the config file.
-                </p>
-                <VersionCode
-                    v3={{ file: "tailwind.config.ts", code: V3_CONFIG }}
-                    v4={{ file: "main.css", code: V4_CSS }}
-                />
-                <p className="prose-sm-muted">
-                    In a CommonJS v3 config, <code className="code-wrap">plugins: [require("tw-bootstrap-grid")]</code>{" "}
-                    works as well.
-                </p>
-            </Step>
+    return (
+        <Section id="installation" eyebrow={t.eyebrow} title={t.title} description={t.description}>
+            <div className="space-y-5">
+                <Step index={1} title={t.step1}>
+                    <PackageManagerTabs />
+                </Step>
 
-            <Step index={3} title="Use the classes">
-                <p className="prose-sm-muted">
-                    That's it. Use them in your markup like any other Tailwind class. Anything you can do with{" "}
-                    <code>sm:</code>, <code>md:</code> or <code>hover:</code> works here too.
-                </p>
-                <CodeBlock code={USAGE} file="index.html" />
-            </Step>
+                <Step index={2} title={t.step2.title}>
+                    <p className="prose-sm-muted">
+                        <Rich text={t.step2.body} />
+                    </p>
+                    <VersionCode
+                        v3={{ file: "tailwind.config.ts", code: V3_CONFIG }}
+                        v4={{ file: "main.css", code: V4_CSS }}
+                    />
+                    <p className="prose-sm-muted">
+                        <Rich text={t.step2.note} />
+                    </p>
+                </Step>
 
-            <Callout kind="warning" title="You need a build step">
-                The plugin runs inside Tailwind's compiler (PostCSS, Vite, Webpack, the Tailwind CLI…). It can't work
-                with the Tailwind Play CDN script, which has no way to load plugins from npm.
-            </Callout>
-        </div>
-    </Section>
-);
+                <Step index={3} title={t.step3.title}>
+                    <p className="prose-sm-muted">
+                        <Rich text={t.step3.body} />
+                    </p>
+                    <CodeBlock code={USAGE} file="index.html" />
+                </Step>
+
+                <Callout kind="warning" title={t.buildStep.title}>
+                    <Rich text={t.buildStep.body} />
+                </Callout>
+            </div>
+        </Section>
+    );
+};
 
 export default SectionInstallation;

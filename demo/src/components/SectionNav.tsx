@@ -3,6 +3,7 @@ import { LucideChevronDown } from "lucide-react";
 import clsx from "clsx";
 import { useOverflowTabs } from "react-overflow-tabs";
 import { SECTIONS, type SectionId } from "@/_constants";
+import useI18n from "@/hooks/useI18n";
 import { MIGRATION_PATH } from "@/site";
 import useApp from "@/hooks/useApp";
 
@@ -11,9 +12,11 @@ const LINK = "block whitespace-nowrap rounded-md px-3 py-2 text-xs font-medium t
 // the section links: those that don't fit move into a "More" menu as the space shrinks
 const SectionNav = () => {
     const { activeSection, page } = useApp();
+    const { m, url } = useI18n();
 
     // the migration guide is a page of its own, the other links are sections of the home page
-    const hrefFor = (id: SectionId) => (id === "migration" ? MIGRATION_PATH : page === "home" ? `#${id}` : `/#${id}`);
+    const hrefFor = (id: SectionId) =>
+        id === "migration" ? url(MIGRATION_PATH) : page === "home" ? `#${id}` : url(`/#${id}`);
     const currentFor = (id: SectionId) =>
         id !== activeSection ? undefined : page === "migration" ? ("page" as const) : ("location" as const);
 
@@ -96,7 +99,7 @@ const SectionNav = () => {
     return (
         <nav
             ref={navRef}
-            aria-label="Sections"
+            aria-label={m.nav.label}
             className="order-3 flex w-full min-w-0 items-center gap-1 pb-2 lg:order-none lg:w-auto lg:flex-1 lg:px-3 lg:pb-0"
         >
             {/* overflowing links stay in the layout but are invisible, which is how the hook knows when they fit again */}
@@ -117,7 +120,7 @@ const SectionNav = () => {
                                     : "text-muted hover:text-ink",
                             )}
                         >
-                            {section.label}
+                            {m.nav[section.id]}
                         </a>
                     </li>
                 ))}
@@ -138,7 +141,7 @@ const SectionNav = () => {
                             activeIsHidden || menuOpen ? "bg-accent-soft text-accent" : "text-muted hover:text-ink",
                         )}
                     >
-                        More
+                        {m.nav.more}
                         <LucideChevronDown
                             size={14}
                             aria-hidden="true"
@@ -170,7 +173,7 @@ const SectionNav = () => {
                                             : "text-ink hover:bg-sunken",
                                     )}
                                 >
-                                    {section.label}
+                                    {m.nav[section.id]}
                                 </a>
                             </li>
                         ))}

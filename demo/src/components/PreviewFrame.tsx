@@ -5,7 +5,7 @@ import useApp from "@/hooks/useApp";
 import { breakpointFor } from "@/lib/devices";
 
 interface IPreviewFrameProps {
-    // names the frame for screen readers
+    // names the frame for screen readers, the whole sentence
     title: string;
     // the HTML to show, it is sanitized before it goes into the frame
     html: string;
@@ -158,7 +158,7 @@ const PreviewFrame = ({ title, html, width, matchEditor }: IPreviewFrameProps) =
                 {near && (
                     <iframe
                         ref={iframeRef}
-                        title={`Live preview: ${title}`}
+                        title={title}
                         srcDoc={SKELETON}
                         sandbox="allow-same-origin"
                         onLoad={handleLoad}

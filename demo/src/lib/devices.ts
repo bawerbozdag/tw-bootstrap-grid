@@ -2,16 +2,15 @@ export type DeviceId = "fit" | "phone" | "tablet" | "desktop";
 
 export interface IDevice {
     id: DeviceId;
-    label: string;
     // the viewport width the preview pretends to have, or null to use the width of the preview panel
     width: number | null;
 }
 
 export const DEVICES: IDevice[] = [
-    { id: "fit", label: "Fit to panel", width: null },
-    { id: "phone", label: "Phone, 375px", width: 375 },
-    { id: "tablet", label: "Tablet, 768px", width: 768 },
-    { id: "desktop", label: "Desktop, 1280px", width: 1280 },
+    { id: "fit", width: null },
+    { id: "phone", width: 375 },
+    { id: "tablet", width: 768 },
+    { id: "desktop", width: 1280 },
 ];
 
 // Tailwind's default breakpoints, which is what this demo uses

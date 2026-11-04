@@ -1,14 +1,13 @@
-import { useId, useState, type ReactNode } from "react";
+import { useId, useState } from "react";
 import { LucideChevronDown } from "lucide-react";
 import clsx from "clsx";
 import Callout from "@/components/Callout";
-import { FAQ } from "@/faq";
-import { ISSUES_URL, PULLS_URL } from "@/_constants";
-import NewTabHint from "@/components/NewTabHint";
+import Rich from "@/components/Rich";
 import Section from "@/components/Section";
+import useI18n from "@/hooks/useI18n";
 
 // one question, the answer slides open and closed
-const FaqItem = ({ question, answer }: { question: string; answer: ReactNode }) => {
+const FaqItem = ({ question, answer }: { question: string; answer: string }) => {
     const [open, setOpen] = useState(false);
     const panelId = useId();
     const buttonId = `${panelId}-question`;
@@ -47,52 +46,34 @@ const FaqItem = ({ question, answer }: { question: string; answer: ReactNode }) 
                 )}
             >
                 <div className="overflow-hidden">
-                    <p className="prose-sm-muted max-w-3xl px-6 pb-5">{answer}</p>
+                    <p className="prose-sm-muted max-w-3xl px-6 pb-5">
+                        <Rich text={answer} />
+                    </p>
                 </div>
             </div>
         </div>
     );
 };
 
-const SectionFaq = () => (
-    <Section
-        id="faq"
-        eyebrow="Good to know"
-        title="Frequently asked questions"
-        description="Answers to the questions that come up most."
-    >
-        <div className="space-y-5">
-            <div className="panel divide-y">
-                {FAQ.map((item) => (
-                    <FaqItem key={item.question} question={item.question} answer={item.answer} />
-                ))}
-            </div>
+const SectionFaq = () => {
+    const { m } = useI18n();
+    const t = m.faq;
 
-            <Callout kind="tip" title="Found a bug or have an idea?">
-                Please{" "}
-                <a
-                    href={`${ISSUES_URL}/new`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-medium text-accent underline underline-offset-4"
-                >
-                    open an issue
-                    <NewTabHint />
-                </a>{" "}
-                or send a{" "}
-                <a
-                    href={PULLS_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-medium text-accent underline underline-offset-4"
-                >
-                    pull request
-                    <NewTabHint />
-                </a>{" "}
-                on GitHub. Small fixes and documentation improvements are very welcome.
-            </Callout>
-        </div>
-    </Section>
-);
+    return (
+        <Section id="faq" eyebrow={t.eyebrow} title={t.title} description={t.description}>
+            <div className="space-y-5">
+                <div className="panel divide-y">
+                    {t.items.map((item) => (
+                        <FaqItem key={item.question} question={item.question} answer={item.answer} />
+                    ))}
+                </div>
+
+                <Callout kind="tip" title={t.feedback.title}>
+                    <Rich text={t.feedback.body} />
+                </Callout>
+            </div>
+        </Section>
+    );
+};
 
 export default SectionFaq;

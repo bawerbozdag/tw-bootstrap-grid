@@ -303,3 +303,28 @@
     @apply translate-y-3;
     top: 0;
 }
+
+/* Type that suits the language of the page, set through <html lang>. */
+
+/* Chinese and Japanese are not set with the tight letter spacing that suits Latin headings */
+html:is(:lang(zh), :lang(ja)) :is(h1, h2, h3, .tracking-tight, .tracking-widest, .tracking-wider) {
+    letter-spacing: normal;
+}
+
+/* uppercase labels only make sense for scripts that have letter case */
+html:is(:lang(zh), :lang(ja), :lang(ru)) .uppercase {
+    text-transform: none;
+}
+
+/* Long words in German, Russian and the like would otherwise stick out of narrow cards */
+:is(p, li, td, th, h1, h2, h3, summary, figcaption) {
+    overflow-wrap: break-word;
+}
+
+html:is(:lang(de), :lang(fr), :lang(es), :lang(pt-BR), :lang(ru), :lang(tr)) :is(p, li, td, th) {
+    hyphens: auto;
+}
+
+code {
+    hyphens: none;
+}

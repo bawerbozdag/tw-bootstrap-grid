@@ -14,6 +14,9 @@ import clsx from "clsx";
 import type { IExample } from "@/examples";
 import CopyButton from "./CopyButton";
 import PreviewFrame from "./PreviewFrame";
+import Rich from "./Rich";
+import useI18n from "@/hooks/useI18n";
+import { fmt } from "@/i18n/format";
 import { DEVICES, type DeviceId } from "@/lib/devices";
 import { hasRootRtl, setRootRtl } from "@/lib/rootDir";
 
@@ -32,6 +35,9 @@ const DEVICE_ICONS: Record<DeviceId, LucideIcon> = {
 };
 
 const LiveExample = ({ example }: ILiveExampleProps) => {
+    const { m } = useI18n();
+    const text = m.examples.items[example.id];
+
     const [code, setCode] = useState(example.code);
     const [revision, setRevision] = useState(0);
     const [deviceId, setDeviceId] = useState<DeviceId>(example.device ?? "fit");
@@ -58,18 +64,22 @@ const LiveExample = ({ example }: ILiveExampleProps) => {
                 <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent">
                     <example.icon size={18} aria-hidden="true" />
                 </span>
-                {example.title}
+                {text.title}
             </h3>
-            <p className="prose-sm-muted mb-5 max-w-3xl">{example.description}</p>
+            <p className="prose-sm-muted mb-5 max-w-3xl">
+                <Rich text={text.description} />
+            </p>
 
             <div className="row gy-4">
                 <div className={clsx("col-12 min-w-0", expanded ? "xl:order-1" : "xl:col-6 xl:order-2")}>
                     <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-                        <span className="text-xs font-semibold uppercase tracking-widest text-muted">Preview</span>
+                        <span className="text-xs font-semibold uppercase tracking-widest text-muted">
+                            {m.examples.preview}
+                        </span>
                         <div className="flex items-center gap-2">
                             <div
                                 role="group"
-                                aria-label="Preview width"
+                                aria-label={m.examples.previewWidth}
                                 className="flex rounded-lg border bg-surface p-0.5"
                             >
                                 {DEVICES.map((item) => {
@@ -80,8 +90,8 @@ const LiveExample = ({ example }: ILiveExampleProps) => {
                                             key={item.id}
                                             type="button"
                                             aria-pressed={deviceId === item.id}
-                                            aria-label={item.label}
-                                            title={item.label}
+                                            aria-label={m.examples.devices[item.id]}
+                                            title={m.examples.devices[item.id]}
                                             onClick={() => setDeviceId(item.id)}
                                             className={clsx(
                                                 "inline-flex size-8 cursor-pointer items-center justify-center rounded-md transition",
@@ -102,17 +112,22 @@ const LiveExample = ({ example }: ILiveExampleProps) => {
                                 className={clsx("btn btn-secondary btn-sm", rtl && "border-accent text-accent")}
                             >
                                 {rtl ? <LucideAlignRight size={13} /> : <LucideAlignLeft size={13} />}
-                                RTL
+                                {m.examples.rtl}
                             </button>
                         </div>
                     </div>
-                    <PreviewFrame title={example.title} html={code} width={device.width} matchEditor={!expanded} />
+                    <PreviewFrame
+                        title={fmt(m.examples.previewTitle, { title: text.title })}
+                        html={code}
+                        width={device.width}
+                        matchEditor={!expanded}
+                    />
                 </div>
 
                 <div className={clsx("col-12 min-w-0", expanded ? "xl:order-2" : "xl:col-6 xl:order-1")}>
-                    <div className="mb-2 flex items-center justify-between">
+                    <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <span className="text-xs font-semibold uppercase tracking-widest text-muted">
-                            Editable HTML
+                            {m.examples.editable}
                         </span>
                         <div className="flex items-center gap-1">
                             <CopyButton text={code} />
@@ -123,7 +138,7 @@ const LiveExample = ({ example }: ILiveExampleProps) => {
                                 className="inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-md px-2 py-1 text-xs text-muted transition hover:text-accent disabled:pointer-events-none disabled:opacity-40"
                             >
                                 <LucideRotateCcw size={13} />
-                                Reset
+                                {m.examples.reset}
                             </button>
                         </div>
                     </div>
@@ -133,7 +148,7 @@ const LiveExample = ({ example }: ILiveExampleProps) => {
                                 <pre
                                     tabIndex={0}
                                     role="group"
-                                    aria-label={`Editable HTML, ${example.title} (loading the editor)`}
+                                    aria-label={fmt(m.examples.editorLoading, { title: text.title })}
                                     className={clsx(
                                         "code-scroll max-h-[360px] min-h-48 overflow-auto bg-sunken p-4 font-mono text-[13px] leading-6",
                                         !expanded && "xl:h-[360px]",
@@ -144,7 +159,7 @@ const LiveExample = ({ example }: ILiveExampleProps) => {
                             }
                         >
                             <CodeEditor
-                                label={`Editable HTML, ${example.title}`}
+                                label={fmt(m.examples.editorLabel, { title: text.title })}
                                 value={code}
                                 onChange={setCode}
                                 revision={revision}
@@ -155,10 +170,12 @@ const LiveExample = ({ example }: ILiveExampleProps) => {
                 </div>
             </div>
 
-            {example.tip && (
+            {text.tip && (
                 <p className="mt-4 flex items-start gap-2 text-sm leading-relaxed text-muted">
                     <LucideLightbulb size={16} className="mt-0.5 shrink-0 text-amber-500" />
-                    <span>{example.tip}</span>
+                    <span>
+                        <Rich text={text.tip} />
+                    </span>
                 </p>
             )}
         </article>

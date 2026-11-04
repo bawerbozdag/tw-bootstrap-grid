@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
+import Rich from "./Rich";
 
 interface ISectionProps {
     id: string;
     eyebrow: string;
     title: string;
-    description?: ReactNode;
+    description?: string;
     children: ReactNode;
 }
 
@@ -15,7 +16,11 @@ const Section = ({ id, eyebrow, title, description, children }: ISectionProps) =
             <h2 id={`${id}-title`} className="mb-3 text-3xl font-bold tracking-tight">
                 {title}
             </h2>
-            {description && <p className="lead">{description}</p>}
+            {description && (
+                <p className="lead">
+                    <Rich text={description} />
+                </p>
+            )}
         </header>
         {children}
     </section>

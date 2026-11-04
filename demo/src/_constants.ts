@@ -10,14 +10,14 @@ export const THEME_STORAGE_KEY = "theme";
 export const DEFAULT_TAILWIND_VERSION = "v4";
 
 export const SECTIONS = [
-    { id: "introduction", label: "Introduction" },
-    { id: "installation", label: "Installation" },
-    { id: "configuration", label: "Configuration" },
-    { id: "classes", label: "Classes" },
-    { id: "migration", label: "Migration" },
-    { id: "examples", label: "Examples" },
-    { id: "rtl", label: "RTL" },
-    { id: "faq", label: "FAQ" },
+    { id: "introduction" },
+    { id: "installation" },
+    { id: "configuration" },
+    { id: "classes" },
+    { id: "migration" },
+    { id: "examples" },
+    { id: "rtl" },
+    { id: "faq" },
 ] as const;
 
 export type SectionId = (typeof SECTIONS)[number]["id"];

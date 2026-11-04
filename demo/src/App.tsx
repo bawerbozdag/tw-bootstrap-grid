@@ -13,6 +13,9 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
 import MigrationPage from "./pages/MigrationPage";
+import I18nContext, { type II18n } from "./i18n/I18nContext";
+import { localizePath, type ILanguage } from "./i18n/languages";
+import type { Messages } from "./i18n/messages/en";
 import type { PageId } from "./site";
 // style
 import "@/assets/css/main.css";
@@ -36,7 +39,13 @@ const readTheme = (): Theme => {
 
 const NO_SECTIONS: readonly SectionId[] = [];
 
-const App = ({ page }: { page: PageId }) => {
+interface IAppProps {
+    page: PageId;
+    language: ILanguage;
+    messages: Messages;
+}
+
+const App = ({ page, language, messages }: IAppProps) => {
     const [tailwindVersion, setVersionState] = useState<TailwindVersion>(readVersion);
     const [theme, setTheme] = useState<Theme>(readTheme);
 
@@ -73,22 +82,35 @@ const App = ({ page }: { page: PageId }) => {
         }
     }, []);
 
+    // the prerendered HTML already has these, this keeps them right in development and after any client-side change
+    useEffect(() => {
+        document.documentElement.lang = language.hreflang;
+        document.documentElement.dir = language.dir;
+    }, [language]);
+
+    const i18n = useMemo<II18n>(
+        () => ({ language, m: messages, url: (path: string) => localizePath(language, path) }),
+        [language, messages],
+    );
+
     const value = useMemo<IAppContext>(
         () => ({ page, activeSection, tailwindVersion, setTailwindVersion, theme, toggleTheme }),
         [page, activeSection, tailwindVersion, setTailwindVersion, theme, toggleTheme],
     );
 
     return (
-        <AppContext.Provider value={value}>
-            <a href="#main" className="skip-link">
-                Skip to content
-            </a>
-            <Header />
-            <main id="main" tabIndex={-1} className="container max-w-6xl outline-none">
-                {page === "home" ? <HomePage /> : <MigrationPage />}
-            </main>
-            <Footer />
-        </AppContext.Provider>
+        <I18nContext.Provider value={i18n}>
+            <AppContext.Provider value={value}>
+                <a href="#main" className="skip-link">
+                    {messages.common.skipToContent}
+                </a>
+                <Header />
+                <main id="main" tabIndex={-1} className="container max-w-6xl outline-none">
+                    {page === "home" ? <HomePage /> : <MigrationPage />}
+                </main>
+                <Footer />
+            </AppContext.Provider>
+        </I18nContext.Provider>
     );
 };
 

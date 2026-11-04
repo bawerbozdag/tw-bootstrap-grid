@@ -1,31 +1,31 @@
 // This is the server entry for the prerender, not something Fast Refresh ever reloads, so exporting plain functions is fine.
 /* eslint-disable react-refresh/only-export-components */
-import { renderToStaticMarkup, renderToString } from "react-dom/server";
+import { renderToString } from "react-dom/server";
 import App from "./App";
-import { FAQ } from "./faq";
-import { MIGRATION_STEPS } from "./migration-content";
+import { loadMessages } from "./i18n/load";
+import { languageByCode, type ILanguage } from "./i18n/languages";
+import { plain } from "./i18n/format";
 import type { PageId } from "./site";
 
-export { PAGES, SITE_URL } from "./site";
+export { LANGUAGES, localizePath } from "./i18n/languages";
+export { PAGES, SITE_URL, pageFile, pageUrl } from "./site";
+export { plain } from "./i18n/format";
+export { loadMessages } from "./i18n/load";
 
-// used by scripts/prerender.mjs: the page as static HTML, so crawlers get real content without running any JavaScript
-export const render = (page: PageId): string => renderToString(<App page={page} />);
-
-const toText = (markup: string): string =>
-    markup
-        .replace(/<[^>]+>/g, "")
-        .replace(/&lt;/g, "<")
-        .replace(/&gt;/g, ">")
-        .replace(/&quot;/g, '"')
-        .replace(/&#x27;|&#39;/g, "'")
-        .replace(/&amp;/g, "&")
-        .replace(/\s+/g, " ")
-        .trim();
+// used by scripts/prerender.mjs: a page in a language as static HTML, so crawlers get real content without running any JavaScript
+export const render = async (page: PageId, language: ILanguage): Promise<string> =>
+    renderToString(<App page={page} language={language} messages={await loadMessages(language.code)} />);
 
 // the FAQ as plain text, for the FAQPage structured data
-export const faqEntries = (): { question: string; answer: string }[] =>
-    FAQ.map(({ question, answer }) => ({ question, answer: toText(renderToStaticMarkup(<>{answer}</>)) }));
+export const faqEntries = async (code: string): Promise<{ question: string; answer: string }[]> =>
+    (await loadMessages(languageByCode(code).code)).faq.items.map(({ question, answer }) => ({
+        question: plain(question),
+        answer: plain(answer),
+    }));
 
 // the steps of the migration guide as plain text, for the HowTo structured data
-export const migrationSteps = (): { name: string; text: string }[] =>
-    MIGRATION_STEPS.map(({ name, text }) => ({ name, text: toText(renderToStaticMarkup(<>{text}</>)) }));
+export const migrationSteps = async (code: string): Promise<{ name: string; text: string }[]> =>
+    (await loadMessages(languageByCode(code).code)).guide.steps.map(({ name, text }) => ({
+        name: plain(name),
+        text: plain(text),
+    }));
