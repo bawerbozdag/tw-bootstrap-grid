@@ -1,228 +1,168 @@
-import { LucideSettings, LucideLightbulb } from "lucide-react";
-import CodeMirror from "@uiw/react-codemirror";
-import { javascript } from "@codemirror/lang-javascript";
-import { css } from "@codemirror/lang-css";
-import { vscodeLight, vscodeDark } from "@uiw/codemirror-theme-vscode";
-import CopyButton from "@/components/CopyButton";
-import useApp from "@/hooks/useApp";
+import Callout from "@/components/Callout";
+import Section from "@/components/Section";
+import VersionCode from "@/components/VersionCode";
 
-const SectionConfiguration = () => {
-    const { tailwindVersion, theme } = useApp();
-
-    const v3Config = `import Grid from "tw-bootstrap-grid";
-
-export default {
-  content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
+const V3_SCREENS = `export default {
   theme: {
     screens: {
-      sm: "40rem", // 640px
-      md: "48rem", // 768px
-      lg: "64rem", // 1024px
-      xl: "80rem", // 1280px
-      2xl: "96rem", // 1536px
+      sm: "40rem",  // 640px
+      md: "48rem",  // 768px
+      lg: "64rem",  // 1024px
+      xl: "80rem",  // 1280px
+      "2xl": "96rem", // 1536px
     },
-    extend: {},
   },
   plugins: [Grid],
 };`;
 
-    const v4Theme = `@import "tailwindcss";
+const V4_SCREENS = `@import "tailwindcss";
 @plugin "tw-bootstrap-grid";
 
 @theme {
-  --breakpoint-sm: 40rem; /* 640px */
-  --breakpoint-md: 48rem; /* 768px */
-  --breakpoint-lg: 64rem; /* 1024px */
-  --breakpoint-xl: 80rem; /* 1280px */
+  --breakpoint-sm: 40rem;  /* 640px */
+  --breakpoint-md: 48rem;  /* 768px */
+  --breakpoint-lg: 64rem;  /* 1024px */
+  --breakpoint-xl: 80rem;  /* 1280px */
   --breakpoint-2xl: 96rem; /* 1536px */
 }`;
 
-    const v3Gutters = `import Grid from "tw-bootstrap-grid";
+const V3_GUTTERS = `import Grid from "tw-bootstrap-grid";
 
 export default {
-  content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
   plugins: [
     Grid({
-      /* Global gutter options */
+      // used by containers and rows
       gutters: { x: "1.5rem", y: "0" },
-      /* Container-specific */
-      containerGutters: {x: "1.5rem", y: "0" },
-      /* Row-specific */
-      rowGutters: { x: "1.5rem", y: "0" },
+
+      // overrides for one of them only
+      containerGutters: { x: "1rem" },
+      rowGutters: { x: "2rem", y: "1rem" },
     }),
   ],
 };`;
 
-    const v4ThemeGutters = `@import "tailwindcss";
+const V4_GUTTERS = `@import "tailwindcss";
 @plugin "tw-bootstrap-grid";
 
-@theme {
-  /* Global gutter variables */
+:root {
+  /* used by containers and rows */
   --bs-global-gutter-x: 1.5rem;
   --bs-global-gutter-y: 0;
 
-  /* Container-specific */
-  --bs-container-gutter-x: var(--bs-global-gutter-x);
-  --bs-container-gutter-y: var(--bs-global-gutter-y);
-
-  /* Row-specific */
-  --bs-row-gutter-x: var(--bs-global-gutter-x);
-  --bs-row-gutter-y: var(--bs-global-gutter-y);
+  /* overrides for one of them only */
+  --bs-container-gutter-x: 1rem;
+  --bs-row-gutter-x: 2rem;
+  --bs-row-gutter-y: 1rem;
 }`;
 
-    return (
-        <section
-            id="configuration"
-            className="container py-16 px-4 border-b"
-            aria-labelledby="configuration-title"
-            aria-describedby="configuration-description"
-        >
-            <h2 id="configuration-title" className="mb-3">
-                <LucideSettings className="text-indigo-600 dark:text-indigo-400" size={24} />
-                Configuration
-            </h2>
-            <p id="configuration-description" className="mb-6">
-                The <span className="font-semibold">tw-bootstrap-grid</span> plugin provides several configuration
-                options that let you tailor its behavior to your project's layout system. You can adjust container
-                breakpoints, gutter spacing, and layout behavior for both Tailwind v3 and v4.
-            </p>
+const V3_CONTAINERS = `export default {
+  plugins: [Grid({ generateContainers: false })],
+};`;
 
-            <div className="card mb-10">
-                <div className="flex items-start justify-between mb-3">
-                    <h3>1) Define custom breakpoints</h3>
-                    <span className="badge-version">
-                        {tailwindVersion === "v3" ? "Tailwind v3.4.x" : "Tailwind v4+"}
-                    </span>
-                </div>
-                <p className="mb-6">
-                    You can override the default<code className="badge">.container</code>breakpoints to match your
-                    project's responsive design system. The plugin automatically uses these values to generate
-                    responsive container max-widths.
+const V4_CONTAINERS = `@import "tailwindcss";
+@plugin "tw-bootstrap-grid" {
+  generateContainers: false;
+}`;
+
+const ORDER = [
+    [
+        "1",
+        "--bs-row-gutter-x / --bs-container-gutter-x",
+        "rowGutters / containerGutters",
+        "The most specific value wins.",
+    ],
+    ["2", "--bs-global-gutter-x", "gutters", "Shared fallback for both."],
+    ["3", "1.5rem (x) and 0 (y)", "built-in default", "The same defaults Bootstrap uses."],
+];
+
+const SectionConfiguration = () => (
+    <Section
+        id="configuration"
+        eyebrow="Getting started"
+        title="Configuration"
+        description="The defaults match Bootstrap, so you can skip this page. Come back when you want different breakpoints or gutter sizes."
+    >
+        <div className="space-y-5">
+            <div className="panel space-y-4 p-4 sm:p-6">
+                <h3 className="text-lg font-semibold">Breakpoints</h3>
+                <p className="prose-sm-muted">
+                    The plugin has no breakpoints of its own. Prefixes like <code>md:col-6</code> and the max-width of{" "}
+                    <code>.container</code> both come from Tailwind, so changing your screens changes the grid with
+                    them.
                 </p>
-                <div className="mb-6">
-                    {tailwindVersion === "v3" ? (
-                        <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
-                                    tailwind.config.ts
-                                </span>
-                                <CopyButton text={v3Config} />
-                            </div>
-                            <CodeMirror
-                                aria-label="Read-only Tailwind v3 config example defining custom breakpoints"
-                                className="text-sm"
-                                extensions={[javascript()]}
-                                theme={theme == "light" ? vscodeLight : vscodeDark}
-                                editable={false}
-                                basicSetup={{
-                                    highlightActiveLine: false,
-                                    highlightActiveLineGutter: false,
-                                    foldGutter: false,
-                                }}
-                                value={v3Config}
-                            />
-                        </div>
-                    ) : (
-                        <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
-                                    main.css
-                                </span>
-                                <CopyButton text={v4Theme} />
-                            </div>
-                            <CodeMirror
-                                aria-label="Read-only Tailwind v4 config example defining custom breakpoints "
-                                className="text-sm"
-                                extensions={[css()]}
-                                theme={theme == "light" ? vscodeLight : vscodeDark}
-                                editable={false}
-                                basicSetup={{
-                                    highlightActiveLine: false,
-                                    highlightActiveLineGutter: false,
-                                    foldGutter: false,
-                                }}
-                                value={v4Theme}
-                            />
-                        </div>
-                    )}
+                <VersionCode
+                    v3={{ file: "tailwind.config.ts", code: V3_SCREENS }}
+                    v4={{ file: "main.css", code: V4_SCREENS }}
+                />
+            </div>
+
+            <div className="panel space-y-4 p-4 sm:p-6">
+                <h3 className="text-lg font-semibold">Gutter sizes</h3>
+                <p className="prose-sm-muted">
+                    Gutters are the space between columns. By default it's <code>1.5rem</code> horizontally and{" "}
+                    <code>0</code> vertically. Set it once for everything, or separately for containers and rows. In v3
+                    you pass options to the plugin, in v4 you set CSS variables.
+                </p>
+                <VersionCode
+                    v3={{ file: "tailwind.config.ts", code: V3_GUTTERS }}
+                    v4={{ file: "main.css", code: V4_GUTTERS }}
+                />
+
+                <div className="overflow-x-auto rounded-xl border">
+                    <table className="w-full min-w-[34rem] text-left text-sm">
+                        <caption className="sr-only">Gutter resolution order</caption>
+                        <thead className="bg-sunken text-xs uppercase tracking-wider text-muted">
+                            <tr>
+                                <th className="px-4 py-2.5 font-medium">Priority</th>
+                                <th className="px-4 py-2.5 font-medium">CSS variable</th>
+                                <th className="px-4 py-2.5 font-medium">Option</th>
+                                <th className="px-4 py-2.5 font-medium">Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y">
+                            {ORDER.map(([priority, variable, option, notes]) => (
+                                <tr key={priority}>
+                                    <td className="px-4 py-2.5 text-muted">{priority}</td>
+                                    <td className="px-4 py-2.5">
+                                        <code>{variable}</code>
+                                    </td>
+                                    <td className="px-4 py-2.5">
+                                        <code>{option}</code>
+                                    </td>
+                                    <td className="px-4 py-2.5 text-muted">{notes}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
-                <p className="tip-info">
-                    <LucideLightbulb size={16} />
-                    Tip: Breakpoints defined here automatically affect<code className="badge">.container</code>widths
-                    and responsive column utilities (<code className="badge">md:col-*</code>,
-                    <code className="badge">lg:col-*</code>, etc.).
+
+                <p className="prose-sm-muted">
+                    The CSS variables are read at runtime, so in either version you can also override them on any
+                    element to change the gutters for just that section. For a single row, use <code>.g-*</code>,{" "}
+                    <code>.gx-*</code> and <code>.gy-*</code>.
                 </p>
             </div>
 
-            <div className="card">
-                <div className="flex items-start justify-between">
-                    <h3 className="mb-3">2) Configure gutter spacing</h3>
-                    <span className="badge-version">
-                        {tailwindVersion === "v3" ? "Tailwind v3.4.x" : "Tailwind v4+"}
-                    </span>
-                </div>
-                <p className="mb-6">
-                    Gutters control the horizontal (<code className="badge">gx-*</code>) and vertical (
-                    <code className="badge">gy-*</code>) spacing between columns and rows. You can customize their
-                    default values globally or per-container/row level.
+            <div className="panel space-y-4 p-4 sm:p-6">
+                <h3 className="text-lg font-semibold">Turn off the containers</h3>
+                <p className="prose-sm-muted">
+                    Prefer Tailwind's own <code>container</code> alone? Set <code>generateContainers</code> to{" "}
+                    <code>false</code> and the plugin stops generating <code>.container-fluid</code> and its
+                    gutter-aware padding. Rows and columns are unaffected.
                 </p>
-                <div className="mb-6">
-                    {tailwindVersion === "v3" ? (
-                        <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
-                                    tailwind.config.ts
-                                </span>
-                                <CopyButton text={v3Gutters} />
-                            </div>
-                            <CodeMirror
-                                aria-label="Tailwind v3 config example for gutter spacing"
-                                className="text-sm"
-                                extensions={[javascript()]}
-                                theme={theme == "light" ? vscodeLight : vscodeDark}
-                                editable={false}
-                                basicSetup={{
-                                    highlightActiveLine: false,
-                                    highlightActiveLineGutter: false,
-                                    foldGutter: false,
-                                }}
-                                value={v3Gutters}
-                            />
-                        </div>
-                    ) : (
-                        <div className="rounded-lg border overflow-hidden">
-                            <div className="flex items-center justify-between px-3 py-2 border-b bg-slate-50 dark:bg-slate-800">
-                                <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-200">
-                                    main.css
-                                </span>
-                                <CopyButton text={v4ThemeGutters} />
-                            </div>
-                            <CodeMirror
-                                aria-label="Tailwind v4 config example for gutter spacing"
-                                className="text-sm"
-                                extensions={[css()]}
-                                theme={theme == "light" ? vscodeLight : vscodeDark}
-                                editable={false}
-                                basicSetup={{
-                                    highlightActiveLine: false,
-                                    highlightActiveLineGutter: false,
-                                    foldGutter: false,
-                                }}
-                                value={v4ThemeGutters}
-                            />
-                        </div>
-                    )}
-                </div>
-                <p className="tip-info">
-                    <LucideLightbulb size={16} />
-                    Tip: <code className="badge">g-*</code>, <code className="badge">gx-*</code>, and
-                    <code className="badge">gy-*</code> classes use Tailwind's{" "}
-                    <code className="badge">theme.spacing</code> scale. Updating your spacing scale automatically
-                    updates all gutter utilities.
-                </p>
+                <VersionCode
+                    v3={{ file: "tailwind.config.ts", code: V3_CONTAINERS }}
+                    v4={{ file: "main.css", code: V4_CONTAINERS }}
+                />
             </div>
-        </section>
-    );
-};
+
+            <Callout kind="note" title="Why variables in v4?">
+                Tailwind v4 can pass simple values like <code>generateContainers: false;</code> to a plugin, but not
+                nested objects such as <code>gutters</code>. CSS variables cover that case and have the bonus of being
+                overridable per element.
+            </Callout>
+        </div>
+    </Section>
+);
 
 export default SectionConfiguration;

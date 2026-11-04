@@ -1,108 +1,146 @@
-import { LucideSparkles } from "lucide-react";
-import DropdownTailwindVersion from "@/components/Sidebar/components/DropdownTailwindVersion";
-import FeaturesList from "@/components/FeaturesList";
-import useApp from "@/hooks/useApp";
+import type { ReactNode } from "react";
+import {
+    LucideArrowRight,
+    LucideBox,
+    LucideColumns3,
+    LucideGlobe,
+    LucideLayoutGrid,
+    LucideMoveRight,
+    LucideStretchHorizontal,
+} from "lucide-react";
+import { GITHUB_URL } from "@/_constants";
+import CopyButton from "@/components/CopyButton";
+import HeroGrid from "@/components/HeroGrid";
 
-const SectionIntroduction = () => {
-    const { tailwindVersion } = useApp();
+interface IFeature {
+    icon: ReactNode;
+    title: string;
+    body: ReactNode;
+}
 
-    return (
-        <section
-            id="introduction"
-            className="container py-16 px-4 border-b"
-            aria-labelledby="section-introduction-title"
-            aria-describedby="section-introduction-description"
-        >
-            <h1
-                id="section-introduction-title"
-                className="text-nowrap mb-3 text-4xl font-bold inline-block tracking-tight bg-gradient-to-r from-sky-600/90 via-indigo-500 to-purple-600 bg-clip-text text-transparent leading-13"
-            >
-                tw-bootstrap-grid
-            </h1>
+const FEATURES: IFeature[] = [
+    {
+        icon: <LucideLayoutGrid size={20} />,
+        title: "12-column grid",
+        body: (
+            <>
+                <code>.row</code>, <code>.col</code>, <code>.col-auto</code> and <code>.col-1</code> to{" "}
+                <code>.col-12</code>, just like Bootstrap.
+            </>
+        ),
+    },
+    {
+        icon: <LucideStretchHorizontal size={20} />,
+        title: "Gutters from your theme",
+        body: (
+            <>
+                <code>.g-*</code>, <code>.gx-*</code> and <code>.gy-*</code> use your Tailwind spacing scale, so they
+                match the rest of your design.
+            </>
+        ),
+    },
+    {
+        icon: <LucideMoveRight size={20} />,
+        title: "Offsets",
+        body: (
+            <>
+                <code>.offset-0</code> to <code>.offset-12</code> to center a column or leave a gap.
+            </>
+        ),
+    },
+    {
+        icon: <LucideColumns3 size={20} />,
+        title: "Row columns",
+        body: (
+            <>
+                <code>.row-cols-1</code> to <code>.row-cols-6</code> and <code>.row-cols-auto</code> size every child
+                from one class on the row.
+            </>
+        ),
+    },
+    {
+        icon: <LucideBox size={20} />,
+        title: "Containers",
+        body: (
+            <>
+                <code>.container</code> and <code>.container-fluid</code> with gutter-aware padding. Max widths come
+                from Tailwind's own breakpoints.
+            </>
+        ),
+    },
+    {
+        icon: <LucideGlobe size={20} />,
+        title: "Responsive and RTL",
+        body: (
+            <>
+                Every class takes Tailwind's breakpoint prefixes, like <code>md:col-6</code>, and flips correctly with{" "}
+                <code>dir="rtl"</code>.
+            </>
+        ),
+    },
+];
 
-            <p id="section-introduction-description" className="mb-4 leading-relaxed">
-                A lightweight and intuitive grid system that brings the simplicity of Bootstrap's layout to Tailwind
-                CSS. Fully compatible with Tailwind v3.4.x and v4+.
-            </p>
-
-            <div className="mb-6 flex items-center gap-3">
-                <a
-                    href="#installation"
-                    className="btn btn-primary"
-                    onClick={(e) => {
-                        e.preventDefault();
-
-                        const element = document.querySelector("section#installation");
-
-                        if (!element) {
-                            return;
-                        }
-
-                        return element.scrollIntoView({ behavior: "smooth" });
-                    }}
+const SectionIntroduction = () => (
+    <section id="introduction" aria-labelledby="introduction-title" className="pb-12 pt-8 sm:pb-16 sm:pt-12 lg:pt-16">
+        <div className="row items-center gy-10">
+            <div className="col-12 xl:col-6">
+                <p className="mb-4 inline-flex items-center gap-2 rounded-full border bg-surface px-3 py-1 text-xs font-medium text-muted">
+                    <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />
+                    Tailwind CSS plugin · v3.4 and v4
+                </p>
+                <h1
+                    id="introduction-title"
+                    className="mb-5 text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl"
                 >
-                    Get Started
-                </a>
-                {/* <a
-                    href="#playground"
-                    className="btn btn-secondary"
-                    onClick={(e) => {
-                        e.preventDefault();
+                    The Bootstrap grid, <span className="text-accent">for Tailwind.</span>
+                </h1>
+                <p className="lead mb-8 max-w-xl">
+                    If you already think in rows and columns, keep doing it. tw-bootstrap-grid adds the familiar
+                    12-column grid, <code>.row</code>, <code>.col-6</code>, <code>.offset-2</code>, <code>.g-4</code>,
+                    to Tailwind, with RTL support and no opinions about how your components should look.
+                </p>
 
-                        const element = document.querySelector("section#playground");
+                <div className="mb-6 flex flex-wrap items-center gap-3">
+                    <a href="#installation" className="btn btn-primary">
+                        Get started
+                        <LucideArrowRight size={16} />
+                    </a>
+                    <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="btn btn-secondary">
+                        View on GitHub
+                    </a>
+                </div>
 
-                        if (!element) {
-                            return;
-                        }
-
-                        return element.scrollIntoView({ behavior: "smooth" });
-                    }}
-                >
-                    Try Playground
-                </a> */}
+                <div className="inline-flex max-w-full items-center gap-3 rounded-lg border bg-surface py-1.5 pl-4 pr-2 font-mono text-sm">
+                    <span className="shrink-0 select-none text-muted">$</span>
+                    <span className="min-w-0 truncate">npm install tw-bootstrap-grid</span>
+                    <CopyButton text="npm install tw-bootstrap-grid" className="shrink-0" />
+                </div>
             </div>
 
-            <div className="mb-8 border-b pb-8">
-                <span
-                    className="mb-4 inline-flex items-center gap-2 rounded-full border bg-slate-100 px-3 py-1.5 text-sm text-slate-700 dark:bg-slate-800 dark:text-slate-300"
-                    aria-live="polite"
-                    role="status"
-                >
-                    <span className="inline-block size-2 rounded-full bg-indigo-500" aria-hidden="true" />
-                    Currently viewing:
-                    <strong className="font-medium text-indigo-700 dark:text-indigo-400">
-                        {tailwindVersion === "v3" ? "Tailwind v3.4.x" : "Tailwind v4+"}
-                    </strong>
-                </span>
-                <DropdownTailwindVersion className="mb-1 block xl:hidden" />
-                <p className="text-sm mb-2">
-                    Installation steps differ between Tailwind v3.4.x and v4+.
-                    <span className="hidden lg:inline">
-                        {" "}
-                        Use the version selector in the sidebar to switch examples.
-                    </span>
-                </p>
-                <p className="mb-2 text-sm">
-                    <strong>tw-bootstrap-grid</strong> bridges two worlds, the structured, reliable grid system of
-                    Bootstrap and the utility-first flexibility of Tailwind. It focuses solely on layout, providing a
-                    clean, predictable, and minimal grid layer without extra bloat or visual opinions.
-                </p>
-                <p className="text-sm">
-                    Whether you're building quick prototypes or production-grade dashboards, this plugin gives you the
-                    power of a proven 12-column grid while keeping the expressive Tailwind syntax you already know.
-                </p>
+            <div className="col-12 xl:col-6">
+                <HeroGrid />
             </div>
+        </div>
 
-            <h2 className="mb-3">
-                <LucideSparkles size={24} className="text-indigo-500 dark:text-indigo-400 mt-0.5" />
-                Features
-            </h2>
-            <p className="mb-6">
-                Explore the core utilities that make responsive layouts simple, predictable, and flexible.
-            </p>
-            <FeaturesList />
-        </section>
-    );
-};
+        <div className="row mt-16 gy-6">
+            {FEATURES.map((feature) => (
+                <div key={feature.title} className="col-12 sm:col-6 lg:col-4">
+                    <div className="panel h-full p-5">
+                        <span className="mb-3 inline-flex size-9 items-center justify-center rounded-lg bg-accent-soft text-accent">
+                            {feature.icon}
+                        </span>
+                        <h3 className="mb-1.5 font-semibold">{feature.title}</h3>
+                        <p className="prose-sm-muted">{feature.body}</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+
+        <p className="mt-8 max-w-3xl text-sm leading-relaxed text-muted">
+            It only does layout: no colors, no components, no resets. It adds to Tailwind rather than replacing any of
+            it, so you can mix <code>col-4</code> and <code>flex</code> on the same page without a second thought.
+        </p>
+    </section>
+);
 
 export default SectionIntroduction;

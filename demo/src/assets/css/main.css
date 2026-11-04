@@ -1,79 +1,295 @@
 @import "./tailwind.css";
 
-/* components */
-@import "./components/button";
-@import "./components/dropdown-tailwind-version";
+/* class based dark mode (toggled from the header, defaults to the system preference) */
+@custom-variant dark (&:where(.dark, .dark *));
 
-/* layout */
-@import "./layout/sidebar";
+/* semantic tokens: components use these names, the values flip with the theme */
+@theme inline {
+    --color-canvas: var(--canvas);
+    --color-surface: var(--surface);
+    --color-sunken: var(--sunken);
+    --color-line: var(--line);
+    --color-ink: var(--ink);
+    --color-muted: var(--muted);
+    --color-accent: var(--accent);
+    --color-accent-soft: var(--accent-soft);
+    --color-accent-ink: var(--accent-ink);
+    --color-guide: var(--guide);
+
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+:root {
+    /* roomier page edges, using the plugin's own container gutter variable */
+    --bs-container-gutter-x: 2.5rem;
+
+    --canvas: #fafaf9;
+    --surface: #ffffff;
+    --sunken: #f4f4f2;
+    --line: #e7e5e0;
+    --ink: #1c1b19;
+    --muted: #6c6862;
+    --accent: #4f46e5;
+    --accent-soft: #eeedfd;
+    --accent-ink: #ffffff;
+
+    /* the twelve guide columns in the hero: a tint of the accent, so they stand out from the card but stay in tune */
+    --guide: color-mix(in srgb, var(--accent) 24%, var(--surface));
+
+    /* live preview columns: two alternating shades so neighbours stay distinct, plus a cooler pair for nested rows */
+    --col-a: #c7d2fe;
+    --col-b: #ddd6fe;
+    --col-ink: #312e81;
+    --sub-a: #bae6fd;
+    --sub-b: #a5f3fc;
+    --sub-ink: #0c4a6e;
+
+    /* code colors, taken from VS Code Light+ */
+    --tok-comment: #008000;
+    --tok-keyword: #0000ff;
+    --tok-control: #af00db;
+    --tok-string: #a31515;
+    --tok-attr-value: #0000ff;
+    --tok-number: #098658;
+    --tok-property: #001080;
+    --tok-variable: #001080;
+    --tok-function: #795e26;
+    --tok-tag: #800000;
+    --tok-bracket: #800000;
+    --tok-attr: #e50000;
+    --tok-type: #267f99;
+}
+
+.dark {
+    --canvas: #0d0e12;
+    --surface: #14161b;
+    --sunken: #101216;
+    --line: #262a33;
+    --ink: #ececf1;
+    --muted: #9399a6;
+    --accent: #8b87ff;
+    --accent-soft: #1e1f3d;
+    --accent-ink: #0d0e12;
+
+    /* a darker card needs a stronger tint to read as clearly as in the light theme */
+    --guide: color-mix(in srgb, var(--accent) 40%, var(--surface));
+
+    --col-a: #3b3a8f;
+    --col-b: #4d3a8f;
+    --col-ink: #e0e7ff;
+    --sub-a: #164e63;
+    --sub-b: #155e75;
+    --sub-ink: #cffafe;
+
+    /* code colors, taken from VS Code Dark+ */
+    --tok-comment: #6a9955;
+    --tok-keyword: #569cd6;
+    --tok-control: #c586c0;
+    --tok-string: #ce9178;
+    --tok-attr-value: #ce9178;
+    --tok-number: #b5cea8;
+    --tok-property: #9cdcfe;
+    --tok-variable: #9cdcfe;
+    --tok-function: #dcdcaa;
+    --tok-tag: #569cd6;
+    --tok-bracket: #808080;
+    --tok-attr: #9cdcfe;
+    --tok-type: #4ec9b0;
+}
 
 @layer base {
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 7.5rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+    }
+
+    @media (min-width: 64rem) {
+        html {
+            scroll-padding-top: 5rem;
+        }
+    }
+
     *,
     ::before,
     ::after {
-        @apply border-slate-300/70 dark:border-slate-700;
+        border-color: var(--line);
+    }
+
+    body {
+        background: var(--canvas);
+        color: var(--ink);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+        background: var(--accent);
+        color: var(--accent-ink);
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+        border-radius: 4px;
     }
 }
 
-body {
-    @apply bg-indigo-50/20 text-slate-700;
-    @apply dark:bg-slate-900 dark:text-slate-300;
+/* prose-ish helpers used by the sections */
+.lead {
+    @apply text-lg leading-relaxed text-muted;
 }
 
-h2 {
-    @apply flex items-center gap-2 text-2xl font-bold tracking-tight;
+.prose-sm-muted {
+    @apply text-sm leading-relaxed text-muted;
 }
 
-h3 {
-    @apply text-lg font-semibold;
-
-    svg {
-        @apply mt-0.5;
-    }
-
-    & ~ p {
-        @apply text-sm;
-    }
+/* inline code */
+:not(pre) > code {
+    @apply rounded-md border bg-sunken px-1.5 py-0.5 font-mono text-[0.8125em] text-ink;
+    white-space: nowrap;
 }
 
-.card {
-    @apply rounded-lg border bg-white dark:bg-slate-950 p-6 shadow dark:shadow-slate-600/50;
-
-    .badge-version {
-        @apply inline-flex items-center rounded-full bg-indigo-100 text-indigo-700 px-2.5 py-0.5 whitespace-nowrap text-[11px] font-semibold tracking-wider mt-0.5;
-        @apply dark:bg-indigo-800 dark:text-indigo-50;
-    }
+/* buttons */
+.btn {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition;
+    @apply hover:-translate-y-px active:translate-y-0 disabled:pointer-events-none disabled:opacity-60;
 }
 
-code.badge {
-    @apply px-1.5 py-0.5 rounded-md bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-mono text-xs mx-1;
+.btn-primary {
+    @apply border-accent bg-accent text-accent-ink hover:opacity-90;
 }
 
-.tip-info {
-    @apply text-sm text-slate-500 dark:text-slate-400 flex items-center flex-wrap gap-1;
-
-    svg {
-        @apply text-amber-500;
-    }
-
-    code.badge {
-        @apply text-[11px];
-    }
+.btn-secondary {
+    @apply bg-surface text-ink hover:border-accent hover:text-accent;
 }
 
+.btn-sm {
+    @apply min-h-8 px-2.5 py-1 text-xs;
+}
+
+/* surfaces */
+.panel {
+    @apply rounded-xl border bg-surface;
+}
+
+/* the live preview: everything inside is rendered with the plugin itself */
 .doc-preview {
-    @apply min-h-60 max-h-[500px] overflow-auto;
+    @apply font-mono text-xs;
+
+    /* the page uses a roomier container gutter, the preview goes back to the default */
+    --bs-container-gutter-x: 1.5rem;
 
     .container {
-        @apply text-center;
+        padding-block: 0.75rem;
     }
 
-    .row:not(:last-child) {
-        @apply mb-6;
+    .row + .row,
+    .row + .row-cols-auto {
+        margin-top: 1rem;
     }
 
-    .col,
-    [class*="col-"] {
-        @apply bg-slate-50 dark:bg-slate-800 border p-6;
+    /* tint only the content box so the gutters stay visible between columns */
+    .row > * {
+        background-color: var(--col-a);
+        color: var(--col-ink);
+        background-clip: content-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 3rem;
+        text-align: center;
+        overflow-wrap: anywhere;
     }
+
+    /* alternate shades, so columns with no gutter between them still read as separate boxes */
+    .row > :nth-child(even) {
+        background-color: var(--col-b);
+    }
+
+    .row .row > * {
+        background-color: var(--sub-a);
+        color: var(--sub-ink);
+    }
+
+    .row .row > :nth-child(even) {
+        background-color: var(--sub-b);
+    }
+}
+
+/* tiny scrollbars for code areas */
+.code-scroll {
+    scrollbar-width: thin;
+}
+
+/* columns in the hero fade in when the layout changes */
+@keyframes hero-in {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+}
+
+.hero-col {
+    animation: hero-in 0.45s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-col {
+        animation: none;
+    }
+}
+
+/* syntax highlighting */
+.tok-comment {
+    color: var(--tok-comment);
+    font-style: italic;
+}
+.tok-keyword {
+    color: var(--tok-keyword);
+}
+.tok-control {
+    color: var(--tok-control);
+}
+.tok-string {
+    color: var(--tok-string);
+}
+.tok-attr-value {
+    color: var(--tok-attr-value);
+}
+.tok-number {
+    color: var(--tok-number);
+}
+.tok-property {
+    color: var(--tok-property);
+}
+.tok-variable {
+    color: var(--tok-variable);
+}
+.tok-function {
+    color: var(--tok-function);
+}
+.tok-tag {
+    color: var(--tok-tag);
+}
+.tok-bracket {
+    color: var(--tok-bracket);
+}
+.tok-attr {
+    color: var(--tok-attr);
+}
+.tok-type {
+    color: var(--tok-type);
+}
+
+/* inline code stays on one line, unless it is long enough to need wrapping on a phone */
+:not(pre) > code.code-wrap {
+    white-space: normal;
+    overflow-wrap: anywhere;
 }

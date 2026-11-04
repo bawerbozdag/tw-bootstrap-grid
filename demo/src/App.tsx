@@ -1,121 +1,88 @@
-import { useEffect, useState } from "react";
-import { DEFAULT_TAB_KEY, DEFAULT_TAILWIND_VERSION, LOCAL_STORAGE_KEY, SIDEBAR_TABS, TAB_KEYS } from "./_constants";
-import AppContext, { type IAppContext } from "./contexts/AppContext";
-import Sidebar from "./components/Sidebar";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { DEFAULT_TAILWIND_VERSION, SECTIONS, SECTION_IDS, THEME_STORAGE_KEY, VERSION_STORAGE_KEY } from "./_constants";
+import AppContext, { type IAppContext, type TailwindVersion, type Theme } from "./contexts/AppContext";
+import useScrollSpy from "./hooks/useScrollSpy";
+import { readStorage, writeStorage } from "./lib/storage";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import SectionIntroduction from "./sections/SectionIntroduction";
 import SectionInstallation from "./sections/SectionInstallation";
 import SectionConfiguration from "./sections/SectionConfiguration";
+import SectionClasses from "./sections/SectionClasses";
+import SectionMigration from "./sections/SectionMigration";
 import SectionExamples from "./sections/SectionExamples";
+import SectionRtl from "./sections/SectionRtl";
+import SectionFaq from "./sections/SectionFaq";
 // style
 import "@/assets/css/main.css";
 
-const isTabKey = (key: string): key is IAppContext["activeTab"] => {
-    return (TAB_KEYS as readonly string[]).includes(key);
+const readVersion = (): TailwindVersion => {
+    const stored = readStorage(VERSION_STORAGE_KEY);
+
+    return stored === "v3" || stored === "v4" ? stored : DEFAULT_TAILWIND_VERSION;
+};
+
+const readTheme = (): Theme => {
+    const stored = readStorage(THEME_STORAGE_KEY);
+
+    if (stored === "light" || stored === "dark") {
+        return stored;
+    }
+
+    return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 };
 
 const App = () => {
-    const [activeTab, setActiveTab] = useState<IAppContext["activeTab"]>(DEFAULT_TAB_KEY);
+    const [tailwindVersion, setVersionState] = useState<TailwindVersion>(readVersion);
+    const [theme, setTheme] = useState<Theme>(readTheme);
 
-    const updateActiveTabOnScroll = () => {
-        const tabSections = document.querySelectorAll<HTMLElement>("#sections > section");
+    const activeSection = useScrollSpy(SECTION_IDS, "introduction");
 
-        if (!tabSections || !tabSections.length) {
-            return;
-        }
-
-        const visibleSection = Array.from(tabSections).find((section) => {
-            const { top, bottom } = section.getBoundingClientRect();
-
-            return top < 100 && bottom > 100;
-        });
-
-        if (!visibleSection) {
-            return;
-        }
-
-        const visibleTab = `tab-${visibleSection.id}`;
-
-        if (!isTabKey(visibleTab)) {
-            return;
-        }
-
-        return setActiveTab((currentTab) => {
-            // if the current active tab matches the new tab, do nothing
-            if (currentTab == visibleTab) {
-                return currentTab;
-            }
-
-            // update
-            return visibleTab;
-        });
-    };
-
-    useEffect(() => {
-        // run first time
-        updateActiveTabOnScroll();
-
-        window.addEventListener("scroll", updateActiveTabOnScroll);
-
-        // cleanup
-        return () => window.removeEventListener("scroll", updateActiveTabOnScroll);
-
-        //
+    const setTailwindVersion = useCallback((version: TailwindVersion) => {
+        writeStorage(VERSION_STORAGE_KEY, version);
+        setVersionState(version);
     }, []);
 
-    const [tailwindVersion, setTailwindVersion] = useState<IAppContext["tailwindVersion"]>(() => {
-        const currentTailwindVersion = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const toggleTheme = useCallback(() => {
+        setTheme((current) => {
+            const next = current === "dark" ? "light" : "dark";
 
-        if (!currentTailwindVersion || (currentTailwindVersion !== "v3" && currentTailwindVersion !== "v4")) {
-            localStorage.setItem(LOCAL_STORAGE_KEY, DEFAULT_TAILWIND_VERSION);
+            writeStorage(THEME_STORAGE_KEY, next);
 
-            return DEFAULT_TAILWIND_VERSION;
-        }
-
-        return currentTailwindVersion;
-    });
+            return next;
+        });
+    }, []);
 
     useEffect(() => {
-        if (!document) {
-            return;
-        }
+        document.documentElement.classList.toggle("dark", theme === "dark");
+        document.documentElement.style.colorScheme = theme;
+    }, [theme]);
 
-        const currentTab = SIDEBAR_TABS.flatMap((tab) => tab.items).find((item) => item.id === activeTab)?.label;
+    useEffect(() => {
+        const label = SECTIONS.find((section) => section.id === activeSection)?.label;
 
-        document.title = `${currentTab ?? "Docs"} / tw-bootstrap-grid`;
+        document.title = activeSection === "introduction" ? "tw-bootstrap-grid" : `${label} · tw-bootstrap-grid`;
+    }, [activeSection]);
 
-        //
-    }, [activeTab]);
+    const value = useMemo<IAppContext>(
+        () => ({ activeSection, tailwindVersion, setTailwindVersion, theme, toggleTheme }),
+        [activeSection, tailwindVersion, setTailwindVersion, theme, toggleTheme],
+    );
 
     return (
-        <AppContext.Provider
-            value={{
-                activeTab,
-                setActiveTab,
-                tailwindVersion,
-                setTailwindVersion: (tailwindVersion) => {
-                    // validate tailwind version
-                    if (tailwindVersion !== "v3" && tailwindVersion !== "v4") {
-                        localStorage.setItem(LOCAL_STORAGE_KEY, DEFAULT_TAILWIND_VERSION);
-
-                        return setTailwindVersion(DEFAULT_TAILWIND_VERSION);
-                    }
-
-                    localStorage.setItem(LOCAL_STORAGE_KEY, tailwindVersion);
-
-                    return setTailwindVersion(tailwindVersion);
-                },
-                theme: matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light",
-            }}
-        >
-            <main className="xl:grid xl:grid-cols-[280px_auto]">
-                <Sidebar />
-                <div id="sections">
-                    <SectionIntroduction />
-                    <SectionInstallation />
-                    <SectionConfiguration />
-                    <SectionExamples />
-                </div>
+        <AppContext.Provider value={value}>
+            <Header />
+            <main className="container max-w-6xl">
+                <SectionIntroduction />
+                <SectionInstallation />
+                <SectionConfiguration />
+                <SectionClasses />
+                <SectionMigration />
+                <SectionExamples />
+                <SectionRtl />
+                <SectionFaq />
             </main>
+            <Footer />
         </AppContext.Provider>
     );
 };

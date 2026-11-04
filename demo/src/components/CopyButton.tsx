@@ -1,66 +1,59 @@
-import { LucideCopy, LucideCopyCheck, LucideCopyX } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { LucideCheck, LucideCopy, LucideX } from "lucide-react";
 import clsx from "clsx";
 
 interface ICopyButtonProps {
     text: string;
     className?: string;
-    iconSize?: number;
+    label?: string;
+    // hides the word on phones and keeps just the icon, for crowded bars
+    compact?: boolean;
 }
 
-const CopyButton = ({ text, className, iconSize = 16 }: ICopyButtonProps) => {
-    const [copied, setCopied] = useState<boolean | undefined>(false);
+type TCopyState = "idle" | "copied" | "failed";
 
-    const copyStatus = copied == undefined ? "Failed" : copied == true ? "Copied" : "Copy";
+const CopyButton = ({ text, className, label = "Copy", compact }: ICopyButtonProps) => {
+    const [state, setState] = useState<TCopyState>("idle");
+    const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+    useEffect(() => () => clearTimeout(timer.current), []);
 
     const handleClick = async () => {
         try {
-            if (!navigator.clipboard) {
-                console.warn("Clipboard API not supported");
-                setCopied(undefined);
-
-                return;
-            }
-
             await navigator.clipboard.writeText(text);
 
-            setCopied(true);
-
-            //
+            setState("copied");
         } catch {
-            setCopied(undefined);
-
-            //
-        } finally {
-            setTimeout(() => setCopied(false), 2000);
+            setState("failed");
         }
+
+        clearTimeout(timer.current);
+
+        timer.current = setTimeout(() => setState("idle"), 1800);
     };
 
     return (
         <button
             type="button"
-            disabled={copied === true}
             onClick={handleClick}
-            title={copyStatus}
+            title={label}
             className={clsx(
-                "inline-flex items-center gap-1.5 text-xs transition duration-200",
-                copied === true && "scale-110 text-green-600",
-                copied === undefined && "scale-110 text-red-600",
-                copied === false &&
-                    "text-indigo-500 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-500",
+                "inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-md px-2 py-1 text-xs transition",
+                state === "idle" && "text-muted hover:text-accent",
+                state === "copied" && "text-emerald-600 dark:text-emerald-400",
+                state === "failed" && "text-red-600 dark:text-red-400",
                 className,
             )}
-            aria-live="polite"
         >
-            {copied === true ? (
-                <LucideCopyCheck size={iconSize} />
-            ) : copied === undefined ? (
-                <LucideCopyX size={iconSize} />
+            {state === "copied" ? (
+                <LucideCheck size={14} />
+            ) : state === "failed" ? (
+                <LucideX size={14} />
             ) : (
-                <LucideCopy size={iconSize} />
+                <LucideCopy size={14} />
             )}
-            <span aria-live="polite" role="status" className="sr-only">
-                {copyStatus}
+            <span aria-live="polite" className={compact ? "sr-only sm:not-sr-only" : undefined}>
+                {state === "copied" ? "Copied" : state === "failed" ? "Failed" : label}
             </span>
         </button>
     );
