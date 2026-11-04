@@ -32,6 +32,8 @@ tw-bootstrap-grid lets you write Bootstrap-style layouts in a Tailwind project. 
 
 ## Migrating from Bootstrap
 
+The full guide is at https://tw-bootstrap-grid.vercel.app/migrate-from-bootstrap/. In short:
+
 - Bootstrap writes the breakpoint in the middle, Tailwind writes it as a prefix: `col-md-6` becomes `md:col-6`, `offset-md-3` becomes `md:offset-3`, `row-cols-md-3` becomes `md:row-cols-3`, `col-xxl-4` becomes `2xl:col-4`.
 - Gutter numbers follow Tailwind's spacing scale: Bootstrap `g-3` (1rem) is `g-4`, `g-4` (1.5rem) is `g-6`, `g-5` (3rem) is `g-12`. `g-0`, `g-1` and `g-2` are the same.
 - Breakpoints differ: Bootstrap uses 576, 768, 992, 1200 and 1400px, Tailwind uses 640, 768, 1024, 1280 and 1536px. They can be changed in the Tailwind config.
@@ -40,11 +42,11 @@ tw-bootstrap-grid lets you write Bootstrap-style layouts in a Tailwind project. 
 
 ## Docs
 
-- [Documentation and live examples](https://tw-bootstrap-grid.vercel.app/): installation, configuration, class reference, migration guide, editable examples with a responsive preview, RTL and FAQ
+- [Documentation and live examples](https://tw-bootstrap-grid.vercel.app/): installation, configuration, class reference, editable examples with a responsive preview, RTL and FAQ
 - [Installation](https://tw-bootstrap-grid.vercel.app/#installation): install and register the plugin for Tailwind v3 and v4
 - [Configuration](https://tw-bootstrap-grid.vercel.app/#configuration): breakpoints, gutter sizes and turning off the containers
 - [Class reference](https://tw-bootstrap-grid.vercel.app/#classes): every class the plugin adds
-- [Migrating from Bootstrap](https://tw-bootstrap-grid.vercel.app/#migration): class mapping tables and a Perl command that converts markup
+- [Migrating from Bootstrap](https://tw-bootstrap-grid.vercel.app/migrate-from-bootstrap/): a step-by-step guide with class mapping tables, gutter size changes, Bootstrap's breakpoints and a Perl command that converts markup
 - [Examples](https://tw-bootstrap-grid.vercel.app/#examples): editable HTML with a phone, tablet and desktop preview
 - [FAQ](https://tw-bootstrap-grid.vercel.app/#faq): common questions
 
