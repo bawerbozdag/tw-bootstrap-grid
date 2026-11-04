@@ -1,13 +1,19 @@
-# robots.txt for tw-bootstrap-grid documentation site
-
+# Everything is open to crawlers, search engines and AI assistants alike.
 User-agent: *
 Allow: /
 
-# Prevent search engines from indexing build or config artifacts
-Disallow: /node_modules/
-Disallow: /dist/
-Disallow: /build/
-Disallow: /api/
+# AI crawlers, listed so the intent is explicit
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+Allow: /
 
-# Sitemap reference
 Sitemap: https://tw-bootstrap-grid.vercel.app/sitemap.xml

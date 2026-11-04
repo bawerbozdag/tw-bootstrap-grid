@@ -1,0 +1,55 @@
+# tw-bootstrap-grid
+
+> A Tailwind CSS plugin that adds the Bootstrap 12-column grid: rows, columns, gutters, offsets, row-cols and RTL support. It works with Tailwind CSS v3.4 and v4 and is MIT licensed.
+
+tw-bootstrap-grid lets you write Bootstrap-style layouts in a Tailwind project. It only adds layout (no colors, components or resets) and does not replace any Tailwind utility. Every class accepts Tailwind's breakpoint prefixes, for example `md:col-6` or `lg:offset-3`. It needs a build step (PostCSS, Vite, Webpack or the Tailwind CLI) and does not work with the Tailwind Play CDN.
+
+## Quick start
+
+- Install: `npm install tw-bootstrap-grid`
+- Tailwind v4, in your CSS: `@import "tailwindcss";` then `@plugin "tw-bootstrap-grid";`
+- Tailwind v3, in `tailwind.config`: `import Grid from "tw-bootstrap-grid";` then `plugins: [Grid]`
+- Use it: `<div class="container"><div class="row g-4"><div class="col-12 md:col-6 lg:col-4">...</div></div></div>`
+
+## Classes
+
+- `.container`, `.container-fluid`: centered wrapper with padding that matches the gutter. Max widths come from Tailwind's own `container` and breakpoints.
+- `.row`: flex row that wraps, with negative margins so the gutters line up.
+- `.col`, `.col-auto`, `.col-1` to `.col-12`: equal-width, content-width and fixed-width columns on a 12-column grid.
+- `.offset-0` to `.offset-12`: push a column using `margin-inline-start`, so it works in right-to-left layouts.
+- `.row-cols-auto`, `.row-cols-1` to `.row-cols-6`: set equal column widths once on the row.
+- `.g-*`, `.gx-*`, `.gy-*`: gutter size on both axes, horizontally or vertically, taken from Tailwind's spacing scale.
+- Alignment and order are not part of the plugin: use Tailwind's `items-*`, `justify-*` and `order-*` on a `.row`.
+
+## Options
+
+- `gutters: { x, y }`: gutter for containers and rows. Defaults are `1.5rem` horizontally and `0` vertically.
+- `containerGutters` and `rowGutters`: override the gutter for containers or rows only.
+- `generateContainers: false`: do not generate `.container` and `.container-fluid`.
+- Tailwind v3 takes these as plugin options: `Grid({ gutters: { x: "1rem" } })`.
+- Tailwind v4 cannot pass nested options through `@plugin`, so use the CSS variables instead: `--bs-global-gutter-x`, `--bs-global-gutter-y`, `--bs-container-gutter-x`, `--bs-row-gutter-x` and the matching `y` variables. `@plugin "tw-bootstrap-grid" { generateContainers: false; }` works in v4.
+- Resolution order: the row or container variable, then the global variable, then the default.
+
+## Migrating from Bootstrap
+
+- Bootstrap writes the breakpoint in the middle, Tailwind writes it as a prefix: `col-md-6` becomes `md:col-6`, `offset-md-3` becomes `md:offset-3`, `row-cols-md-3` becomes `md:row-cols-3`, `col-xxl-4` becomes `2xl:col-4`.
+- Gutter numbers follow Tailwind's spacing scale: Bootstrap `g-3` (1rem) is `g-4`, `g-4` (1.5rem) is `g-6`, `g-5` (3rem) is `g-12`. `g-0`, `g-1` and `g-2` are the same.
+- Breakpoints differ: Bootstrap uses 576, 768, 992, 1200 and 1400px, Tailwind uses 640, 768, 1024, 1280 and 1536px. They can be changed in the Tailwind config.
+- The CSS variables keep Bootstrap's names, `--bs-gutter-x` and `--bs-gutter-y`.
+- Not included: `.container-sm`, `.container-md` and the other responsive containers.
+
+## Docs
+
+- [Documentation and live examples](https://tw-bootstrap-grid.vercel.app/): installation, configuration, class reference, migration guide, editable examples with a responsive preview, RTL and FAQ
+- [Installation](https://tw-bootstrap-grid.vercel.app/#installation): install and register the plugin for Tailwind v3 and v4
+- [Configuration](https://tw-bootstrap-grid.vercel.app/#configuration): breakpoints, gutter sizes and turning off the containers
+- [Class reference](https://tw-bootstrap-grid.vercel.app/#classes): every class the plugin adds
+- [Migrating from Bootstrap](https://tw-bootstrap-grid.vercel.app/#migration): class mapping tables and a Perl command that converts markup
+- [Examples](https://tw-bootstrap-grid.vercel.app/#examples): editable HTML with a phone, tablet and desktop preview
+- [FAQ](https://tw-bootstrap-grid.vercel.app/#faq): common questions
+
+## Optional
+
+- [GitHub repository](https://github.com/bawerbozdag/tw-bootstrap-grid): source code, issues and pull requests
+- [npm package](https://www.npmjs.com/package/tw-bootstrap-grid): latest release and install statistics
+- [Changelog](https://github.com/bawerbozdag/tw-bootstrap-grid/blob/master/CHANGELOG.md): release notes
