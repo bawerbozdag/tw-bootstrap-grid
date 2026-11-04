@@ -26,9 +26,12 @@ npm run dev
 ```
 src/
   App.tsx            page layout, theme and Tailwind-version state
+  site.ts            the pages (path, title, description) and the site URL
   _constants.ts      section list, links, storage keys
   examples.tsx       the live examples (title, text, editable HTML)
-  sections/          one file per section of the page
+  migration-content.tsx  the cards and steps shared by the home page and the guide
+  pages/             HomePage (the sections below) and MigrationPage (the guide)
+  sections/          one file per section of the home page
   components/        header, code blocks, live example, ...
   hooks/             useApp (context) and useScrollSpy
   assets/css/        main.css (design tokens, shared styles), tailwind.css
@@ -43,12 +46,19 @@ src/
   snippets are shown.
 - **Theme.** Light and dark are class based (`.dark` on `<html>`). The choice is saved in `localStorage` and falls back
   to the system preference. A tiny inline script in `index.html` applies it before first paint.
-- **Prerendering.** The site is a client-side React app, but `npm run build` also renders the page to static HTML
-  (`src/entry-server.tsx`, then `scripts/prerender.mjs`) and writes it into `dist/index.html`. Crawlers that don't run
-  JavaScript, which includes most AI crawlers, therefore get the real content. The same step writes the JSON-LD
-  structured data (the plugin version comes from the installed package, the FAQ from `src/faq.tsx`) and the sitemap, and
-  it fails the build if the page comes out without its heading or sections. In the browser the app still mounts with
-  `createRoot`, so nothing is hydrated.
+- **Pages.** There are two, each its own static HTML file: the home page (`/`) and the migration guide
+  (`/migrate-from-bootstrap/`). They share one JavaScript bundle, and the URL tells it which page to render. The links
+  between them are normal links, so they are full page loads, and the theme and Tailwind version carry over through
+  `localStorage`. To add a page: add it to `PAGES` in `src/site.ts`, render it from `src/App.tsx`, and list what it must
+  contain in `EXPECTED` in `scripts/prerender.mjs`. `vercel.json` sets `trailingSlash` so every page has a single URL.
+- **Prerendering.** The site is a client-side React app, but `npm run build` also renders every page to static HTML
+  (`src/entry-server.tsx`, then `scripts/prerender.mjs`) and writes it into `dist`. Crawlers that don't run
+  JavaScript, which includes most AI crawlers, therefore get the real content. The same step writes each page's title,
+  description, social cards and JSON-LD structured data (the plugin version comes from the installed package, the FAQ
+  from `src/faq.tsx` and the guide's steps from `src/migration-content.tsx`) and the sitemap. It fails the build if a
+  page comes out without what it should contain. In the browser the app still mounts with `createRoot`, so nothing is
+  hydrated; after mounting it re-aligns a `#link` target, because replacing the prerendered markup resets the scroll
+  position.
 - **For search engines and AI assistants.** `public/llms.txt` is a plain summary of the plugin and the docs, and
   `public/robots.txt` welcomes crawlers. `llms.txt` is written by hand, so when the plugin's options or classes change,
   update it along with the page. The social image is `public/og-image.png` (1200 × 630).
@@ -59,7 +69,7 @@ src/
   width rather than the browser window. The page's stylesheets are copied into it at runtime, which works the same in
   dev and in production. The buttons above the preview pick a phone, tablet or desktop width, and wider ones are scaled
   down to fit.
-- **Migration section.** The Bootstrap-to-Tailwind class mappings and the Perl command in
-  `src/sections/SectionMigration.tsx` were checked against the plugin's real output. If you change one, rerun the
+- **Migration guide.** The Bootstrap-to-Tailwind class mappings and the Perl command in
+  `src/pages/MigrationPage.tsx` were checked against the plugin's real output. If you change one, rerun the
   command on a sample file before publishing it.
 - **Editor.** CodeMirror is loaded lazily the first time the examples render, to keep the initial bundle small.
