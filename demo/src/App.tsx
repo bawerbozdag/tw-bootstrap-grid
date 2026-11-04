@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { DEFAULT_TAILWIND_VERSION, SECTIONS, SECTION_IDS, THEME_STORAGE_KEY, VERSION_STORAGE_KEY } from "./_constants";
+import { DEFAULT_TAILWIND_VERSION, SECTION_IDS, THEME_STORAGE_KEY, VERSION_STORAGE_KEY } from "./_constants";
 import AppContext, { type IAppContext, type TailwindVersion, type Theme } from "./contexts/AppContext";
 import useScrollSpy from "./hooks/useScrollSpy";
 import { readStorage, writeStorage } from "./lib/storage";
@@ -29,7 +29,8 @@ const readTheme = (): Theme => {
         return stored;
     }
 
-    return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    // there is no matchMedia while the page is prerendered at build time
+    return typeof matchMedia !== "undefined" && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 };
 
 const App = () => {
@@ -57,12 +58,6 @@ const App = () => {
         document.documentElement.classList.toggle("dark", theme === "dark");
         document.documentElement.style.colorScheme = theme;
     }, [theme]);
-
-    useEffect(() => {
-        const label = SECTIONS.find((section) => section.id === activeSection)?.label;
-
-        document.title = activeSection === "introduction" ? "tw-bootstrap-grid" : `${label} · tw-bootstrap-grid`;
-    }, [activeSection]);
 
     const value = useMemo<IAppContext>(
         () => ({ activeSection, tailwindVersion, setTailwindVersion, theme, toggleTheme }),

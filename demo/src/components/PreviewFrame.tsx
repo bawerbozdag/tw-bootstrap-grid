@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import clsx from "clsx";
+import DOMPurify from "dompurify";
 import useApp from "@/hooks/useApp";
 import { breakpointFor } from "@/lib/devices";
 
 interface IPreviewFrameProps {
-    // sanitized HTML to show
+    // the HTML to show, it is sanitized before it goes into the frame
     html: string;
     // the viewport width to pretend to have, or null to use the width of the panel
     width: number | null;
@@ -105,7 +106,7 @@ const PreviewFrame = ({ html, width, matchEditor }: IPreviewFrameProps) => {
         const doc = iframeRef.current?.contentDocument;
 
         if (ready && doc) {
-            doc.body.innerHTML = html;
+            doc.body.innerHTML = DOMPurify.sanitize(html);
         }
     }, [ready, html]);
 

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo, useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import {
     LucideAlignLeft,
     LucideAlignRight,
@@ -10,7 +10,6 @@ import {
     LucideTablet,
     type LucideIcon,
 } from "lucide-react";
-import DOMPurify from "dompurify";
 import clsx from "clsx";
 import type { IExample } from "@/examples";
 import CopyButton from "./CopyButton";
@@ -45,8 +44,6 @@ const LiveExample = ({ example }: ILiveExampleProps) => {
 
     // the code is the single source of truth: the RTL button edits the root element's dir, and follows manual edits
     const rtl = hasRootRtl(code);
-
-    const previewHtml = useMemo(() => DOMPurify.sanitize(code), [code]);
 
     const isModified = code !== example.code;
 
@@ -110,7 +107,7 @@ const LiveExample = ({ example }: ILiveExampleProps) => {
                             </button>
                         </div>
                     </div>
-                    <PreviewFrame html={previewHtml} width={device.width} matchEditor={!expanded} />
+                    <PreviewFrame html={code} width={device.width} matchEditor={!expanded} />
                 </div>
 
                 <div className={clsx("col-12 min-w-0", expanded ? "xl:order-2" : "xl:col-6 xl:order-1")}>
@@ -144,7 +141,7 @@ const LiveExample = ({ example }: ILiveExampleProps) => {
                                 </pre>
                             }
                         >
-                            <CodeEditor value={code} onChange={setCode} revision={revision} matchPreview={!expanded} />
+<CodeEditor value={code} onChange={setCode} revision={revision} matchPreview={!expanded} />
                         </Suspense>
                     </div>
                 </div>
