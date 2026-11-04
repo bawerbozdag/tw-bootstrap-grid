@@ -50,6 +50,19 @@ The full guide is at https://tw-bootstrap-grid.vercel.app/migrate-from-bootstrap
 - [Examples](https://tw-bootstrap-grid.vercel.app/#examples): editable HTML with a phone, tablet and desktop preview
 - [FAQ](https://tw-bootstrap-grid.vercel.app/#faq): common questions
 
+## Translations
+
+The documentation is also available in other languages. Each page keeps the same structure, and class names and code are not translated.
+
+- [Türkçe](https://tw-bootstrap-grid.vercel.app/tr/)
+- [Español](https://tw-bootstrap-grid.vercel.app/es/)
+- [Deutsch](https://tw-bootstrap-grid.vercel.app/de/)
+- [Français](https://tw-bootstrap-grid.vercel.app/fr/)
+- [Português (Brasil)](https://tw-bootstrap-grid.vercel.app/pt/)
+- [Русский](https://tw-bootstrap-grid.vercel.app/ru/)
+- [简体中文](https://tw-bootstrap-grid.vercel.app/zh/)
+- [日本語](https://tw-bootstrap-grid.vercel.app/ja/)
+
 ## Optional
 
 - [GitHub repository](https://github.com/bawerbozdag/tw-bootstrap-grid): source code, issues and pull requests

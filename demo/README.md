@@ -29,7 +29,7 @@ src/
   site.ts            the pages (path, title, description) and the site URL
   _constants.ts      section list, links, storage keys
   examples.tsx       the live examples (title, text, editable HTML)
-  migration-content.tsx  the cards and steps shared by the home page and the guide
+  i18n/              languages.ts (the list, URL prefixes), messages/<code>.ts (one file per language), load.ts
   pages/             HomePage (the sections below) and MigrationPage (the guide)
   sections/          one file per section of the home page
   components/        header, code blocks, live example, ...
@@ -46,6 +46,18 @@ src/
   snippets are shown.
 - **Theme.** Light and dark are class based (`.dark` on `<html>`). The choice is saved in `localStorage` and falls back
   to the system preference. A tiny inline script in `index.html` applies it before first paint.
+- **Languages.** The site is available in nine languages: English (the source), Turkish, Spanish, German, French,
+  Portuguese (Brazil), Russian, Chinese (Simplified) and Japanese. English lives at `/`, the others under a prefix
+  (`/tr/`, `/es/`, …), and every page in every language is its own prerendered HTML file with `hreflang` links, its own
+  title, description and structured data, and an entry in the sitemap. The language menu in the header links to the same
+  page in each language. Class names and code are never translated.
+- **Translations.** Every message lives in `src/i18n/messages/<code>.ts` as plain text: `code`, `[label](link)` and
+  `**bold**` are the only markup, links that start with `/` are put into the current language, and `{name}` is filled in
+  by `fmt()`. English (`en.ts`) defines the shape, so a missing or extra key is a type error. The build also compares
+  every translation with the English one and fails if a `code` token, a link target, a `{placeholder}` or the number of
+  items in a list differs. To add a language: copy `en.ts`, translate it, add the language to `LANGUAGES` in
+  `src/i18n/languages.ts` and to `LOADERS` in `src/i18n/load.ts`, then run `npm run build`. The translations were
+  written without a native review, so corrections from native speakers are welcome.
 - **Pages.** There are two, each its own static HTML file: the home page (`/`) and the migration guide
   (`/migrate-from-bootstrap/`). They share one JavaScript bundle, and the URL tells it which page to render. The links
   between them are normal links, so they are full page loads, and the theme and Tailwind version carry over through
@@ -54,8 +66,7 @@ src/
 - **Prerendering.** The site is a client-side React app, but `npm run build` also renders every page to static HTML
   (`src/entry-server.tsx`, then `scripts/prerender.mjs`) and writes it into `dist`. Crawlers that don't run
   JavaScript, which includes most AI crawlers, therefore get the real content. The same step writes each page's title,
-  description, social cards and JSON-LD structured data (the plugin version comes from the installed package, the FAQ
-  from `src/faq.tsx` and the guide's steps from `src/migration-content.tsx`) and the sitemap. It fails the build if a
+  description, social cards and JSON-LD structured data (the plugin version comes from the installed package, the FAQ and the guide's steps from the messages of each language) and the sitemap. It fails the build if a
   page comes out without what it should contain. In the browser the app still mounts with `createRoot`, so nothing is
   hydrated; after mounting it re-aligns a `#link` target, because replacing the prerendered markup resets the scroll
   position.
