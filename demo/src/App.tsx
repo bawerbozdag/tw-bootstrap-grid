@@ -64,6 +64,15 @@ const App = ({ page }: { page: PageId }) => {
         document.documentElement.style.colorScheme = theme;
     }, [theme]);
 
+    // The prerendered page is replaced when the app mounts, which can move or reset the scroll position, and a saved
+    // Tailwind version can change the height of what is above a #link's target. Navigating to the same fragment again
+    // makes the browser align the target the way it does for any link, without adding a history entry.
+    useEffect(() => {
+        if (location.hash.length > 1) {
+            location.replace(location.hash);
+        }
+    }, []);
+
     const value = useMemo<IAppContext>(
         () => ({ page, activeSection, tailwindVersion, setTailwindVersion, theme, toggleTheme }),
         [page, activeSection, tailwindVersion, setTailwindVersion, theme, toggleTheme],
