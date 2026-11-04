@@ -132,12 +132,10 @@ export const EXAMPLES: IExample[] = [
     <div class="col-6">g-0</div>
   </div>
   <div class="row g-4">
-    <div class="col-4">g-4</div>
-    <div class="col-4">g-4</div>
-    <div class="col-4">g-4</div>
-    <div class="col-4">g-4</div>
-    <div class="col-4">g-4</div>
-    <div class="col-4">g-4</div>
+    <div class="col-6">g-4</div>
+    <div class="col-6">g-4</div>
+    <div class="col-6">g-4</div>
+    <div class="col-6">g-4</div>
   </div>
   <div class="row gx-10 gy-2">
     <div class="col-6">gx-10 gy-2</div>
